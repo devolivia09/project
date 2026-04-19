@@ -1,0 +1,49 @@
+/*  Common Style */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  min-height: 100%;
+}
+body {
+  min-height: 100vh;
+  min-height: 100vdh;
+  color: #222;
+  background-color: #fff;
+  overflow-x: hidden;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Section Default Style */
+.section {
+  width: 100vw;
+  width: 100vdw;
+  height: 100vh;
+  height: 100vdh;
+}
+
+/*  Intro section style  */
+.intro {
+  position: relative;
+}
+.v-line {
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 2px;
+  height: 100%;
+  transform-origin: top;
+}
