@@ -39,11 +39,26 @@ img {
 .intro {
   position: relative;
 }
-.v-line {
+.intro__line--vertical {
   position: absolute;
   top: 0;
   left: 15%;
-  width: 2px;
+  width: 1.5px;
   height: 100%;
+  transform: scaleY(0);
   transform-origin: top;
+  background-color: #222;
+}
+.intro__line--horizontal {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
+  transform-origin: top;
+}
+.intro__txt--main {
+  transform: translateX(-50px);
+  opacity: 0;
 }
