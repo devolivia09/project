@@ -1,4 +1,4 @@
-/*  Common Style */
+/* ---  Common Style : Reset & Base Styles --- */
 *,
 *::before,
 *::after {
@@ -9,11 +9,11 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  min-height: 100%;
+  height: 100%;
 }
 body {
   min-height: 100vh;
-  min-height: 100vdh;
+  min-height: 100dvh;
   color: #222;
   background-color: #fff;
   font-family: "Noto Serif KR", serif;
@@ -28,37 +28,37 @@ img {
   max-width: 100%;
 }
 
-/* Section Default Style */
+/* ---  Common Section Style --- */
+.guide-line {
+  position: fixed;
+  top: 0;
+  left: 15%;
+  width: 1.5px;
+  height: 100%;
+  background-color: #222;
+  z-index: -1;
+}
 .section {
   width: 100vw;
   width: 100vdw;
   height: 100vh;
-  height: 100vdh;
+  height: 100dvh;
+  outline: 1px solid pink;
+  outline-offset: -2px;
 }
 
-/*  Intro section style  */
+/* --- [Section] Intro Style -------------------------------------------- */
 section.intro {
   display: flex;
   align-items: center;
   position: relative;
   color: #222;
 }
-
-.intro__line {
-  position: absolute;
-  top: 0;
-  left: 15%;
-  width: 1.5px;
-  height: 100%;
-  transform: scaleY(1);
-  transform-origin: top;
-  background-color: #222;
-}
 .intro__txt {
   position: absolute;
   left: 15%;
   padding-bottom: 0.3rem;
-  padding: 0 0.5rem 0.3rem;
+  padding: 0 0.35rem 0.3rem;
   background-color: #222;
   font-size: 2.5rem;
   font-weight: 500;
@@ -82,31 +82,36 @@ section.intro {
   border-radius: 50%;
   z-index: 1;
 }
+.intro__circle {
+  z-index: 3;
+  background-color: #000;
+  opacity: 0;
+}
+.intro__circle.active {
+  animation: pulse-animation 2.75s infinite;
+}
+@keyframes pulse-animation {
+  0% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -100%) scale(1.35);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+.intro__dot-inner-line {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  transform: translateY(-50%);
+}
 
-/*   애프터  속성  임시   */
-section.intro::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  height: 2px;
-  /* background-color: pink; */
-  transform: translateY(-50%);
-}
-.intro__dot::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  height: 2px;
-  background-color: #222;
-  transform: translateY(-50%);
-}
-/* .intro__txt::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  height: 2px;
-  transform: translateY(-50%);
-} */
+/* --- [Section] Profile Style -------------------------------------------- */
+/* --- [Section] Skills Style -------------------------------------------- */
+/* --- [Section] Works Style -------------------------------------------- */
+/* --- [Section] Outro Style -------------------------------------------- */
