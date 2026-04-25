@@ -8,8 +8,9 @@
 }
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
   height: 100%;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 body {
   min-height: 100vh;
@@ -17,7 +18,6 @@ body {
   color: #222;
   background-color: #fff;
   font-family: "Noto Serif KR", serif;
-  overflow-x: hidden;
 }
 a {
   text-decoration: none;
@@ -29,22 +29,50 @@ img {
 }
 
 /* ---  Common Section Style --- */
-.guide-line {
-  position: fixed;
+.container {
+  position: relative;
+  width: 100vw;
+  width: 100dvw;
+  height: 500vh;
+  height: 500dvh;
+}
+.section {
+  height: 100vh;
+  height: 100dvh;
+}
+.axis-line {
+  position: absolute;
   top: 0;
-  left: 15%;
+  left: 16%;
   width: 1.5px;
   height: 100%;
   background-color: #222;
-  z-index: -1;
 }
-.section {
-  width: 100vw;
-  width: 100vdw;
-  height: 100vh;
-  height: 100dvh;
-  outline: 1px solid pink;
-  outline-offset: -2px;
+.axis-point {
+  position: absolute;
+  top: 10%;
+  left: 16%;
+  width: 30px;
+  height: 30px;
+  background-color: #000;
+  border-radius: 50%;
+  opacity: 1;
+  translate: -50% -50%;
+}
+.axis-point.active {
+  opacity: 1;
+  animation: pulse-animation 2.75s infinite;
+  transform-origin: center;
+}
+@keyframes pulse-animation {
+  0%,
+  100% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -100%) scale(1.2);
+    box-shadow: 0 0 0 16px rgba(0, 0, 0, 0.2);
+  }
 }
 
 /* --- [Section] Intro Style -------------------------------------------- */
@@ -52,14 +80,13 @@ section.intro {
   display: flex;
   align-items: center;
   position: relative;
-  color: #222;
 }
 .intro__txt {
   position: absolute;
-  left: 15%;
+  left: 16%;
   padding-bottom: 0.3rem;
   padding: 0 0.35rem 0.3rem;
-  background-color: #222;
+  background-color: #000;
   font-size: 2.5rem;
   font-weight: 500;
   letter-spacing: 3px;
@@ -74,44 +101,66 @@ section.intro {
 .intro__dot {
   position: absolute;
   top: 50%;
-  left: 15%;
-  transform: translate(-50%, -50%);
-  width: 1.75rem;
-  height: 1.75rem;
+  left: 16%;
+  translate: -50% -50%;
+  width: 28px;
+  height: 28px;
   background-color: #fff;
   border-radius: 50%;
   z-index: 1;
-}
-.intro__circle {
-  z-index: 3;
-  background-color: #000;
-  opacity: 0;
-}
-.intro__circle.active {
-  animation: pulse-animation 2.75s infinite;
-}
-@keyframes pulse-animation {
-  0% {
-    transform: translate(-50%, -100%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -100%) scale(1.35);
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  100% {
-    transform: translate(-50%, -100%) scale(1);
-  }
 }
 .intro__dot-inner-line {
   position: absolute;
   top: 50%;
   width: 100%;
-  height: 2px;
+  height: 1.5px;
   background-color: #000;
   transform: translateY(-50%);
 }
 
 /* --- [Section] Profile Style -------------------------------------------- */
+section.profile {
+  position: relative;
+  background-color: rgba(195, 39, 39, 0.2);
+}
+.profile-frame {
+  width: 100%;
+  height: 100%;
+}
+.profile-frame > div {
+  position: absolute;
+  left: 20%;
+  width: 50%;
+}
+.profile__message {
+  height: 15%;
+  top: 15%;
+}
+.profile__picture {
+  height: 17%;
+  top: 40%;
+}
+.profile__name {
+  height: 10%;
+  top: 60%;
+}
+.profile__info {
+  height: 10%;
+  top: 75%;
+}
+
+/* 애프터 속성 : 지울 것  */
+
+.profile-frame > div::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 1px;
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
 /* --- [Section] Skills Style -------------------------------------------- */
 /* --- [Section] Works Style -------------------------------------------- */
 /* --- [Section] Outro Style -------------------------------------------- */
