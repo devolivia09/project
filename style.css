@@ -15,7 +15,7 @@ html {
 body {
   min-height: 100vh;
   min-height: 100dvh;
-  color: #222;
+  color: #000;
   background-color: #fff;
   font-family: "Noto Serif KR", serif;
 }
@@ -50,19 +50,20 @@ img {
 }
 .axis-point {
   position: absolute;
-  top: 10%;
+  /* top: 10%; */
   left: 16%;
-  width: 30px;
-  height: 30px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
   background-color: #000;
   border-radius: 50%;
-  opacity: 1;
+  opacity: 0;
   translate: -50% -50%;
+  transform-origin: center;
 }
 .axis-point.active {
   opacity: 1;
   animation: pulse-animation 2.75s infinite;
-  transform-origin: center;
 }
 @keyframes pulse-animation {
   0%,
@@ -98,7 +99,7 @@ section.intro {
   opacity: 0;
   min-width: 1.75rem;
 }
-.intro__dot {
+.intro__txt-dot {
   position: absolute;
   top: 50%;
   left: 16%;
@@ -113,9 +114,22 @@ section.intro {
   position: absolute;
   top: 50%;
   width: 100%;
-  height: 1.5px;
+  height: 2px;
   background-color: #000;
   transform: translateY(-50%);
+}
+.material-symbols-outlined {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: translateX(-50%) rotate(-45deg);
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 30;
 }
 
 /* --- [Section] Profile Style -------------------------------------------- */
