@@ -50,7 +50,6 @@ img {
 }
 .axis-point {
   position: absolute;
-  /* top: 10%; */
   left: 16%;
   z-index: 3;
   width: 32px;

@@ -1,5 +1,15 @@
 gsap.registerPlugin(ScrollTrigger);
 
+/* * ---------------------------------------------------------
+ * [인트로 섹션] 애니메이션 타임라인
+ * 1. introTimeline Instance 정의
+ * 2. introTimeline 기본 top값 설정
+ * 3. introTimeline 애니메이션
+ * 4. introTimeline 건너뛰기 : 사용자 편의
+ * ---------------------------------------------------------
+ */
+
+// 1. introTimeline 정의
 const introTimeline = gsap.timeline({
   defaults: {
     ease: "power2.inOut",
@@ -8,12 +18,12 @@ const introTimeline = gsap.timeline({
 });
 const axisPoint = document.querySelector(".axis-point");
 
-// Intro Timeline 정의
+// 2. introTimeline 기본 top값 설정
 introTimeline.set(axisPoint, {
   top: "10%",
 });
 
-//  Intro Animation
+// 3. introTimeline 애니메이션
 introTimeline
   .to(".intro__dot-inner-line", {
     rotate: 90,
@@ -22,7 +32,8 @@ introTimeline
     width: "17px",
     height: "17px",
     opacity: 1,
-    duration: 1.75,
+    duration: 0.5,
+    ease: "back.out(1.7)",
   })
   .to(axisPoint, {
     top: "20%",
@@ -44,7 +55,26 @@ introTimeline
     "+=2",
   );
 
-// Axis Point Scroll Animation for Profile Section
+// 4. introTimeline 건너뛰기 : 사용자 편의
+ScrollTrigger.create({
+  trigger: "section.intro",
+  start: "top top",
+  onleave: () => {
+    introTimeline.progress(1);
+    once: true;
+  },
+});
+
+/* * ---------------------------------------------------------
+ * [프로필 섹션] 프로필 섹션의 축 포인트 애니메이션 타임라인
+ * 1. axisPointTimeline Instance 정의
+ * 2. axisPointTimeline 포인트 이동 범위 제한
+ * 3.
+ * 4.
+ * ---------------------------------------------------------
+ */
+
+// 1. axisPointTimeline Instance 정의
 const axisPointTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: "section.profile",
@@ -54,6 +84,8 @@ const axisPointTimeline = gsap.timeline({
     markers: true,
   },
 });
+
+// 2. axisPointTimeline 포인트 이동 범위 제한
 axisPointTimeline.fromTo(
   axisPoint,
   {
@@ -69,3 +101,5 @@ axisPointTimeline.fromTo(
     },
   },
 );
+
+// 3.
