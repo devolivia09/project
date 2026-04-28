@@ -15,9 +15,12 @@ html {
 body {
   min-height: 100vh;
   min-height: 100dvh;
-  color: #000;
   background-color: #fff;
+  /* font-family: "Montserrat", "Pretendard", sans-serif; */
   font-family: "Noto Serif KR", serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  color: #000;
 }
 a {
   text-decoration: none;
@@ -33,12 +36,14 @@ img {
   position: relative;
   width: 100vw;
   width: 100dvw;
-  height: 500vh;
-  height: 500dvh;
+  height: 600vh;
+  height: 600dvh;
 }
 .section {
   height: 100vh;
   height: 100dvh;
+  outline: 1px solid pink;
+  outline-offset: -2px;
 }
 .axis-line {
   position: absolute;
@@ -74,6 +79,17 @@ img {
     box-shadow: 0 0 0 16px rgba(0, 0, 0, 0.2);
   }
 }
+
+/* --- [Section] Common Style -------------------------------------------- */
+/* .section-indicator {
+  position: fixed;
+  top: 2%;
+  right: 4%;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #000;
+  opacity: 0.5;
+} */
 
 /* --- [Section] Intro Style -------------------------------------------- */
 section.intro {
@@ -117,28 +133,25 @@ section.intro {
   background-color: #000;
   transform: translateY(-50%);
 }
-.material-symbols-outlined {
+.intro__arrow {
   position: absolute;
-  bottom: 4%;
+  bottom: 0%;
   left: 50%;
-  font-size: 1.5rem;
+  width: 2.5rem;
   opacity: 0;
-  transform: translateX(-50%) rotate(-45deg);
-  font-variation-settings:
-    "FILL" 0,
-    "wght" 400,
-    "GRAD" 0,
-    "opsz" 30;
+  transform: translateX(-50%);
 }
 
 /* --- [Section] Profile Style -------------------------------------------- */
 section.profile {
   position: relative;
-  background-color: rgba(195, 39, 39, 0.2);
+  height: 200vh;
+  height: 200dvh;
 }
 .profile-frame {
   width: 100%;
   height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.05); */
 }
 .profile-frame > div {
   position: absolute;
@@ -146,8 +159,10 @@ section.profile {
   width: 50%;
 }
 .profile__message {
-  height: 15%;
   top: 15%;
+  height: 15%;
+  font-size: 1.75rem;
+  line-height: 1.75;
 }
 .profile__picture {
   height: 17%;
@@ -164,16 +179,20 @@ section.profile {
 
 /* 애프터 속성 : 지울 것  */
 
-.profile-frame > div::after {
-  content: "";
+/* .profile-frame > div::after {
+*/
+/* .section {{
   position: absolute;
   top: 0;
-  left: -50%;
-  width: 200%;
+  left: 0%;
+  width: 100%;
   height: 1px;
   background-color: rgba(255, 0, 0, 0.5);
-}
+} */
 
 /* --- [Section] Skills Style -------------------------------------------- */
+section.skills {
+  background-color: rgba(195, 39, 39, 0.1);
+}
 /* --- [Section] Works Style -------------------------------------------- */
 /* --- [Section] Outro Style -------------------------------------------- */

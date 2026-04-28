@@ -10,17 +10,21 @@ gsap.registerPlugin(ScrollTrigger);
  */
 
 // 1. introTimeline 정의
+const axisPoint = document.querySelector(".axis-point");
+const introSection = document.querySelector("section.intro");
+const introHeight = introSection.offsetHeight;
+const axisStartPoint = introSection.offsetHeight * 0.5;
+
 const introTimeline = gsap.timeline({
   defaults: {
     ease: "power2.inOut",
     duration: 1,
   },
 });
-const axisPoint = document.querySelector(".axis-point");
 
 // 2. introTimeline 기본 top값 설정
 introTimeline.set(axisPoint, {
-  top: "10%",
+  top: axisStartPoint,
 });
 
 // 3. introTimeline 애니메이션
@@ -36,7 +40,7 @@ introTimeline
     ease: "back.out(1.7)",
   })
   .to(axisPoint, {
-    top: "20%",
+    top: introHeight,
     yPercent: -100,
     width: "14px",
     height: "14px",
@@ -48,26 +52,29 @@ introTimeline
     },
   })
   .to(
-    ".material-symbols-outlined",
+    ".intro__arrow",
     {
-      opacity: 1,
+      opacity: 0.65,
     },
-    "+=2",
+    "+=2.5",
   );
 
 // 4. introTimeline 건너뛰기 : 사용자 편의
 ScrollTrigger.create({
   trigger: "section.intro",
   start: "top top",
-  onleave: () => {
+  onLeave: () => {
     introTimeline.progress(1);
-    once: true;
+    gsap.to(".intro__arrow", {
+      opacity: 0,
+    });
   },
+  // once: true,
 });
 
 /* * ---------------------------------------------------------
- * [프로필 섹션] 프로필 섹션의 축 포인트 애니메이션 타임라인
- * 1. axisPointTimeline Instance 정의
+ * [프로필 섹션] 애니메이션 타임라인
+ * 1. 프로필 섹션의 축 포인트 애니메이션 타임라인
  * 2. axisPointTimeline 포인트 이동 범위 제한
  * 3.
  * 4.
@@ -80,8 +87,8 @@ const axisPointTimeline = gsap.timeline({
     trigger: "section.profile",
     start: "top 55%",
     end: "bottom 55%",
-    scrub: 0.75,
-    markers: true,
+    scrub: 0.85,
+    // markers: true,
   },
 });
 
@@ -89,7 +96,7 @@ const axisPointTimeline = gsap.timeline({
 axisPointTimeline.fromTo(
   axisPoint,
   {
-    top: "20%",
+    top: introHeight,
   },
   {
     top: "40%",
@@ -103,3 +110,23 @@ axisPointTimeline.fromTo(
 );
 
 // 3.
+const profileItems = document.querySelectorAll(".profile__item");
+
+profileItems.forEach((item) => {
+  gsap.fromTo(
+    item,
+    { opacity: 0, x: 30 },
+    {
+      opacity: 1,
+      x: 0,
+      duration: 0.75,
+      scrollTrigger: {
+        trigger: item,
+        start: "top 70%",
+        end: "bottom 70%",
+        scrub: 0.75,
+      },
+    },
+    "-=0.75",
+  );
+});
