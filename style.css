@@ -16,7 +16,6 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   background-color: #fff;
-  /* font-family: "Montserrat", "Pretendard", sans-serif; */
   font-family: "Noto Serif KR", serif;
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
@@ -36,8 +35,8 @@ img {
   position: relative;
   width: 100vw;
   width: 100dvw;
-  height: 600vh;
-  height: 600dvh;
+  height: 500vh;
+  height: 500dvh;
 }
 .section {
   height: 100vh;
@@ -145,36 +144,42 @@ section.intro {
 /* --- [Section] Profile Style -------------------------------------------- */
 section.profile {
   position: relative;
-  height: 200vh;
-  height: 200dvh;
+  height: 100vh;
+  height: 100dvh;
+  font-size: 1.2rem;
+  line-height: 1.85;
 }
 .profile-frame {
   width: 100%;
   height: 100%;
-  /* background-color: rgba(0, 0, 0, 0.05); */
+  outline: 1px solid blue;
+  outline-offset: -2px;
 }
 .profile-frame > div {
   position: absolute;
   left: 20%;
-  width: 50%;
-}
-.profile__message {
-  top: 15%;
-  height: 15%;
-  font-size: 1.75rem;
-  line-height: 1.75;
-}
-.profile__picture {
-  height: 17%;
-  top: 40%;
 }
 .profile__name {
-  height: 10%;
-  top: 60%;
+  top: 10%;
+}
+.profile__job {
+  font-size: 1.2rem;
+}
+.profile__name {
+  font-size: 1.6rem;
+}
+.profile__portrait {
+  top: 25%;
 }
 .profile__info {
-  height: 10%;
-  top: 75%;
+  top: 55%;
+}
+.profile__portrait svg {
+  overflow: visible;
+}
+.profile__message {
+  top: 70%;
+  font-size: 1.5rem;
 }
 
 /* 애프터 속성 : 지울 것  */

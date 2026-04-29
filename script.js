@@ -76,7 +76,7 @@ ScrollTrigger.create({
  * [프로필 섹션] 애니메이션 타임라인
  * 1. 프로필 섹션의 축 포인트 애니메이션 타임라인
  * 2. axisPointTimeline 포인트 이동 범위 제한
- * 3.
+ * 3. Profile 섹션의 각 아이템 나타나는 애니메이션
  * 4.
  * ---------------------------------------------------------
  */
@@ -88,7 +88,6 @@ const axisPointTimeline = gsap.timeline({
     start: "top 55%",
     end: "bottom 55%",
     scrub: 0.85,
-    // markers: true,
   },
 });
 
@@ -109,7 +108,7 @@ axisPointTimeline.fromTo(
   },
 );
 
-// 3.
+// 3. Profile 섹션의 각 아이템 애니메이션 (오른쪽에서 왼쪽 진입)
 const profileItems = document.querySelectorAll(".profile__item");
 
 profileItems.forEach((item) => {
@@ -119,14 +118,61 @@ profileItems.forEach((item) => {
     {
       opacity: 1,
       x: 0,
-      duration: 0.75,
+      duration: 0.85,
       scrollTrigger: {
         trigger: item,
         start: "top 70%",
         end: "bottom 70%",
-        scrub: 0.75,
+        scrub: 0.85,
       },
     },
     "-=0.75",
   );
 });
+
+const profileItemTimeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: "section.profile",
+    start: "25% 80%",
+    end: "center 50%",
+    scrub: 0.75,
+    toggleActions: "play none none reverse",
+  },
+});
+
+profileItemTimeline
+  .from("#face", {
+    x: 250,
+    y: 100,
+    transformOrigin: "center center",
+  })
+  .from("#hat", {
+    rotate: -540,
+    transformOrigin: "center center",
+  })
+  .from("#eye", {
+    x: -150,
+  })
+  .from("#mouth", {
+    y: 100,
+    rotate: -25,
+  })
+  .from("#mouthLine", {
+    x: -100,
+    y: 20,
+  })
+  .from("#nose", {
+    y: -10,
+    rotate: -90,
+  });
+/*
+
+
+#
+#
+#
+#
+
+
+
+*/
