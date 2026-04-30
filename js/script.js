@@ -142,19 +142,19 @@ const profileItemTimeline = gsap.timeline({
 
 profileItemTimeline
   .from("#face", {
-    x: 250,
+    x: 350,
     y: 100,
-    transformOrigin: "center center",
   })
   .from("#hat", {
-    rotate: -540,
+    rotate: -360,
     transformOrigin: "center center",
   })
   .from("#eye", {
     x: -150,
   })
   .from("#mouth", {
-    y: 100,
+    x: 100,
+    y: 50,
     rotate: -25,
   })
   .from("#mouthLine", {

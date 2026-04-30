@@ -21,7 +21,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=block"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
@@ -37,7 +37,7 @@
           </div>
           <div class="intro__txt">C<span>O</span>NNECT</div>
           <img
-            src="img/arrow-down.svg"
+            src="assets/img/arrow-down.svg"
             class="intro__arrow"
             alt="인트로 더보기 화살표"
           />
@@ -64,16 +64,17 @@
                   y="34"
                   width="80"
                   height="95"
-                  fill="black"
-                  fill-opacity="0.1"
+                  fill="#cccccc"
+                  filter="url(#noise)"
                   stroke="black"
                 />
                 <path
                   id="hat"
                   d="M51.5291 11.4352C65.8236 8.1351 79.1873 6.89191 89.2451 7.55966C94.2705 7.89331 98.4999 8.70587 101.614 9.9969C104.715 11.2821 106.818 13.0901 107.37 15.4775C107.921 17.8648 106.822 20.4121 104.599 22.9263C102.366 25.4519 98.9209 28.0363 94.5503 30.5392C85.8032 35.5484 73.2469 40.2893 58.9525 43.5894C44.6581 46.8896 31.2944 48.1328 21.2366 47.465C16.2112 47.1314 11.9817 46.3188 8.8674 45.0278C5.76716 43.7425 3.66319 41.9345 3.11203 39.5472C2.56088 37.1599 3.65934 34.6126 5.8824 32.0983C8.11561 29.5727 11.5608 26.9884 15.9313 24.4855C24.6785 19.4763 37.2347 14.7354 51.5291 11.4352Z"
-                  fill="black"
-                  fill-opacity="0.55"
+                  filter="url(#feltTexture)"
+                  fill="#111111"
                   stroke="black"
+                  stroke-width="0.5"
                 />
                 <circle
                   id="eye"
@@ -106,13 +107,14 @@
                 />
                 <rect
                   id="nose"
-                  x="45.7408"
-                  y="52.0123"
+                  x="40"
+                  y="56"
                   width="18"
                   height="40"
                   fill="white"
                   fill-opacity="0.75"
                   stroke="black"
+                  transform="rotate(-10)"
                 />
               </svg>
             </div>
@@ -130,7 +132,35 @@
           </div>
         </section>
 
-        <section class="section skills"></section>
+        <section class="section skills">
+          <div class="skills__list">
+            <div class="skills__item skills__html">
+              <h3 class="skills__title">HTML</h3>
+              <span class="skills__arrow">&rarr;</span>
+              <p class="skills__desc">
+                반응형 웹 설계<br />
+                W3C 웹 표준 준수 크로스 브라우징 최적화
+              </p>
+            </div>
+            <div class="skills__item skills__css">
+              <h3 class="skills__title">CSS</h3>
+              <span class="skills__arrow">&rarr;</span>
+              <p class="skills__desc">
+                반응형 레이아웃<br />
+                크로스 브라우징 최적화<br />
+                CSS 애니메이션 및 트랜지션
+              </p>
+            </div>
+            <div class="skills__item skills__javascript">
+              <h3 class="skills__title">Javascript</h3>
+              <span class="skills__arrow">&rarr;</span>
+              <p class="skills__desc">
+                ES6+ 문법 및 모듈화<br />
+                DOM 조작 및 이벤트 제어
+              </p>
+            </div>
+          </div>
+        </section>
         <section class="section works"></section>
         <section class="section outro"></section>
       </div>
