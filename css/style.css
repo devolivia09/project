@@ -193,6 +193,10 @@ section.skills {
   list-style: none;
   text-align: center;
 }
+.skills__item {
+  color: #000000;
+  font-weight: 500;
+}
 .skills__item:not(:first-child) {
   margin-top: 1.85rem;
 }
@@ -205,7 +209,10 @@ section.skills {
   left: 0;
   bottom: 0;
   font-size: 1.15rem;
-  transform: translate(130%, 20%) rotate(-35deg);
+  transform: translate(150%, 20%) rotate(-35deg);
+}
+.javascript-lang {
+  font-size: 0.95rem;
 }
 .skills__desc {
   list-style: none;

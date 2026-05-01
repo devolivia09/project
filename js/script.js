@@ -176,18 +176,29 @@ faceTimeline
  * ---------------------------------------------------------
  */
 
-const skillsList = gsap.utils.toArray(".skills__item");
+// 1. 기술 섹션의 아이템 애니메이션 함수
+const listItems = document.querySelectorAll(
+  ".skills__arrow, .skills__title, .skills__desc li",
+);
 
-skillsList.forEach((listItem) => {
-  const arrowItem = listItem.querySelector(".skills__arrow");
-  const titleItem = listItem.querySelector(".skills__title");
-  const descItem = listItem.querySelector(".skills__desc");
-  console.log(descItem);
+listItems.forEach((item) => {
+  const skillsTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: item,
+      start: "top 80%",
+      end: "bottom 60%",
+      scrub: 1,
+    },
+    duration: 1.5,
+    ease: "power2.out",
+  });
+
+  skillsTimeline.from(
+    item,
+    {
+      color: "#bbb",
+      stagger: 0.3,
+    },
+    "+=1",
+  );
 });
-
-/*
-
-
-
-
-*/
