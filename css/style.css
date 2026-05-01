@@ -152,10 +152,8 @@ section.profile {
 .profile-frame {
   width: 100%;
   height: 100%;
-  outline: 1px solid blue;
-  outline-offset: -2px;
 }
-.profile-frame > div {
+.profile__item {
   position: absolute;
   left: 20%;
 }
@@ -182,22 +180,36 @@ section.profile {
   font-size: 1.5rem;
 }
 
-/* 애프터 속성 : 지울 것  */
-
-/* .profile-frame > div::after {
-*/
-/* .section {{
-  position: absolute;
-  top: 0;
-  left: 0%;
-  width: 100%;
-  height: 1px;
-  background-color: rgba(255, 0, 0, 0.5);
-} */
-
 /* --- [Section] Skills Style -------------------------------------------- */
 section.skills {
-  background-color: rgba(195, 39, 39, 0.1);
+  position: relative;
+  line-height: 2.8;
 }
+.skills__list {
+  position: absolute;
+  top: 8%;
+  left: 20%;
+  width: 60%;
+  list-style: none;
+  text-align: center;
+}
+.skills__item:not(:first-child) {
+  margin-top: 1.85rem;
+}
+.skills__title {
+  position: relative;
+  font-size: 1.5rem;
+}
+.skills__arrow {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 1.15rem;
+  transform: translate(130%, 20%) rotate(-35deg);
+}
+.skills__desc {
+  list-style: none;
+}
+
 /* --- [Section] Works Style -------------------------------------------- */
 /* --- [Section] Outro Style -------------------------------------------- */

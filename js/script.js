@@ -77,7 +77,7 @@ ScrollTrigger.create({
  * 1. 프로필 섹션의 축 포인트 애니메이션 타임라인
  * 2. axisPointTimeline 포인트 이동 범위 제한
  * 3. Profile 섹션의 각 아이템 나타나는 애니메이션
- * 4.
+ * 4. 얼굴의 각 요소 애니메이션
  * ---------------------------------------------------------
  */
 
@@ -114,23 +114,24 @@ const profileItems = document.querySelectorAll(".profile__item");
 profileItems.forEach((item) => {
   gsap.fromTo(
     item,
-    { opacity: 0, x: 30 },
+    { opacity: 0, x: 60 },
     {
       opacity: 1,
       x: 0,
-      duration: 0.85,
+      duration: 1,
       scrollTrigger: {
         trigger: item,
         start: "top 70%",
         end: "bottom 70%",
-        scrub: 0.85,
+        scrub: 1,
       },
     },
-    "-=0.75",
+    "-=0.85",
   );
 });
 
-const profileItemTimeline = gsap.timeline({
+// 4. 얼굴의 각 요소 애니메이션
+const faceTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: "section.profile",
     start: "25% 80%",
@@ -140,7 +141,7 @@ const profileItemTimeline = gsap.timeline({
   },
 });
 
-profileItemTimeline
+faceTimeline
   .from("#face", {
     x: 350,
     y: 100,
@@ -165,13 +166,27 @@ profileItemTimeline
     y: -10,
     rotate: -90,
   });
+
+/* * ---------------------------------------------------------
+ * [기술 섹션] 애니메이션 타임라인
+ * 1. 기술 섹션의 아이템 애니메이션 함수
+ * 2.
+ * 3.
+ * 4.
+ * ---------------------------------------------------------
+ */
+
+const skillsList = gsap.utils.toArray(".skills__item");
+
+skillsList.forEach((listItem) => {
+  const arrowItem = listItem.querySelector(".skills__arrow");
+  const titleItem = listItem.querySelector(".skills__title");
+  const descItem = listItem.querySelector(".skills__desc");
+  console.log(descItem);
+});
+
 /*
 
-
-#
-#
-#
-#
 
 
 
