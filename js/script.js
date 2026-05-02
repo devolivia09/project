@@ -12,8 +12,8 @@ gsap.registerPlugin(ScrollTrigger);
 // 1. introTimeline 정의
 const axisPoint = document.querySelector(".axis-point");
 const introSection = document.querySelector("section.intro");
-const introHeight = introSection.offsetHeight;
-const axisStartPoint = introSection.offsetHeight * 0.5;
+const introHeight = "100dvh";
+const Axis_Start = "50dvh";
 
 const introTimeline = gsap.timeline({
   defaults: {
@@ -24,7 +24,7 @@ const introTimeline = gsap.timeline({
 
 // 2. introTimeline 기본 top값 설정
 introTimeline.set(axisPoint, {
-  top: axisStartPoint,
+  top: Axis_Start,
 });
 
 // 3. introTimeline 애니메이션
@@ -44,19 +44,19 @@ introTimeline
     yPercent: -100,
     width: "14px",
     height: "14px",
-    duration: 1,
   })
   .to(axisPoint, {
     onComplete: () => {
       axisPoint.classList.add("active");
     },
+    duration: 0.5,
   })
   .to(
     ".intro__arrow",
     {
       opacity: 0.65,
     },
-    "+=2.5",
+    "+=2",
   );
 
 // 4. introTimeline 건너뛰기 : 사용자 편의
@@ -69,7 +69,6 @@ ScrollTrigger.create({
       opacity: 0,
     });
   },
-  // once: true,
 });
 
 /* * ---------------------------------------------------------
@@ -196,7 +195,8 @@ listItems.forEach((item) => {
   skillsTimeline.from(
     item,
     {
-      color: "#bbb",
+      y: 10,
+      color: "#ccc",
       stagger: 0.3,
     },
     "+=1",
