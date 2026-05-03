@@ -1,7 +1,8 @@
 gsap.registerPlugin(ScrollTrigger);
 
+//
 /* * ---------------------------------------------------------
- * [인트로 섹션] 애니메이션 타임라인
+ * [ Intro ] 애니메이션 타임라인
  * 1. introTimeline Instance 정의
  * 2. introTimeline 기본 top값 설정
  * 3. introTimeline 애니메이션
@@ -71,43 +72,69 @@ ScrollTrigger.create({
   },
 });
 
-/* * ---------------------------------------------------------
- * [프로필 섹션] 애니메이션 타임라인
- * 1. 프로필 섹션의 축 포인트 애니메이션 타임라인
- * 2. axisPointTimeline 포인트 이동 범위 제한
- * 3. Profile 섹션의 각 아이템 나타나는 애니메이션
- * 4. 얼굴의 각 요소 애니메이션
+/*
+ * ---------------------------------------------------------
+ * [ Axis-Line ] 애니메이션 타임라인
+ *  .intro, .outro 제외한 각 섹션에서의 축 포인트 애니메이션 타임라인
  * ---------------------------------------------------------
  */
 
-// 1. axisPointTimeline Instance 정의
+const sectionArray = gsap.utils.toArray(".profile, .skills, .works");
+
+sectionArray.forEach((section, idx) => {
+  const basic_Height = 100;
+  const startPos = basic_Height * (idx + 1);
+  const endPos = basic_Height + startPos;
+
+  const axisTracker = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top 55%",
+      end: "bottom 55%",
+      scrub: 0.85,
+    },
+  });
+
+  axisTracker.fromTo(
+    axisPoint,
+    {
+      top: `${startPos}dvh`,
+    },
+    {
+      top: `${endPos}dvh`,
+    },
+  );
+});
+
+//
+/* * ---------------------------------------------------------
+ * [ Profile 섹션] 애니메이션 타임라인
+ * 1. 프로필 섹션의 축 포인트 이동 범위 제한
+ * 2. Profile 섹션의 각 아이템 애니메이션 (오른쪽에서 왼쪽 진입)
+ * 3. 얼굴의 각 요소 애니메이션
+ * ---------------------------------------------------------
+ */
+
+// 1. 프로필 섹션의 축 포인트 이동 범위 제한
 const axisPointTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: "section.profile",
-    start: "top 55%",
-    end: "bottom 55%",
+    start: "top bottom",
+    end: "bottom top",
     scrub: 0.85,
   },
 });
 
-// 2. axisPointTimeline 포인트 이동 범위 제한
-axisPointTimeline.fromTo(
-  axisPoint,
-  {
-    top: introHeight,
+axisPointTimeline.to(axisPoint, {
+  onStart: () => {
+    axisPoint.classList.remove("active");
   },
-  {
-    top: "40%",
-    onStart: () => {
-      axisPoint.classList.remove("active");
-    },
-    onReverseComplete: () => {
-      axisPoint.classList.add("active");
-    },
+  onReverseComplete: () => {
+    axisPoint.classList.add("active");
   },
-);
+});
 
-// 3. Profile 섹션의 각 아이템 애니메이션 (오른쪽에서 왼쪽 진입)
+// 2. Profile 섹션의 각 요소 애니메이션 (아이템들이 오른쪽에서 왼쪽으로 진입)
 const profileItems = document.querySelectorAll(".profile__item");
 
 profileItems.forEach((item) => {
@@ -129,7 +156,7 @@ profileItems.forEach((item) => {
   );
 });
 
-// 4. 얼굴의 각 요소 애니메이션
+// 3. 얼굴의 각 요소 애니메이션
 const faceTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: "section.profile",
@@ -166,16 +193,17 @@ faceTimeline
     rotate: -90,
   });
 
+//
 /* * ---------------------------------------------------------
- * [기술 섹션] 애니메이션 타임라인
- * 1. 기술 섹션의 아이템 애니메이션 함수
+ * [ Skills ] 애니메이션 타임라인
+ * 1. 기술 섹션의 요소들(언어) 애니메이션 함수
  * 2.
  * 3.
  * 4.
  * ---------------------------------------------------------
  */
 
-// 1. 기술 섹션의 아이템 애니메이션 함수
+// 1. 기술 섹션의 요소들(언어) 애니메이션 함수
 const listItems = document.querySelectorAll(
   ".skills__arrow, .skills__title, .skills__desc li",
 );
@@ -202,3 +230,20 @@ listItems.forEach((item) => {
     "+=1",
   );
 });
+
+//
+/* * ---------------------------------------------------------
+ * [ Works ] 섹션 애니메이션
+ * 주요 프로젝트(Works) 리스트 및 스크롤 인터랙션 제어
+ * ---------------------------------------------------------
+ */
+
+//
+/* * ---------------------------------------------------------
+ * [ Outro ] 애니메이션 타임라인
+ * 1. 기술 섹션의 요소들(언어) 애니메이션 함수
+ * 2.
+ * 3.
+ * 4.
+ * ---------------------------------------------------------
+ */
