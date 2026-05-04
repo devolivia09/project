@@ -234,25 +234,26 @@ listItems.forEach((item) => {
 //
 /* * ---------------------------------------------------------
  * [ Works ] 섹션 애니메이션
- * 1. Works 섹션의 주요 프로젝트(Works) 리스트 및 스크롤 인터랙션 제어
+ * 1. 주 요소의 스크롤 인터랙션 제어
  * 2.
  * 3.
  * 4.
  * ---------------------------------------------------------
  */
-const timeline = gsap.timeline(".works", {
+const timeline = gsap.timeline({
   scrollTrigger: {
     trigger: ".works",
     start: "top center",
     end: "end center",
-    scub: 0.85,
+    scrub: 0.85,
+    ease: "power2.out",
   },
 });
 
 timeline.to(".works", {
-  backgroundColor: "#000",
-  duration: 1,
-  ease: "power2.out",
+  // backgroundColor: "#000000",
+  // duration: 5, // 1.5초 동안 천천히 변화
+  // ease: "power2.inOut", // 가속도(Ease)를 주어 자연스럽게
 });
 
 //
