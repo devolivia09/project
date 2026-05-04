@@ -1,6 +1,6 @@
-+ Portfolio Project <br>
+## Portfolio Project ##<br>
 <br>
-⚪ 연결<br>
+### 연결 ### <br>
 미니멀리즘과 인터랙션, 사용자와 요소들<br>
 <br>
 <br>
