@@ -197,9 +197,6 @@ faceTimeline
 /* * ---------------------------------------------------------
  * [ Skills ] 애니메이션 타임라인
  * 1. 기술 섹션의 요소들(언어) 애니메이션 함수
- * 2.
- * 3.
- * 4.
  * ---------------------------------------------------------
  */
 
@@ -231,29 +228,39 @@ listItems.forEach((item) => {
   );
 });
 
-//
-/* * ---------------------------------------------------------
+/*
+ ---------------------------------------------------------
  * [ Works ] 섹션 애니메이션
- * 1. 주 요소의 스크롤 인터랙션 제어
- * 2.
- * 3.
- * 4.
- * ---------------------------------------------------------
+ * 1. item 요소들의 스크롤 인터랙션 제어
+ ---------------------------------------------------------
  */
-const timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".works",
-    start: "top center",
-    end: "end center",
-    scrub: 0.85,
-    ease: "power2.out",
-  },
-});
 
-timeline.to(".works", {
-  // backgroundColor: "#000000",
-  // duration: 5, // 1.5초 동안 천천히 변화
-  // ease: "power2.inOut", // 가속도(Ease)를 주어 자연스럽게
+const worksItems = gsap.utils.toArray(".works__item");
+
+worksItems.forEach((item) => {
+  const targetImg = item.querySelector(".works__thumbnail img");
+  const targetTxt = item.querySelector(".works-desc");
+  const worksTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: item,
+      start: "top 85%",
+      end: "bottom 40%",
+      scrub: 1.2,
+    },
+    ease: "slow(0.7,0.7,false)",
+  });
+
+  worksTimeline
+    .to(targetImg, {
+      opacity: 1,
+    })
+    .to(
+      targetTxt,
+      {
+        color: "#000",
+      },
+      "<",
+    );
 });
 
 //
