@@ -7,7 +7,19 @@ gsap.registerPlugin(ScrollTrigger);
  * ---------------------------------------------------------
  */
 const axisPoint = document.querySelector(".axis-point");
-const sectionArray = gsap.utils.toArray(".profile, .skills, .works");
+const section = {
+  intro: document.querySelector(".intro"),
+  profile: document.querySelector(".profile"),
+  skills: document.querySelector(".skills"),
+  works: document.querySelector(".works"),
+  outro: document.querySelector(".outro"),
+};
+const sectionArray = gsap.utils.toArray(
+  section.profile,
+  section.skills,
+  section.works,
+);
+
 const basic_Height = 100;
 
 sectionArray.forEach((section, idx) => {
@@ -32,6 +44,52 @@ sectionArray.forEach((section, idx) => {
       top: `${endPos}dvh`,
     },
   );
+});
+
+/*
+ * ---------------------------------------------------------
+ * [ Pulse Effect ] Pulse 애니메이션 관련
+ * 1. Profile 섹션 진입 시, 축 포인트 클래스명 제거
+ * 2. Outro 섹션 진입 시, 축 포인트 클래스명 추가
+ * ---------------------------------------------------------
+ */
+
+// 1.  Profile 섹션 진입 시, 축 포인트 클래스명 제거
+const clearPulseTimeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: section.profile,
+    start: "top bottom",
+    end: "bottom top",
+    scrub: 0.85,
+  },
+});
+
+clearPulseTimeline.to(axisPoint, {
+  onStart: () => {
+    axisPoint.classList.remove("active");
+  },
+  onReverseComplete: () => {
+    axisPoint.classList.add("active");
+  },
+});
+
+// 2. Outro 섹션 진입 시, 축 포인트 클래스명 추가
+const applyPulseTimeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: section.outro,
+    start: "top bottom",
+    end: "bottom top",
+    scrub: 0.85,
+  },
+});
+
+applyPulseTimeline.to(axisPoint, {
+  onStart: () => {
+    axisPoint.classList.add("active");
+  },
+  onReverseComplete: () => {
+    axisPoint.classList.remove("active");
+  },
 });
 
 //
@@ -68,8 +126,8 @@ introTimeline
     rotate: 90,
   })
   .to(axisPoint, {
-    width: "17px",
-    height: "17px",
+    width: "15px",
+    height: "15px",
     opacity: 1,
     duration: 0.5,
     ease: "back.out(1.7)",
@@ -77,8 +135,8 @@ introTimeline
   .to(axisPoint, {
     top: introHeight,
     yPercent: -100,
-    width: "14px",
-    height: "14px",
+    width: "13px",
+    height: "13px",
   })
   .to(axisPoint, {
     onComplete: () => {
@@ -109,32 +167,12 @@ ScrollTrigger.create({
 //
 /* * ---------------------------------------------------------
  * [ Profile 섹션] 애니메이션 타임라인
- * 1. Profile 섹션의 축 포인트 이동 범위 제한
- * 2. Profile 섹션의 각 아이템 애니메이션 (오른쪽에서 왼쪽 진입)
- * 3. 얼굴의 각 요소 애니메이션
+ * 1. Profile 섹션의 각 아이템 애니메이션 (오른쪽에서 왼쪽 진입)
+ * 2. 얼굴의 각 요소 애니메이션
  * ---------------------------------------------------------
  */
 
-// 1. 프로필 섹션의 축 포인트 이동 범위 제한
-const axisPointTimeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: "section.profile",
-    start: "top bottom",
-    end: "bottom top",
-    scrub: 0.85,
-  },
-});
-
-axisPointTimeline.to(axisPoint, {
-  onStart: () => {
-    axisPoint.classList.remove("active");
-  },
-  onReverseComplete: () => {
-    axisPoint.classList.add("active");
-  },
-});
-
-// 2. Profile 섹션의 각 요소 애니메이션 (아이템들이 오른쪽에서 왼쪽으로 진입)
+// 1. Profile 섹션의 각 요소 애니메이션 (아이템들이 오른쪽에서 왼쪽으로 진입)
 const profileItems = document.querySelectorAll(".profile__item");
 
 profileItems.forEach((item) => {
@@ -156,7 +194,7 @@ profileItems.forEach((item) => {
   );
 });
 
-// 3. 얼굴의 각 요소 애니메이션
+// 2. 얼굴의 각 요소 애니메이션
 const faceTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: "section.profile",
@@ -201,7 +239,7 @@ faceTimeline
  */
 
 // 1. 기술 섹션의 요소들(언어) 애니메이션 함수
-const listItems = document.querySelectorAll(
+const listItems = section.skills.querySelectorAll(
   ".skills__arrow, .skills__title, .skills__desc li",
 );
 

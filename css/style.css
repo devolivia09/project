@@ -47,7 +47,7 @@ img {
   position: absolute;
   top: 0;
   left: 16%;
-  width: 1.5px;
+  width: 0.1rem;
   height: 100%;
   background-color: #222;
 }
@@ -60,7 +60,8 @@ img {
   background-color: #000;
   border-radius: 50%;
   opacity: 0;
-  translate: -50% -50%;
+  /* translate: -50% -50%; */
+  transform: translate(-50%, -50%);
   transform-origin: center;
 }
 .axis-point.active {
@@ -226,7 +227,7 @@ section.profile {
   justify-content: space-between;
 }
 .works__item:not(:first-child) {
-  margin-top: 5rem;
+  margin-top: 6rem;
 }
 .works__thumbnail {
   width: clamp(5.5rem, 30%, 8rem);
