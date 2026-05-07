@@ -311,6 +311,8 @@ worksItems.forEach((item) => {
  */
 
 const outroTitle = section.outro.querySelector(".outro__title");
+const outroSubTitle = section.outro.querySelector(".outro__subtitle");
+const outroCursor = section.outro.querySelector(".outro__cursor");
 
 const outroTimeline = gsap.timeline({
   scrollTrigger: {
@@ -318,18 +320,50 @@ const outroTimeline = gsap.timeline({
     start: "top 65%",
     end: "bottom 35%",
     toggleActions: "play none none reverse",
-    // scrub: 0.75,
     markers: true,
   },
   ease: "none",
 });
 
+outroTimeline.set([outroTitle, outroSubTitle], {
+  text: "",
+});
+outroTimeline.set([outroCursor], {
+  autoAlpha: 0,
+});
+
 outroTimeline
-  .set(outroTitle, {
-    text: "",
-    duration: 0,
+  .to(outroCursor, {
+    autoAlpha: 1,
+    repeat: 10,
+    duration: 0.4,
+    yoyo: true,
+    ease: "steps(1)",
   })
-  .to(outroTitle, {
-    text: "End?",
-    duration: 1.25,
+  .to(
+    outroTitle,
+    {
+      text: "End?",
+      duration: 0.8,
+      autoAlpha: 1,
+    },
+    "+=0.08",
+  )
+  .to(
+    outroTitle,
+    {
+      text: {
+        value: "",
+        rtl: true,
+      },
+      duration: 1.25,
+    },
+    "+=1.25",
+  )
+  .to(outroCursor, {
+    autoAlpha: 1,
+    repeat: 6,
+    duration: 0.4,
+    yoyo: true,
+    ease: "steps(1)",
   });

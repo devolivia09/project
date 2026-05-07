@@ -282,31 +282,29 @@ section.outro::after {
   left: 24%;
   width: 60%;
   line-height: 1.75;
-
-  /* outline: 1px solid pink;
-  outline-offset: -2px; */
-}
-.outro__message * {
-  display: inline-block;
 }
 .outro__message {
   display: flex;
   align-items: center;
-  min-height: 1.6rem;
+  padding: 0;
+  line-height: 1;
+  min-height: 1.5rem;
 }
 .outro__title {
-  font-weight: 500;
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 2.15rem;
 }
 .outro__subtitle {
-  font-weight: 500;
-  font-size: 1.65rem;
+  margin-top: 1.75rem;
+  font-weight: 600;
+  font-size: 1.75rem;
 }
-.outro_cursor {
+.outro__cursor {
   width: 2px;
-  height: 1.35rem;
+  height: 1.75rem;
   background-color: #000;
+  margin-left: 4px;
+  vertical-align: super;
 }
 .outro__menu {
   display: grid;
@@ -318,6 +316,4 @@ section.outro::after {
   font-size: 1.2rem;
   line-height: 2.8;
   font-weight: 600;
-  /* outline: 1px solid pink;
-  outline-offset: -2px; */
 }
