@@ -1,4 +1,5 @@
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(TextPlugin);
 
 /*
  * ---------------------------------------------------------
@@ -14,11 +15,7 @@ const section = {
   works: document.querySelector(".works"),
   outro: document.querySelector(".outro"),
 };
-const sectionArray = gsap.utils.toArray(
-  section.profile,
-  section.skills,
-  section.works,
-);
+const sectionArray = Object.values(section).slice(1, 5);
 
 const basic_Height = 100;
 
@@ -29,9 +26,10 @@ sectionArray.forEach((section, idx) => {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
       trigger: section,
-      start: "top 60%",
-      end: "bottom 60%",
-      scrub: 0.35,
+      start: "top center",
+      end: "bottom 55%",
+      scrub: 0.5,
+      ease: "none",
     },
   });
 
@@ -281,11 +279,12 @@ worksItems.forEach((item) => {
   const worksTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: item,
-      start: "top 85%",
-      end: "bottom 40%",
-      scrub: 1.2,
+      start: "top 90%",
+      end: "bottom 45%",
+      scrub: 1,
     },
     ease: "slow(0.7,0.7,false)",
+    duration: 1.25,
   });
 
   worksTimeline
@@ -310,3 +309,27 @@ worksItems.forEach((item) => {
  * 4.
  * ---------------------------------------------------------
  */
+
+const outroTitle = section.outro.querySelector(".outro__title");
+
+const outroTimeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: section.outro,
+    start: "top 65%",
+    end: "bottom 35%",
+    toggleActions: "play none none reverse",
+    // scrub: 0.75,
+    markers: true,
+  },
+  ease: "none",
+});
+
+outroTimeline
+  .set(outroTitle, {
+    text: "",
+    duration: 0,
+  })
+  .to(outroTitle, {
+    text: "End?",
+    duration: 1.25,
+  });
