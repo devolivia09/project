@@ -290,12 +290,14 @@ section.outro::after {
   line-height: 1;
   min-height: 1.5rem;
 }
+.outro__message--sub{
+  margin-top: 2rem;
+}
 .outro__title {
   font-weight: 600;
   font-size: 2.15rem;
 }
-.outro__subtitle {
-  margin-top: 1.75rem;
+.outro__subtitle {  
   font-weight: 600;
   font-size: 1.75rem;
 }
