@@ -326,49 +326,52 @@ const outroTimeline = gsap.timeline({
   ease: "none",
 });
 
-outroTimeline.set([outroTitle, outroSubTitle], {
-  text: "",
-});
-outroTimeline.set([outroCursor], {
-  autoAlpha: 0,
-});
-
-outroTimeline
-/// 1. 커서 깜빡임
-  .to(outroCursor, {
+const cursorBlink = (count) => ({
     autoAlpha: 1,
-    repeat: 4,
+    repeat: count,
     duration: 0.4,
     yoyo: true,
     ease: "steps(1)",    
-  })
+});
 
-/// 2. 커서 깜빡임 멈춤, End 타이핑
+outroTimeline.set([outroTitle, outroSubTitle], {
+  text: "",
+});
+outroTimeline.set(outroCursor, {
+  autoAlpha: 0,
+});
+
+
+// Outro 섹션 글자 애니메이션 
+outroTimeline
+  /// 1. 커서 깜빡임
+  .to(outroCursor, cursorBlink(4))
+  
+  /// 2. 커서 멈춤, End 타이핑
+  .set(outroCursor, {autoAlpha: 1})
   .to(
-    outroTitle,
-    {
-      onStart: () => {
-        gsap.set(outroCursor, {autoAlpha: 1})
-      },
+    outroTitle,{    
       text: "End?",
       duration: 0.65,
       autoAlpha: 1,
     },"+=0.25"
   )
-
-/// 3. 커서 깜빡임
-  .to(outroCursor, {
+  
+  /// 3. 커서 깜빡임
+  .set(outroCursor, {
     autoAlpha: 0,    
   })
-  .to(outroCursor, {    
-    autoAlpha: 1,
-    repeat: 2,
-    duration: 0.4,
-    yoyo: true,
-    ease: "steps(1)",    
-  })
-
-/// 4. 글자 지우기
+  .to(outroCursor, cursorBlink(2))
+  // .to(outroCursor, {
+  //   autoAlpha: 1,
+  //   repeat: 4,
+  //   duration: 0.4,
+  //   yoyo: true,
+  //   ease: "steps(1)",    
+  // })
+  // .to(outroCursor, cursorBlink(4))
+  
+  /// 4. 글자 지우기
   .to(
     outroTitle,
     {
@@ -381,8 +384,8 @@ outroTimeline
     "+=0.15",
   ) 
   
- /// 5. 다시 커서 깜빡임
-  .to(outroCursor, {
+  /// 5. 다시 커서 깜빡임
+  .set(outroCursor, {
     autoAlpha: 0,    
   })
   .to(outroCursor, {    
@@ -395,7 +398,7 @@ outroTimeline
 
 
   /// 6. And 타이핑
-  .to(outroCursor, {
+  .set(outroCursor, {
     autoAlpha: 1,    
   })
   .to(
@@ -422,23 +425,22 @@ outroTimeline
       },
   },"<")
 
-
   /// 8. To be... 타이핑
   .to(
-  outroSubTitle,
-  {      
-    text: "To be continued",
-    duration: 0.95,
-    autoAlpha: 1,    
-  },
-  "+=0.1",
+    outroSubTitle,
+      {      
+        text: "To be continued",
+        duration: 0.95,
+        autoAlpha: 1,    
+      },
+    "+=0.1",
   )
 
   /// 9. 커서 사라짐
-   .to(outroCursor, {
+  .set(outroCursor, {
     autoAlpha: 0,    
   })
-   .to(outroCursor, {
+  .to(outroCursor, {
     autoAlpha: 1,
     repeat: 2,
     duration: 0.4,
