@@ -1,12 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(TextPlugin);
 
-/*
- * ---------------------------------------------------------
- * [ Axis-Line ] 애니메이션 타임라인
- * 각 섹션(intro, .outro 제외)에서의 축 포인트 애니메이션 타임라인
- * ---------------------------------------------------------
- */
 const axisPoint = document.querySelector(".axis-point");
 const section = {
   intro: document.querySelector(".intro"),
@@ -15,7 +9,14 @@ const section = {
   works: document.querySelector(".works"),
   outro: document.querySelector(".outro"),
 };
-const sectionArray = Object.values(section).slice(1, 5);
+const sectionArray = Object.values(section).slice(1, 4);
+
+/*
+ * ---------------------------------------------------------
+ * [ Axis-Line ] 애니메이션 타임라인
+ * 각 섹션(intro, .outro 제외)에서의 축 포인트 애니메이션 타임라인
+ * ---------------------------------------------------------
+ */
 
 const basic_Height = 100;
 
