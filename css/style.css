@@ -278,8 +278,8 @@ section.outro::after {
 }
 .outro__wrapper {
   position: absolute;
-  top: 20%;
-  left: 24%;
+  top: 25%;
+  left: 26%;
   width: 60%;
   line-height: 1.75;
 }
@@ -291,7 +291,7 @@ section.outro::after {
   min-height: 1.5rem;
 }
 .outro__message--sub {
-  margin-top: 2rem;
+  margin-top: 2.2rem;
 }
 .outro__title {
   font-weight: 600;
@@ -312,11 +312,19 @@ section.outro::after {
 .outro__menu {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 3rem;
+  grid-gap: 2.75rem;
   position: absolute;
-  top: 55%;
-  left: 24%;
+  top: 58%;
+  left: 30%;
   font-size: 1.2rem;
-  line-height: 2.8;
+  line-height: 2;
   font-weight: 600;
+}
+.outro__menu li {
+  transform: translateX(-1.2rem);
+  opacity: 0;
+}
+.outro__menu li a {
+  padding-bottom: 2px;
+  letter-spacing: 0.85px;
 }

@@ -270,7 +270,6 @@ listItems.forEach((item) => {
  * 1. item 요소들의 스크롤 인터랙션 제어
  ---------------------------------------------------------
  */
-
 const worksItems = gsap.utils.toArray(".works__item");
 
 worksItems.forEach((item) => {
@@ -303,10 +302,9 @@ worksItems.forEach((item) => {
 //
 /* * ---------------------------------------------------------
  * [ Outro ] 애니메이션 타임라인
- * 1.
- * 2.
- * 3.
- * 4.
+ * 1. 함수 정의 : 커서 숨김 & 깜빡임 효과
+ * 2. Outro 섹션 클로징 타이핑 애니메이션
+ * 3. Outro 섹션의 메뉴 마우스 이벤트 설정
  * ---------------------------------------------------------
  */
 
@@ -314,6 +312,8 @@ const outroTitle = section.outro.querySelector(".outro__title");
 const outroSubTitle = section.outro.querySelector(".outro__subtitle");
 const outroMessageSub = section.outro.querySelector(".outro__message--sub");
 const outroCursor = section.outro.querySelector(".outro__cursor");
+const outroLists = section.outro.querySelectorAll(".outro__menu li");
+const outroLinks = section.outro.querySelectorAll(".outro__menu li a");
 
 const outroTimeline = gsap.timeline({
   scrollTrigger: {
@@ -321,12 +321,11 @@ const outroTimeline = gsap.timeline({
     start: "top 65%",
     end: "bottom 35%",
     toggleActions: "play none none reverse",
-    markers: true,
   },
   ease: "none",
 });
 
-// 함수 : 커서 숨김 후에 깜빡임 효과
+// 1. 함수 정의 : 커서 숨김 & 깜빡임 효과
 const cursorBlink = (target, count, showAtEnd = true) => {
   const timelilne = gsap.timeline();
 
@@ -345,31 +344,29 @@ const cursorBlink = (target, count, showAtEnd = true) => {
   return timelilne;
 };
 
+// 2. Outro 섹션 클로징 타이핑 애니메이션
 outroTimeline.set([outroTitle, outroSubTitle], {
   text: "",
   autoAlpha: 0,
 });
 
-// Outro 섹션 글자 애니메이션
 outroTimeline
-  /// 1. 커서 깜빡임 & End 타이핑
+  /// 2-1. 커서 깜빡임 & End 타이핑
   .add(cursorBlink(outroCursor, 4))
   .set(outroCursor, { autoAlpha: 1 })
-
   .to(
     outroTitle,
     {
       text: "End?",
-      duration: 0.65,
+      duration: 0.55,
       autoAlpha: 1,
     },
     "+=0.25",
   )
 
-  /// 2. 커서 깜빡임 & End 지우기
+  /// 2-2. 커서 깜빡임 & End 지우기
   .add(cursorBlink(outroCursor, 2))
   .set(outroCursor, { autoAlpha: 1 })
-
   .to(
     outroTitle,
     {
@@ -377,24 +374,22 @@ outroTimeline
         value: "",
         rtl: true,
       },
-      duration: 1.2,
+      duration: 1,
     },
-    "+=0.15",
+    "+=0.1",
   )
 
-  /// 3. 커서 깜빡임 & And 타이핑
+  /// 2-3. 커서 깜빡임 & And 타이핑
   .add(cursorBlink(outroCursor, 1))
   .set(outroCursor, { autoAlpha: 1 })
-
   .to(outroTitle, {
     text: "And",
     duration: 0.4,
     autoAlpha: 1,
   })
 
-  /// 4. 커서 깜빡임 & 커서 다음 줄 이동
+  ///2-4. 커서 깜빡임 & 커서 다음 줄 이동
   .add(cursorBlink(outroCursor, 2))
-
   .to(
     outroCursor,
     {
@@ -406,17 +401,34 @@ outroTimeline
     "<",
   )
 
-  /// 5. To be... 타이핑
-  .to(
-    outroSubTitle,
-    {
-      text: "To be continued",
-      duration: 0.95,
-      autoAlpha: 1,
-    },
-    "+=0.1",
-  )
-
-  /// 6. 커서 사라짐
+  /// 2-5. To be continued 타이핑 & 커서 깜박임 후 사라짐
+  .to(outroSubTitle, {
+    text: "To be continued",
+    duration: 0.95,
+    autoAlpha: 1,
+  })
   .add(cursorBlink(outroCursor, 3))
-  .set(outroCursor, { autoAlpha: 0 });
+  .set(outroCursor, { autoAlpha: 0 })
+
+  // 2-6. 메뉴 나타남
+  .to(
+    outroLists,
+    { x: 0, duration: 1.2, opacity: 1, stagger: 0.3, ease: "back.out(1.7)" },
+    "+=0.35",
+  );
+
+// 3. Outro 섹션의 메뉴 마우스 이벤트 설정
+outroLinks.forEach((link) => {
+  link.addEventListener("mouseenter", () => {
+    gsap.to(link, {
+      borderBottom: "1px solid black",
+      duration: 0.5,
+    });
+  });
+  link.addEventListener("mouseleave", () => {
+    gsap.to(link, {
+      borderBottom: "1px solid #fff",
+      duration: 0.5,
+    });
+  });
+});
