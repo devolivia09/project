@@ -326,52 +326,50 @@ const outroTimeline = gsap.timeline({
   ease: "none",
 });
 
-const cursorBlink = (count) => ({
-    autoAlpha: 1,
-    repeat: count,
-    duration: 0.4,
-    yoyo: true,
-    ease: "steps(1)",    
-});
+// 함수 : 커서 숨김 후에 깜빡임 효과
+const cursorBlink = (target, count, showAtEnd = true) => {
+  const timelilne = gsap.timeline();
+
+  timelilne
+    .set(target, {
+      autoAlpha: 0,
+    })
+    .to(target, {
+      autoAlpha: 1,
+      repeat: count,
+      duration: 0.4,
+      yoyo: true,
+      ease: "steps(1)",
+    });
+
+  return timelilne;
+};
 
 outroTimeline.set([outroTitle, outroSubTitle], {
   text: "",
-});
-outroTimeline.set(outroCursor, {
   autoAlpha: 0,
 });
 
-
-// Outro 섹션 글자 애니메이션 
+// Outro 섹션 글자 애니메이션
 outroTimeline
-  /// 1. 커서 깜빡임
-  .to(outroCursor, cursorBlink(4))
-  
-  /// 2. 커서 멈춤, End 타이핑
-  .set(outroCursor, {autoAlpha: 1})
+  /// 1. 커서 깜빡임 & End 타이핑
+  .add(cursorBlink(outroCursor, 4))
+  .set(outroCursor, { autoAlpha: 1 })
+
   .to(
-    outroTitle,{    
+    outroTitle,
+    {
       text: "End?",
       duration: 0.65,
       autoAlpha: 1,
-    },"+=0.25"
+    },
+    "+=0.25",
   )
-  
-  /// 3. 커서 깜빡임
-  .set(outroCursor, {
-    autoAlpha: 0,    
-  })
-  .to(outroCursor, cursorBlink(2))
-  // .to(outroCursor, {
-  //   autoAlpha: 1,
-  //   repeat: 4,
-  //   duration: 0.4,
-  //   yoyo: true,
-  //   ease: "steps(1)",    
-  // })
-  // .to(outroCursor, cursorBlink(4))
-  
-  /// 4. 글자 지우기
+
+  /// 2. 커서 깜빡임 & End 지우기
+  .add(cursorBlink(outroCursor, 2))
+  .set(outroCursor, { autoAlpha: 1 })
+
   .to(
     outroTitle,
     {
@@ -379,75 +377,46 @@ outroTimeline
         value: "",
         rtl: true,
       },
-      duration: 1.2,      
+      duration: 1.2,
     },
     "+=0.15",
-  ) 
-  
-  /// 5. 다시 커서 깜빡임
-  .set(outroCursor, {
-    autoAlpha: 0,    
-  })
-  .to(outroCursor, {    
-    autoAlpha: 1,
-    repeat: 1,
-    duration: 0.4,
-    yoyo: true,
-    ease: "steps(1)",
-  })
-
-
-  /// 6. And 타이핑
-  .set(outroCursor, {
-    autoAlpha: 1,    
-  })
-  .to(
-    outroTitle,
-    {
-      text: "And",
-      duration: 0.4,
-      autoAlpha: 1,         
-    },
   )
 
-  /// 7. 커서 깜빡임 및 이동
-  .to(outroCursor, {
-    autoAlpha: 1,
-    repeat: 2,
+  /// 3. 커서 깜빡임 & And 타이핑
+  .add(cursorBlink(outroCursor, 1))
+  .set(outroCursor, { autoAlpha: 1 })
+
+  .to(outroTitle, {
+    text: "And",
     duration: 0.4,
-    yoyo: true,
-    ease: "steps(1)",
+    autoAlpha: 1,
   })
-  .to(outroCursor, {
-    autoAlpha: 1,    
-       onComplete: () => {
+
+  /// 4. 커서 깜빡임 & 커서 다음 줄 이동
+  .add(cursorBlink(outroCursor, 2))
+
+  .to(
+    outroCursor,
+    {
+      autoAlpha: 1,
+      onComplete: () => {
         outroMessageSub.appendChild(outroCursor);
       },
-  },"<")
+    },
+    "<",
+  )
 
-  /// 8. To be... 타이핑
+  /// 5. To be... 타이핑
   .to(
     outroSubTitle,
-      {      
-        text: "To be continued",
-        duration: 0.95,
-        autoAlpha: 1,    
-      },
+    {
+      text: "To be continued",
+      duration: 0.95,
+      autoAlpha: 1,
+    },
     "+=0.1",
   )
 
-  /// 9. 커서 사라짐
-  .set(outroCursor, {
-    autoAlpha: 0,    
-  })
-  .to(outroCursor, {
-    autoAlpha: 1,
-    repeat: 2,
-    duration: 0.4,
-    yoyo: true,
-    ease: "steps(1)",
-  })
- .to(outroCursor, {
-    autoAlpha: 0,    
-  });
-
+  /// 6. 커서 사라짐
+  .add(cursorBlink(outroCursor, 3))
+  .set(outroCursor, { autoAlpha: 0 });
