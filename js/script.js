@@ -9,12 +9,12 @@ const section = {
   works: document.querySelector(".works"),
   outro: document.querySelector(".outro"),
 };
-const sectionArray = Object.values(section).slice(1, 4);
+const sectionArray = Object.values(section).slice(1, 5);
 
 /*
  * ---------------------------------------------------------
  * [ Axis-Line ] 애니메이션 타임라인
- * 각 섹션(intro, .outro 제외)에서의 축 포인트 애니메이션 타임라인
+ * intro 제외한 각 섹션의 축 포인트 제어
  * ---------------------------------------------------------
  */
 
@@ -22,16 +22,20 @@ const basic_Height = 100;
 
 sectionArray.forEach((section, idx) => {
   const startPos = basic_Height * (idx + 1);
-  const endPos = basic_Height + startPos;
+  const isLast = idx === sectionArray.length - 1;
+  // const endPos = basic_Height + startPos;
+  const endPos = isLast ? basic_Height / 2 + startPos : basic_Height + startPos;
+
+  console.log(isLast);
 
   const axisTracker = gsap.timeline({
     scrollTrigger: {
       trigger: section,
       start: "top center",
-      end: "bottom 55%",
-      scrub: 0.5,
-      ease: "none",
+      end: isLast ? "top top" : "bottom 55%",
+      scrub: 0.3,
     },
+    ease: "none",
   });
 
   axisTracker.fromTo(
@@ -56,80 +60,78 @@ sectionArray.forEach((section, idx) => {
 // 1.  Profile 섹션 진입 시, 축 포인트 클래스명 제거
 const clearPulseTimeline = gsap.timeline({
   scrollTrigger: {
-    trigger: section.profile,
-    start: "top bottom",
+    trigger: section.intro,
+    start: "top top",
     end: "bottom top",
-    scrub: 0.85,
+    scrub: 0.25,
   },
 });
 
 clearPulseTimeline.to(axisPoint, {
-  onStart: () => {
+  onLeave: () => {
     axisPoint.classList.remove("active");
+    console.log("onLeave");
+    // gsap.set(axisPoint, { clearProps: "transform" });
   },
-  onReverseComplete: () => {
+  onEnterBack: () => {
     axisPoint.classList.add("active");
+    console.log("onEnterBack");
   },
 });
 
 // 2. Outro 섹션 진입 시, 축 포인트 클래스명 추가
-const applyPulseTimeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: section.outro,
-    start: "top bottom",
-    end: "bottom top",
-    scrub: 0.85,
-  },
-});
+// const applyPulseTimeline = gsap.timeline({
+//   scrollTrigger: {
+//     trigger: section.outro,
+//     start: "top bottom",
+//     end: "bottom top",
+//     scrub: 0.85,
+//   },
+// });
 
-applyPulseTimeline.to(axisPoint, {
-  onStart: () => {
-    axisPoint.classList.add("active");
-  },
-  onReverseComplete: () => {
-    axisPoint.classList.remove("active");
-  },
-});
+// applyPulseTimeline.to(axisPoint, {
+//   onStart: () => {
+//     axisPoint.classList.add("active");
+//   },
+//   onReverseComplete: () => {
+//     axisPoint.classList.remove("active");
+//   },
+// });
 
 //
 /* * ---------------------------------------------------------
  * [ Intro ] 애니메이션 타임라인
- * 1. introTimeline Instance 정의
- * 2. introTimeline 기본 top값 설정
- * 3. introTimeline 애니메이션
- * 4. introTimeline 건너뛰기 : 사용자 편의
+ * 1 ::  Instance 정의 및 기본값 설정
+ * 2 ::  중심축 타임라인 애니메이션
+ * 3 ::  스크롤 가속 시 애니메이션 강제 완료 처리
  * ---------------------------------------------------------
  */
 
-// 1. introTimeline 정의
+// Intro 1 ::  Instance 정의 및 기본값 설정
 
-// const introSection = document.querySelector("section.intro");
 const introHeight = `${basic_Height}dvh`;
 const Axis_Start = `${basic_Height / 2}dvh`;
 
 const introTimeline = gsap.timeline({
   defaults: {
     ease: "power2.inOut",
-    duration: 1,
+    duration: 0.9,
   },
 });
 
-// 2. introTimeline 기본 top값 설정
-introTimeline.set(axisPoint, {
-  top: Axis_Start,
-});
+introTimeline.set(axisPoint, { top: Axis_Start });
 
-// 3. introTimeline 애니메이션
+// Intro 2 ::  중심축 타임라인 애니메이션
 introTimeline
-  .to(".intro__dot-inner-line", {
+  .to(".intro__dot-innerline", {
     rotate: 90,
   })
   .to(axisPoint, {
-    width: "15px",
-    height: "15px",
+    width: "16px",
+    height: "16px",
     opacity: 1,
     duration: 0.5,
-    ease: "back.out(1.7)",
+    ease: "back.out(3)",
   })
   .to(axisPoint, {
     top: introHeight,
@@ -141,7 +143,7 @@ introTimeline
     onComplete: () => {
       axisPoint.classList.add("active");
     },
-    duration: 0.5,
+    duration: 0.3,
   })
   .to(
     ".intro__arrow",
@@ -151,7 +153,7 @@ introTimeline
     "+=2",
   );
 
-// 4. introTimeline 건너뛰기 : 사용자 편의
+// Intro 3 ::  스크롤 가속 시 애니메이션 강제 완료 처리
 ScrollTrigger.create({
   trigger: "section.intro",
   start: "top top",
@@ -166,12 +168,13 @@ ScrollTrigger.create({
 //
 /* * ---------------------------------------------------------
  * [ Profile 섹션] 애니메이션 타임라인
- * 1. Profile 섹션의 각 아이템 애니메이션 (오른쪽에서 왼쪽 진입)
- * 2. 얼굴의 각 요소 애니메이션
+ * 1 :: 섹션의 각 요소 애니메이션 (아이템 우측 Slide-in)
+ * 2 :: 얼굴의 각 요소 애니메이션
  * ---------------------------------------------------------
  */
 
-// 1. Profile 섹션의 각 요소 애니메이션 (아이템들이 오른쪽에서 왼쪽으로 진입)
+// Profile 1 :: 섹션의 각 요소 애니메이션 (아이템 우측 Slide-in)
+
 const profileItems = document.querySelectorAll(".profile__item");
 
 profileItems.forEach((item) => {
@@ -193,7 +196,7 @@ profileItems.forEach((item) => {
   );
 });
 
-// 2. 얼굴의 각 요소 애니메이션
+// Profile 2 :: 얼굴의 각 요소 애니메이션
 const faceTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: "section.profile",
@@ -233,11 +236,10 @@ faceTimeline
 //
 /* * ---------------------------------------------------------
  * [ Skills ] 애니메이션 타임라인
- * 1. 기술 섹션의 요소들(언어) 애니메이션 함수
+ * 1 :: 기술 섹션의 요소들(언어) 애니메이션 함수
  * ---------------------------------------------------------
  */
 
-// 1. 기술 섹션의 요소들(언어) 애니메이션 함수
 const listItems = section.skills.querySelectorAll(
   ".skills__arrow, .skills__title, .skills__desc li",
 );
@@ -268,7 +270,7 @@ listItems.forEach((item) => {
 /*
  ---------------------------------------------------------
  * [ Works ] 섹션 애니메이션
- * 1. item 요소들의 스크롤 인터랙션 제어
+ * 1 :: item 요소들의 스크롤 인터랙션 제어
  ---------------------------------------------------------
  */
 const worksItems = gsap.utils.toArray(".works__item");
@@ -303,9 +305,9 @@ worksItems.forEach((item) => {
 //
 /* * ---------------------------------------------------------
  * [ Outro ] 애니메이션 타임라인
- * 1. 함수 정의 : 커서 숨김 & 깜빡임 효과
- * 2. Outro 섹션 클로징 타이핑 애니메이션
- * 3. Outro 섹션의 메뉴 마우스 이벤트 설정
+ * 1 :: cursorBlink 함수 정의 (커서 숨김 & 깜빡임)
+ * 2 :: 섹션 클로징 타이핑 애니메이션
+ * 3 :: 섹션의 메뉴 마우스 이벤트 설정
  * ---------------------------------------------------------
  */
 
@@ -326,7 +328,7 @@ const outroTimeline = gsap.timeline({
   ease: "none",
 });
 
-// 1. 함수 정의 : 커서 숨김 & 깜빡임 효과
+// 1 :: cursorBlink 함수 정의 (커서 숨김 & 깜빡임)
 const cursorBlink = (target, count, showAtEnd = true) => {
   const timelilne = gsap.timeline();
 
@@ -345,14 +347,15 @@ const cursorBlink = (target, count, showAtEnd = true) => {
   return timelilne;
 };
 
-// 2. Outro 섹션 클로징 타이핑 애니메이션
+// 2 :: 섹션 클로징 타이핑 애니메이션
 outroTimeline.set([outroTitle, outroSubTitle], {
   text: "",
   autoAlpha: 0,
 });
 
 outroTimeline
-  /// 2-1. 커서 깜빡임 & End 타이핑
+
+  // 2-1. 커서 깜빡임 & End 타이핑
   .add(cursorBlink(outroCursor, 4))
   .set(outroCursor, { autoAlpha: 1 })
   .to(
@@ -365,7 +368,7 @@ outroTimeline
     "+=0.25",
   )
 
-  /// 2-2. 커서 깜빡임 & End 지우기
+  // 2-2. 커서 깜빡임 & End 지우기
   .add(cursorBlink(outroCursor, 2))
   .set(outroCursor, { autoAlpha: 1 })
   .to(
@@ -380,7 +383,7 @@ outroTimeline
     "+=0.1",
   )
 
-  /// 2-3. 커서 깜빡임 & And 타이핑
+  // 2-3. 커서 깜빡임 & And 타이핑
   .add(cursorBlink(outroCursor, 1))
   .set(outroCursor, { autoAlpha: 1 })
   .to(outroTitle, {
@@ -389,7 +392,7 @@ outroTimeline
     autoAlpha: 1,
   })
 
-  ///2-4. 커서 깜빡임 & 커서 다음 줄 이동
+  // 2-4. 커서 깜빡임 & 커서 다음 줄 이동
   .add(cursorBlink(outroCursor, 2))
   .to(
     outroCursor,
@@ -402,7 +405,7 @@ outroTimeline
     "<",
   )
 
-  /// 2-5. To be continued 타이핑 & 커서 깜박임 후 사라짐
+  // 2-5. To be continued 타이핑 & 커서 깜박임 후 사라짐
   .to(outroSubTitle, {
     text: "To be continued",
     duration: 0.95,
@@ -418,7 +421,7 @@ outroTimeline
     "+=0.35",
   );
 
-// 3. Outro 섹션의 메뉴 마우스 이벤트 설정
+// 3 :: 섹션 메뉴의 마우스 hover 설정
 outroLinks.forEach((link) => {
   link.addEventListener("mouseenter", () => {
     gsap.to(link, {

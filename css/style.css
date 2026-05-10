@@ -58,12 +58,11 @@ img {
   position: absolute;
   left: 16%;
   z-index: 3;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   background-color: #000;
   border-radius: 50%;
   opacity: 0;
-  /* translate: -50% -50%; */
   transform: translate(-50%, -50%);
   transform-origin: center;
 }
@@ -126,7 +125,7 @@ section.intro {
   border-radius: 50%;
   z-index: 1;
 }
-.intro__dot-inner-line {
+.intro__dot-innerline {
   position: absolute;
   top: 50%;
   width: 100%;
@@ -261,9 +260,6 @@ section.profile {
   padding: 5px 0;
   font-size: 0.75rem;
 }
-
-/*  */
-/*  */
 
 /* --- [Section] Outro Style -------------------------------------------- */
 section.outro::after {
