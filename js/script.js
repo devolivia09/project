@@ -10,23 +10,18 @@ const section = {
   outro: document.querySelector(".outro"),
 };
 const sectionArray = Object.values(section).slice(1, 5);
+const basic_Height = 100;
 
 /*
  * ---------------------------------------------------------
  * [ Axis-Line ] 애니메이션 타임라인
- * intro 제외한 각 섹션의 축 포인트 제어
+ *   intro 제외한 각 섹션의 축 포인트 제어
  * ---------------------------------------------------------
  */
-
-const basic_Height = 100;
-
 sectionArray.forEach((section, idx) => {
   const startPos = basic_Height * (idx + 1);
   const isLast = idx === sectionArray.length - 1;
-  // const endPos = basic_Height + startPos;
   const endPos = isLast ? basic_Height / 2 + startPos : basic_Height + startPos;
-
-  console.log(isLast);
 
   const axisTracker = gsap.timeline({
     scrollTrigger: {
@@ -52,64 +47,52 @@ sectionArray.forEach((section, idx) => {
 /*
  * ---------------------------------------------------------
  * [ Pulse Effect ] Pulse 애니메이션 관련
- * 1. Profile 섹션 진입 시, 축 포인트 클래스명 제거
- * 2. Outro 섹션 진입 시, 축 포인트 클래스명 추가
+ *   Profile 섹션 진입 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
-
-// 1.  Profile 섹션 진입 시, 축 포인트 클래스명 제거
 const clearPulseTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: section.intro,
-    start: "top top",
-    end: "bottom top",
-    scrub: 0.25,
+    start: "top center",
+    end: "bottom center",
+    markers: true,
+    scrub: true,
+    onLeave: () => {
+      introTimeline.progress(1);
+      axisPoint.classList.remove("active");
+      gsap.to(
+        ".intro__arrow",
+        {
+          opacity: 0,
+        },
+        "+=0.25",
+      );
+      gsap.to(
+        axisPoint,
+        {
+          yPercent: 0,
+          clearProps: "transform",
+        },
+        "<",
+      );
+    },
+    onEnterBack: () => {
+      axisPoint.classList.add("active");
+    },
   },
 });
 
-clearPulseTimeline.to(axisPoint, {
-  onLeave: () => {
-    axisPoint.classList.remove("active");
-    console.log("onLeave");
-    // gsap.set(axisPoint, { clearProps: "transform" });
-  },
-  onEnterBack: () => {
-    axisPoint.classList.add("active");
-    console.log("onEnterBack");
-  },
-});
-
-// 2. Outro 섹션 진입 시, 축 포인트 클래스명 추가
-// const applyPulseTimeline = gsap.timeline({
-//   scrollTrigger: {
-//     trigger: section.outro,
-//     start: "top bottom",
-//     end: "bottom top",
-//     scrub: 0.85,
-//   },
-// });
-
-// applyPulseTimeline.to(axisPoint, {
-//   onStart: () => {
-//     axisPoint.classList.add("active");
-//   },
-//   onReverseComplete: () => {
-//     axisPoint.classList.remove("active");
-//   },
-// });
-
-//
-/* * ---------------------------------------------------------
+/*
+ * ---------------------------------------------------------
  * [ Intro ] 애니메이션 타임라인
  * 1 ::  Instance 정의 및 기본값 설정
  * 2 ::  중심축 타임라인 애니메이션
- * 3 ::  스크롤 가속 시 애니메이션 강제 완료 처리
  * ---------------------------------------------------------
  */
 
 // Intro 1 ::  Instance 정의 및 기본값 설정
 
-const introHeight = `${basic_Height}dvh`;
+const introBottomLine = `${basic_Height}dvh`;
 const Axis_Start = `${basic_Height / 2}dvh`;
 
 const introTimeline = gsap.timeline({
@@ -123,6 +106,7 @@ introTimeline.set(axisPoint, { top: Axis_Start });
 
 // Intro 2 ::  중심축 타임라인 애니메이션
 introTimeline
+  //  2-1. point 안의 선을 90도 전환 및 point의 사이즈 축소
   .to(".intro__dot-innerline", {
     rotate: 90,
   })
@@ -133,8 +117,9 @@ introTimeline
     duration: 0.5,
     ease: "back.out(3)",
   })
+  //  2-2. point의 y 값을 intro section의 바닥까지 이동
   .to(axisPoint, {
-    top: introHeight,
+    top: introBottomLine,
     yPercent: -100,
     width: "13px",
     height: "13px",
@@ -149,21 +134,10 @@ introTimeline
     ".intro__arrow",
     {
       opacity: 0.65,
+      ease: "back.out(1.7)",
     },
     "+=2",
   );
-
-// Intro 3 ::  스크롤 가속 시 애니메이션 강제 완료 처리
-ScrollTrigger.create({
-  trigger: "section.intro",
-  start: "top top",
-  onLeave: () => {
-    introTimeline.progress(1);
-    gsap.to(".intro__arrow", {
-      opacity: 0,
-    });
-  },
-});
 
 //
 /* * ---------------------------------------------------------
@@ -173,10 +147,9 @@ ScrollTrigger.create({
  * ---------------------------------------------------------
  */
 
-// Profile 1 :: 섹션의 각 요소 애니메이션 (아이템 우측 Slide-in)
-
 const profileItems = document.querySelectorAll(".profile__item");
 
+// Profile 1 :: 섹션의 각 요소 애니메이션 (아이템 우측 Slide-in)
 profileItems.forEach((item) => {
   gsap.fromTo(
     item,
@@ -196,7 +169,6 @@ profileItems.forEach((item) => {
   );
 });
 
-// Profile 2 :: 얼굴의 각 요소 애니메이션
 const faceTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: "section.profile",
@@ -207,6 +179,7 @@ const faceTimeline = gsap.timeline({
   },
 });
 
+// Profile 2 :: 얼굴의 각 요소 애니메이션
 faceTimeline
   .from("#face", {
     x: 350,
@@ -236,7 +209,7 @@ faceTimeline
 //
 /* * ---------------------------------------------------------
  * [ Skills ] 애니메이션 타임라인
- * 1 :: 기술 섹션의 요소들(언어) 애니메이션 함수
+ *   기술 섹션의 요소들(언어) 애니메이션 함수
  * ---------------------------------------------------------
  */
 
@@ -270,7 +243,7 @@ listItems.forEach((item) => {
 /*
  ---------------------------------------------------------
  * [ Works ] 섹션 애니메이션
- * 1 :: item 요소들의 스크롤 인터랙션 제어
+ *   item 요소들의 스크롤 인터랙션 제어
  ---------------------------------------------------------
  */
 const worksItems = gsap.utils.toArray(".works__item");
@@ -354,7 +327,6 @@ outroTimeline.set([outroTitle, outroSubTitle], {
 });
 
 outroTimeline
-
   // 2-1. 커서 깜빡임 & End 타이핑
   .add(cursorBlink(outroCursor, 4))
   .set(outroCursor, { autoAlpha: 1 })
