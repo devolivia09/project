@@ -47,7 +47,7 @@ sectionArray.forEach((section, idx) => {
 /*
  * ---------------------------------------------------------
  * [ Pulse Effect ] Pulse 애니메이션 관련
- *   Profile 섹션 진입 시, 클래스명 제거 & pulse 애니메이션 제거
+ *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
 const clearPulseTimeline = gsap.timeline({
@@ -55,7 +55,6 @@ const clearPulseTimeline = gsap.timeline({
     trigger: section.intro,
     start: "top center",
     end: "bottom center",
-    markers: true,
     scrub: true,
     onLeave: () => {
       introTimeline.progress(1);
@@ -92,7 +91,8 @@ const clearPulseTimeline = gsap.timeline({
 
 // Intro 1 ::  Instance 정의 및 기본값 설정
 
-const introBottomLine = `${basic_Height}dvh`;
+const axisPointWidth = 13;
+const introBottomLine = `${basic_Height - axisPointWidth / 2}dvh`;
 const Axis_Start = `${basic_Height / 2}dvh`;
 
 const introTimeline = gsap.timeline({
@@ -102,7 +102,11 @@ const introTimeline = gsap.timeline({
   },
 });
 
-introTimeline.set(axisPoint, { top: Axis_Start });
+introTimeline.set(axisPoint, {
+  top: Axis_Start,
+  xPercent: -50,
+  yPercent: -50,
+});
 
 // Intro 2 ::  중심축 타임라인 애니메이션
 introTimeline
@@ -120,16 +124,24 @@ introTimeline
   //  2-2. point의 y 값을 intro section의 바닥까지 이동
   .to(axisPoint, {
     top: introBottomLine,
-    yPercent: -100,
-    width: "13px",
-    height: "13px",
+    width: `13px`,
+    height: `13px`,
   })
-  .to(axisPoint, {
-    onComplete: () => {
-      axisPoint.classList.add("active");
+  .to(
+    axisPoint,
+    {
+      // onComplete: () => {
+      //   axisPoint.classList.add("active");
+      // },
+      scale: 1.2,
+      repeat: -1,
+      yoyo: true,
+      boxShadow: "0 0 0 16px rgba(0, 0, 0, 0.2)",
+      duration: 0.7,
     },
-    duration: 0.3,
-  })
+    "<",
+  )
+  // .to(axisPoint, { })
   .to(
     ".intro__arrow",
     {

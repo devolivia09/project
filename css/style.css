@@ -73,10 +73,12 @@ img {
 @keyframes pulse-animation {
   0%,
   100% {
-    transform: translate(-50%, -100%) scale(1);
+    /* transform: translate(-50%, -100%) scale(1); */
+    /* transform: translate(-50%, -50%) scale(1); */
+    transform: scale(1);
   }
   50% {
-    transform: translate(-50%, -100%) scale(1.2);
+    transform: scale(1.2);
     box-shadow: 0 0 0 16px rgba(0, 0, 0, 0.2);
   }
 }
@@ -308,7 +310,7 @@ section.outro::after {
 .outro__menu {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 2.75rem;
+  grid-gap: 2.5rem;
   position: absolute;
   top: 58%;
   left: 30%;
