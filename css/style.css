@@ -63,24 +63,8 @@ img {
   background-color: #000;
   border-radius: 50%;
   opacity: 0;
-  transform: translate(-50%, -50%);
-  transform-origin: center;
-}
-.axis-point.active {
-  opacity: 1;
-  animation: pulse-animation 2.75s infinite;
-}
-@keyframes pulse-animation {
-  0%,
-  100% {
-    /* transform: translate(-50%, -100%) scale(1); */
-    /* transform: translate(-50%, -50%) scale(1); */
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-    box-shadow: 0 0 0 16px rgba(0, 0, 0, 0.2);
-  }
+  /* transform: translate(-50%, -50%);
+  transform-origin: center; */
 }
 
 /* --- [Section] Common Style -------------------------------------------- */

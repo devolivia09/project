@@ -20,14 +20,16 @@ const basic_Height = 100;
  */
 sectionArray.forEach((section, idx) => {
   const startPos = basic_Height * (idx + 1);
-  const isLast = idx === sectionArray.length - 1;
-  const endPos = isLast ? basic_Height / 2 + startPos : basic_Height + startPos;
+  const isLastSection = idx === sectionArray.length - 1;
+  const endPos = isLastSection
+    ? basic_Height / 2 + startPos
+    : basic_Height + startPos;
 
   const axisTracker = gsap.timeline({
     scrollTrigger: {
       trigger: section,
       start: "top center",
-      end: isLast ? "top top" : "bottom 55%",
+      end: isLastSection ? "top top" : "bottom 55%",
       scrub: 0.3,
     },
     ease: "none",
@@ -50,6 +52,18 @@ sectionArray.forEach((section, idx) => {
  *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
+
+const pulseAnimation = () => {
+  return {
+    boxShadow: "0 0 0 18px rgba(0, 0, 0, 0.18)",
+    scale: 1.1,
+    duration: 1.3,
+    ease: "none",
+    repeat: -1,
+    yoyo: true,
+  };
+};
+
 const clearPulseTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: section.intro,
@@ -58,7 +72,6 @@ const clearPulseTimeline = gsap.timeline({
     scrub: true,
     onLeave: () => {
       introTimeline.progress(1);
-      axisPoint.classList.remove("active");
       gsap.to(
         ".intro__arrow",
         {
@@ -66,17 +79,9 @@ const clearPulseTimeline = gsap.timeline({
         },
         "+=0.25",
       );
-      gsap.to(
-        axisPoint,
-        {
-          yPercent: 0,
-          clearProps: "transform",
-        },
-        "<",
-      );
     },
     onEnterBack: () => {
-      axisPoint.classList.add("active");
+      gsap.to(axisPoint, pulseAnimation());
     },
   },
 });
@@ -91,14 +96,14 @@ const clearPulseTimeline = gsap.timeline({
 
 // Intro 1 ::  Instance 정의 및 기본값 설정
 
-const axisPointWidth = 13;
-const introBottomLine = `${basic_Height - axisPointWidth / 2}dvh`;
+const introBottomLine = `${basic_Height}dvh`;
 const Axis_Start = `${basic_Height / 2}dvh`;
 
+console.log(introBottomLine);
 const introTimeline = gsap.timeline({
   defaults: {
     ease: "power2.inOut",
-    duration: 0.9,
+    duration: 0.85,
   },
 });
 
@@ -110,6 +115,7 @@ introTimeline.set(axisPoint, {
 
 // Intro 2 ::  중심축 타임라인 애니메이션
 introTimeline
+
   //  2-1. point 안의 선을 90도 전환 및 point의 사이즈 축소
   .to(".intro__dot-innerline", {
     rotate: 90,
@@ -121,27 +127,24 @@ introTimeline
     duration: 0.5,
     ease: "back.out(3)",
   })
+
   //  2-2. point의 y 값을 intro section의 바닥까지 이동
   .to(axisPoint, {
     top: introBottomLine,
-    width: `13px`,
-    height: `13px`,
+    width: "13px",
+    height: "13px",
   })
   .to(
     axisPoint,
     {
-      // onComplete: () => {
-      //   axisPoint.classList.add("active");
-      // },
-      scale: 1.2,
-      repeat: -1,
-      yoyo: true,
-      boxShadow: "0 0 0 16px rgba(0, 0, 0, 0.2)",
-      duration: 0.7,
+      yPercent: -100,
     },
     "<",
   )
-  // .to(axisPoint, { })
+  //  2-3. point에 Pulse Animation 넣기
+  .to(axisPoint, pulseAnimation(), "+=0.3")
+
+  //  2-4. 아래로 가기 화살표 등장
   .to(
     ".intro__arrow",
     {
@@ -403,7 +406,9 @@ outroTimeline
     outroLists,
     { x: 0, duration: 1.2, opacity: 1, stagger: 0.3, ease: "back.out(1.7)" },
     "+=0.35",
-  );
+  )
+
+  .to(axisPoint, pulseAnimation());
 
 // 3 :: 섹션 메뉴의 마우스 hover 설정
 outroLinks.forEach((link) => {
