@@ -11,11 +11,15 @@ const section = {
 };
 const sectionArray = Object.values(section).slice(1, 5);
 const basic_Height = 100;
+const sectionIndicator = document.querySelector(".section-indicator");
 
 /*
  * ---------------------------------------------------------
- * [ Axis-Line ]
- *   intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
+ * [ Axis-Line, Section-indicator ]
+
+ * [  ]
+ *  1  ::  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
+ *  2  ::  Section 진입 시, 그에 맞는 색인 변화 함수
  * ---------------------------------------------------------
  */
 sectionArray.forEach((section, idx) => {
@@ -25,6 +29,11 @@ sectionArray.forEach((section, idx) => {
     ? basic_Height / 2 + startPos
     : basic_Height + startPos;
 
+  const sectionName = section.dataset.name;
+
+  console.log(sectionName, " & ", typeof sectionName);
+
+  // 1  ::  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
   const axisTracker = gsap.timeline({
     scrollTrigger: {
       trigger: section,
@@ -36,16 +45,30 @@ sectionArray.forEach((section, idx) => {
     ease: "none",
   });
 
-  axisTracker.fromTo(
-    axisPoint,
-    {
-      top: `${startPos}dvh`,
-    },
-    {
-      top: `${endPos}dvh`,
-    },
-  );
+  axisTracker
+    .fromTo(
+      axisPoint,
+      {
+        top: `${startPos}dvh`,
+      },
+      {
+        top: `${endPos}dvh`,
+      },
+    )
+    .to(sectionIndicator, {
+      onEnter: () => {
+        sectionIndicator.textContent = sectionName;
+      },
+      onEnterBack: () => {
+        sectionIndicator.textContent = sectionName;
+      },
+      onLeave: () => {
+        sectionIndicator.textContent = sectionName;
+      },
+    });
 });
+
+//sectionIndicator.textContent(sectionName);
 
 /*
  * ---------------------------------------------------------
@@ -103,7 +126,6 @@ const clearPulseTimeline = gsap.timeline({
 const introBottomLine = `${basic_Height}dvh`;
 const Axis_Start = `${basic_Height / 2}dvh`;
 
-console.log(introBottomLine);
 const introTimeline = gsap.timeline({
   defaults: {
     ease: "power2.inOut",
@@ -113,8 +135,8 @@ const introTimeline = gsap.timeline({
 
 introTimeline.set(axisPoint, {
   top: Axis_Start,
-  xPercent: -50,
   yPercent: -50,
+  xPercent: -50,
 });
 
 // Intro 2 ::  중심축 타임라인 애니메이션
