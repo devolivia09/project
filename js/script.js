@@ -14,8 +14,8 @@ const basic_Height = 100;
 
 /*
  * ---------------------------------------------------------
- * [ Axis-Line ] 애니메이션 타임라인
- *   intro 제외한 각 섹션의 축 포인트 제어
+ * [ Axis-Line ]
+ *   intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
  * ---------------------------------------------------------
  */
 sectionArray.forEach((section, idx) => {
@@ -29,8 +29,9 @@ sectionArray.forEach((section, idx) => {
     scrollTrigger: {
       trigger: section,
       start: "top center",
-      end: isLastSection ? "top top" : "bottom 55%",
-      scrub: 0.3,
+      end: isLastSection ? "top top" : "bottom center",
+      scrub: 0.2,
+      fastScrollEnd: true,
     },
     ease: "none",
   });
@@ -48,7 +49,7 @@ sectionArray.forEach((section, idx) => {
 
 /*
  * ---------------------------------------------------------
- * [ Pulse Effect ] Pulse 애니메이션 관련
+ * [ Pulse Effect ]
  *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
@@ -79,6 +80,9 @@ const clearPulseTimeline = gsap.timeline({
         },
         "+=0.25",
       );
+      gsap.to(axisPoint, {
+        yPercent: -50,
+      });
     },
     onEnterBack: () => {
       gsap.to(axisPoint, pulseAnimation());
@@ -88,9 +92,9 @@ const clearPulseTimeline = gsap.timeline({
 
 /*
  * ---------------------------------------------------------
- * [ Intro ] 애니메이션 타임라인
+ * [ Intro ]
  * 1 ::  Instance 정의 및 기본값 설정
- * 2 ::  중심축 타임라인 애니메이션
+ * 2 ::  중심축 타임라인
  * ---------------------------------------------------------
  */
 
@@ -131,8 +135,8 @@ introTimeline
   //  2-2. point의 y 값을 intro section의 바닥까지 이동
   .to(axisPoint, {
     top: introBottomLine,
-    width: "13px",
-    height: "13px",
+    width: "14px",
+    height: "14px",
   })
   .to(
     axisPoint,
@@ -156,15 +160,15 @@ introTimeline
 
 //
 /* * ---------------------------------------------------------
- * [ Profile 섹션] 애니메이션 타임라인
- * 1 :: 섹션의 각 요소 애니메이션 (아이템 우측 Slide-in)
- * 2 :: 얼굴의 각 요소 애니메이션
+ * [ Profile 섹션]
+ * 1 :: 섹션의 각 요소 타임라인 (아이템 우측 Slide-in)
+ * 2 :: 얼굴의 각 요소 타임라인
  * ---------------------------------------------------------
  */
 
 const profileItems = document.querySelectorAll(".profile__item");
 
-// Profile 1 :: 섹션의 각 요소 애니메이션 (아이템 우측 Slide-in)
+// Profile 1 :: 섹션의 각 요소 타임라인 (아이템 우측 Slide-in)
 profileItems.forEach((item) => {
   gsap.fromTo(
     item,
@@ -194,7 +198,7 @@ const faceTimeline = gsap.timeline({
   },
 });
 
-// Profile 2 :: 얼굴의 각 요소 애니메이션
+// Profile 2 :: 얼굴의 각 요소 타임라인
 faceTimeline
   .from("#face", {
     x: 350,
@@ -223,8 +227,8 @@ faceTimeline
 
 //
 /* * ---------------------------------------------------------
- * [ Skills ] 애니메이션 타임라인
- *   기술 섹션의 요소들(언어) 애니메이션 함수
+ * [ Skills ]
+ *   기술 섹션의 요소들(언어) 애니메이션 타임라인
  * ---------------------------------------------------------
  */
 
@@ -257,7 +261,7 @@ listItems.forEach((item) => {
 
 /*
  ---------------------------------------------------------
- * [ Works ] 섹션 애니메이션
+ * [ Works ]
  *   item 요소들의 스크롤 인터랙션 제어
  ---------------------------------------------------------
  */
@@ -292,7 +296,7 @@ worksItems.forEach((item) => {
 
 //
 /* * ---------------------------------------------------------
- * [ Outro ] 애니메이션 타임라인
+ * [ Outro ]
  * 1 :: cursorBlink 함수 정의 (커서 숨김 & 깜빡임)
  * 2 :: 섹션 클로징 타이핑 애니메이션
  * 3 :: 섹션의 메뉴 마우스 이벤트 설정
@@ -343,7 +347,7 @@ outroTimeline.set([outroTitle, outroSubTitle], {
 
 outroTimeline
   // 2-1. 커서 깜빡임 & End 타이핑
-  .add(cursorBlink(outroCursor, 4))
+  .add(cursorBlink(outroCursor, 3))
   .set(outroCursor, { autoAlpha: 1 })
   .to(
     outroTitle,
