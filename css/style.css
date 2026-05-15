@@ -65,17 +65,15 @@ img {
   border-radius: 50%;
   opacity: 0;
 }
-
-/* --- [Section] Common Style -------------------------------------------- */
-/* .section-indicator {
+.section-indicator {
   position: fixed;
-  top: 2%;
+  top: 1.75%;
   right: 4%;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: #000;
-  opacity: 0.5;
-} */
+  opacity: 0.7;
+}
 
 /* --- [Section] Intro Style -------------------------------------------- */
 section.intro {
