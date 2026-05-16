@@ -9,31 +9,24 @@ const section = {
   works: document.querySelector(".works"),
   outro: document.querySelector(".outro"),
 };
-const sectionArray = Object.values(section).slice(1, 5);
+const allSectionArray = Object.values(section);
+const axisTargetSections = allSectionArray.slice(1, 5);
 const basic_Height = 100;
 const sectionIndicator = document.querySelector(".section-indicator");
 
 /*
  * ---------------------------------------------------------
- * [ Axis-Line, Section-indicator ]
-
- * [  ]
- *  1  ::  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
- *  2  ::  Section 진입 시, 그에 맞는 색인 변화 함수
+ * [ Axis-Line ]
+ *  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
  * ---------------------------------------------------------
  */
-sectionArray.forEach((section, idx) => {
+axisTargetSections.forEach((section, idx) => {
   const startPos = basic_Height * (idx + 1);
-  const isLastSection = idx === sectionArray.length - 1;
+  const isLastSection = idx === axisTargetSections.length - 1;
   const endPos = isLastSection
     ? basic_Height / 2 + startPos
     : basic_Height + startPos;
 
-  const sectionName = section.dataset.name;
-
-  console.log(sectionName, " & ", typeof sectionName);
-
-  // 1  ::  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
   const axisTracker = gsap.timeline({
     scrollTrigger: {
       trigger: section,
@@ -45,30 +38,49 @@ sectionArray.forEach((section, idx) => {
     ease: "none",
   });
 
-  axisTracker
-    .fromTo(
-      axisPoint,
-      {
-        top: `${startPos}dvh`,
-      },
-      {
-        top: `${endPos}dvh`,
-      },
-    )
-    .to(sectionIndicator, {
-      onEnter: () => {
-        sectionIndicator.textContent = sectionName;
-      },
-      onEnterBack: () => {
-        sectionIndicator.textContent = sectionName;
-      },
-      onLeave: () => {
-        sectionIndicator.textContent = sectionName;
-      },
-    });
+  axisTracker.fromTo(
+    axisPoint,
+    {
+      top: `${startPos}dvh`,
+    },
+    {
+      top: `${endPos}dvh`,
+    },
+  );
 });
 
-//sectionIndicator.textContent(sectionName);
+/*
+ * ---------------------------------------------------------
+ * [ Section-indicator ]
+ *   Section 진입 시, 그에 맞는 색인 변화 함수
+ * ---------------------------------------------------------
+ */
+
+allSectionArray.forEach((eachSec) => {
+  const sectionName = eachSec.dataset.name;
+
+  const indicatorTracker = gsap.timeline({
+    scrollTrigger: {
+      trigger: eachSec,
+      start: "top 50%",
+
+      onEnter: () => {
+        const indicatorTimeline = gsap.timeline();
+        indicatorTimeline
+          .add(sectionIndicator, { opacity: 0 })
+          .to(sectionIndicator, { textContent: sectionName })
+          .to(sectionIndicator, { opacity: 1 });
+      },
+      onEnterBack: () => {
+        const indicatorTimeline = gsap.timeline();
+        indicatorTimeline
+          .add(sectionIndicator, { opacity: 0 })
+          .to(sectionIndicator, { textContent: sectionName })
+          .to(sectionIndicator, { opacity: 1 });
+      },
+    },
+  });
+});
 
 /*
  * ---------------------------------------------------------
@@ -292,6 +304,7 @@ const worksItems = gsap.utils.toArray(".works__item");
 worksItems.forEach((item) => {
   const targetImg = item.querySelector(".works__thumbnail img");
   const targetTxt = item.querySelector(".works-desc");
+
   const worksTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: item,
