@@ -52,32 +52,46 @@ axisTargetSections.forEach((section, idx) => {
 /*
  * ---------------------------------------------------------
  * [ Section-indicator ]
- *   Section 진입 시, 그에 맞는 색인 변화 함수
+ *   Section 진입 시, 그에 맞는 색인 변화
  * ---------------------------------------------------------
  */
 
 allSectionArray.forEach((eachSec) => {
   const sectionName = eachSec.dataset.name;
 
+  const indicatorController = () => {
+    const timeline = gsap.timeline();
+
+    if (sectionName === "intro") {
+      timeline
+        .to(sectionIndicator, { opacity: 0, duration: 0.2 })
+        .to(sectionIndicator, { textContent: sectionName, duration: 0 })
+        .to(sectionIndicator, {
+          opacity: 0,
+          ease: "power2.out",
+          duration: 0.5,
+        });
+    } else {
+      timeline
+        .to(sectionIndicator, { opacity: 0, duration: 0.2 })
+        .to(sectionIndicator, { textContent: sectionName, duration: 0 })
+        .to(sectionIndicator, {
+          opacity: 1,
+          ease: "power2.out",
+          duration: 0.5,
+        });
+    }
+
+    return timeline;
+  };
+
   const indicatorTracker = gsap.timeline({
     scrollTrigger: {
       trigger: eachSec,
-      start: "top 50%",
+      start: "top 55%",
 
-      onEnter: () => {
-        const indicatorTimeline = gsap.timeline();
-        indicatorTimeline
-          .add(sectionIndicator, { opacity: 0 })
-          .to(sectionIndicator, { textContent: sectionName })
-          .to(sectionIndicator, { opacity: 1 });
-      },
-      onEnterBack: () => {
-        const indicatorTimeline = gsap.timeline();
-        indicatorTimeline
-          .add(sectionIndicator, { opacity: 0 })
-          .to(sectionIndicator, { textContent: sectionName })
-          .to(sectionIndicator, { opacity: 1 });
-      },
+      onEnter: () => indicatorController(),
+      onEnterBack: () => indicatorController(),
     },
   });
 });
