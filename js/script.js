@@ -122,19 +122,13 @@ const clearPulseTimeline = gsap.timeline({
     scrub: true,
     onLeave: () => {
       introTimeline.progress(1);
-      gsap.to(
-        ".intro__arrow",
-        {
-          opacity: 0,
-        },
-        "+=0.25",
-      );
-      gsap.to(axisPoint, {
-        yPercent: -50,
-      });
+      gsap.to(".intro__arrow", { opacity: 0 });
+      gsap.to(axisPoint, { yPercent: 0 });
     },
     onEnterBack: () => {
       gsap.to(axisPoint, pulseAnimation());
+      gsap.to(".intro__arrow", { opacity: 0.5 });
+      gsap.to(axisPoint, { yPercent: -100 });
     },
   },
 });
@@ -200,10 +194,11 @@ introTimeline
   .to(
     ".intro__arrow",
     {
-      opacity: 0.65,
-      ease: "back.out(1.7)",
+      bottom: "2%",
+      opacity: 0.6,
+      ease: "power2.out",
     },
-    "+=2",
+    "+=1.5",
   );
 
 //

@@ -116,11 +116,11 @@ section.intro {
 }
 .intro__arrow {
   position: absolute;
-  bottom: 0%;
+  bottom: 5%;
   left: 50%;
   width: 2.5rem;
-  opacity: 0;
   transform: translateX(-50%);
+  opacity: 0;
 }
 
 /* --- [Section] Profile Style -------------------------------------------- */
