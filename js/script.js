@@ -71,6 +71,7 @@ allSectionArray.forEach((eachSec) => {
           ease: "power2.out",
           duration: 0.5,
         });
+      console.log(sectionName);
     } else {
       timeline
         .to(sectionIndicator, { opacity: 0, duration: 0.2 })
@@ -80,6 +81,7 @@ allSectionArray.forEach((eachSec) => {
           ease: "power2.out",
           duration: 0.5,
         });
+      console.log(sectionName);
     }
 
     return timeline;
@@ -102,6 +104,7 @@ allSectionArray.forEach((eachSec) => {
  *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
+let pulseHandle;
 
 const pulseAnimation = () => {
   return {
@@ -121,12 +124,15 @@ const clearPulseTimeline = gsap.timeline({
     end: "bottom center",
     scrub: true,
     onLeave: () => {
-      introTimeline.progress(1);
       gsap.to(".intro__arrow", { opacity: 0 });
-      gsap.to(axisPoint, { yPercent: 0 });
+      introTimeline.progress(1);
+      gsap.to(axisPoint, { yPercent: -50 });
+      if (pulseHandle) {
+        pulseHandle.pause();
+      }
     },
     onEnterBack: () => {
-      gsap.to(axisPoint, pulseAnimation());
+      pulseHandle = gsap.to(axisPoint, pulseAnimation());
       gsap.to(".intro__arrow", { opacity: 0.5 });
       gsap.to(axisPoint, { yPercent: -100 });
     },
