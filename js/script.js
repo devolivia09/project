@@ -9,46 +9,53 @@ const section = {
   works: document.querySelector(".works"),
   outro: document.querySelector(".outro"),
 };
-const allSectionArray = Object.values(section);
-const axisTargetSections = allSectionArray.slice(1, 5);
-const basic_Height = 100;
+const allSections = Object.values(section);
 const sectionIndicator = document.querySelector(".section-indicator");
-
+const BASE_HEIGHT = 100;
+const HALF_HEIGHT = BASE_HEIGHT / 2;
+let isIntroComplete = false;
 /*
  * ---------------------------------------------------------
  * [ Axis-Line ]
  *  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
  * ---------------------------------------------------------
  */
-axisTargetSections.forEach((section, idx) => {
-  const startPos = basic_Height * (idx + 1);
-  const isLastSection = idx === axisTargetSections.length - 1;
-  const endPos = isLastSection
-    ? basic_Height / 2 + startPos
-    : basic_Height + startPos;
 
-  const axisTracker = gsap.timeline({
-    scrollTrigger: {
-      trigger: section,
-      start: "top center",
-      end: isLastSection ? "top top" : "bottom center",
-      scrub: 0.2,
-      fastScrollEnd: true,
-    },
-    ease: "none",
+function startAxisTracker() {
+  allSections.forEach((section, idx) => {
+    const startPos = idx === 0 ? BASE_HEIGHT : BASE_HEIGHT * idx;
+    const isLastSection = idx === allSections.length - 1;
+
+    const endPos = isLastSection
+      ? startPos + HALF_HEIGHT
+      : startPos + BASE_HEIGHT;
+
+    const axisTracker = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top center",
+        end: isLastSection ? "top top" : "bottom center",
+        scrub: 0.2,
+        fastScrollEnd: true,
+      },
+      ease: "none",
+    });
+
+    axisTracker.fromTo(
+      axisPoint,
+      {
+        top: `${startPos}dvh`,
+      },
+      {
+        top: `${endPos}dvh`,
+      },
+    );
+    console.log(idx, startPos, section);
   });
-
-  axisTracker.fromTo(
-    axisPoint,
-    {
-      top: `${startPos}dvh`,
-    },
-    {
-      top: `${endPos}dvh`,
-    },
-  );
+}
+window.addEventListener("scroll", () => {
+  console.log(axisPoint.offsetTop);
 });
-
 /*
  * ---------------------------------------------------------
  * [ Section-indicator ]
@@ -56,41 +63,33 @@ axisTargetSections.forEach((section, idx) => {
  * ---------------------------------------------------------
  */
 
-allSectionArray.forEach((eachSec) => {
+allSections.forEach((eachSec) => {
   const sectionName = eachSec.dataset.name;
 
   const indicatorController = () => {
     const timeline = gsap.timeline();
 
+    let defaultOpacity = 1;
     if (sectionName === "intro") {
-      timeline
-        .to(sectionIndicator, { opacity: 0, duration: 0.2 })
-        .to(sectionIndicator, { textContent: sectionName, duration: 0 })
-        .to(sectionIndicator, {
-          opacity: 0,
-          ease: "power2.out",
-          duration: 0.5,
-        });
-      console.log(sectionName);
-    } else {
-      timeline
-        .to(sectionIndicator, { opacity: 0, duration: 0.2 })
-        .to(sectionIndicator, { textContent: sectionName, duration: 0 })
-        .to(sectionIndicator, {
-          opacity: 1,
-          ease: "power2.out",
-          duration: 0.5,
-        });
-      console.log(sectionName);
+      defaultOpacity = 0;
     }
+
+    timeline
+      .to(sectionIndicator, { opacity: 0, duration: 0.4 })
+      .to(sectionIndicator, { textContent: sectionName, duration: 0 })
+      .to(sectionIndicator, {
+        opacity: 1,
+        ease: "power2.out",
+        duration: 0.5,
+      });
 
     return timeline;
   };
 
-  const indicatorTracker = gsap.timeline({
+  const indicatorTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: eachSec,
-      start: "top 55%",
+      start: "top center",
 
       onEnter: () => indicatorController(),
       onEnterBack: () => indicatorController(),
@@ -142,20 +141,22 @@ const clearPulseTimeline = gsap.timeline({
 /*
  * ---------------------------------------------------------
  * [ Intro ]
- * 1 ::  Instance 정의 및 기본값 설정
- * 2 ::  중심축 타임라인
+ *   Intro 타임라인 애니메이션
  * ---------------------------------------------------------
  */
 
-// Intro 1 ::  Instance 정의 및 기본값 설정
-
-const introBottomLine = `${basic_Height}dvh`;
-const Axis_Start = `${basic_Height / 2}dvh`;
+const introBottomLine = `${BASE_HEIGHT}dvh`;
+const Axis_Start = `${HALF_HEIGHT}dvh`;
 
 const introTimeline = gsap.timeline({
   defaults: {
     ease: "power2.inOut",
     duration: 0.85,
+  },
+  onComplete: () => {
+    isIntroComplete = true;
+    console.log(isIntroComplete);
+    startAxisTracker();
   },
 });
 
@@ -165,10 +166,9 @@ introTimeline.set(axisPoint, {
   xPercent: -50,
 });
 
-// Intro 2 ::  중심축 타임라인 애니메이션
 introTimeline
 
-  //  2-1. point 안의 선을 90도 전환 및 point의 사이즈 축소
+  //  1. point 안의 선을 90도 전환 및 point의 사이즈 축소
   .to(".intro__dot-innerline", {
     rotate: 90,
   })
@@ -180,7 +180,7 @@ introTimeline
     ease: "back.out(3)",
   })
 
-  //  2-2. point의 y 값을 intro section의 바닥까지 이동
+  //  2. point의 y 값을 intro section의 바닥까지 이동
   .to(axisPoint, {
     top: introBottomLine,
     width: "14px",
@@ -193,10 +193,10 @@ introTimeline
     },
     "<",
   )
-  //  2-3. point에 Pulse Animation 넣기
+  //  3. point에 Pulse Animation 넣기
   .to(axisPoint, pulseAnimation(), "+=0.3")
 
-  //  2-4. 아래로 가기 화살표 등장
+  //  4. 아래로 가기 화살표 등장
   .to(
     ".intro__arrow",
     {
