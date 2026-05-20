@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(TextPlugin);
 
-const axisPoint = document.querySelector(".axis-point");
+
 const section = {
   intro: document.querySelector(".intro"),
   profile: document.querySelector(".profile"),
@@ -10,20 +10,25 @@ const section = {
   outro: document.querySelector(".outro"),
 };
 const allSections = Object.values(section);
+
+const axisPoint = document.querySelector(".axis-point");
 const sectionIndicator = document.querySelector(".section-indicator");
+
 const BASE_HEIGHT = 100;
 const HALF_HEIGHT = BASE_HEIGHT / 2;
 let isIntroComplete = false;
+
 /*
  * ---------------------------------------------------------
  * [ Axis-Line ]
  *  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
  * ---------------------------------------------------------
  */
-
 function startAxisTracker() {
   allSections.forEach((section, idx) => {
-    const startPos = idx === 0 ? BASE_HEIGHT : BASE_HEIGHT * idx;
+    if(idx===0) return;
+    
+    const startPos = BASE_HEIGHT * idx;
     const isLastSection = idx === allSections.length - 1;
 
     const endPos = isLastSection
@@ -50,19 +55,15 @@ function startAxisTracker() {
         top: `${endPos}dvh`,
       },
     );
-    console.log(idx, startPos, section);
   });
 }
-window.addEventListener("scroll", () => {
-  console.log(axisPoint.offsetTop);
-});
+
 /*
  * ---------------------------------------------------------
  * [ Section-indicator ]
  *   Section 진입 시, 그에 맞는 색인 변화
  * ---------------------------------------------------------
  */
-
 allSections.forEach((eachSec) => {
   const sectionName = eachSec.dataset.name;
 
@@ -145,8 +146,8 @@ const clearPulseTimeline = gsap.timeline({
  * ---------------------------------------------------------
  */
 
-const introBottomLine = `${BASE_HEIGHT}dvh`;
-const Axis_Start = `${HALF_HEIGHT}dvh`;
+// const introBottomLine = `${BASE_HEIGHT}dvh`;
+// const Axis_Start = `${HALF_HEIGHT}dvh`;
 
 const introTimeline = gsap.timeline({
   defaults: {
@@ -155,13 +156,13 @@ const introTimeline = gsap.timeline({
   },
   onComplete: () => {
     isIntroComplete = true;
-    console.log(isIntroComplete);
     startAxisTracker();
   },
 });
 
 introTimeline.set(axisPoint, {
-  top: Axis_Start,
+  // top: Axis_Start,
+  top: `${HALF_HEIGHT}dvh`,
   yPercent: -50,
   xPercent: -50,
 });
@@ -182,7 +183,8 @@ introTimeline
 
   //  2. point의 y 값을 intro section의 바닥까지 이동
   .to(axisPoint, {
-    top: introBottomLine,
+    // top: introBottomLine,
+    top: `${BASE_HEIGHT}dvh`,
     width: "14px",
     height: "14px",
   })
