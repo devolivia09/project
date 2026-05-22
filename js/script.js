@@ -1,7 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(TextPlugin);
 
-
 const section = {
   intro: document.querySelector(".intro"),
   profile: document.querySelector(".profile"),
@@ -25,37 +24,27 @@ let isIntroComplete = false;
  * ---------------------------------------------------------
  */
 function startAxisTracker() {
-  allSections.forEach((section, idx) => {
-    if(idx===0) return;
-    
-    const startPos = BASE_HEIGHT * idx;
-    const isLastSection = idx === allSections.length - 1;
-
-    const endPos = isLastSection
-      ? startPos + HALF_HEIGHT
-      : startPos + BASE_HEIGHT;
-
-    const axisTracker = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top center",
-        end: isLastSection ? "top top" : "bottom center",
-        scrub: 0.2,
-        fastScrollEnd: true,
-      },
-      ease: "none",
-    });
-
-    axisTracker.fromTo(
-      axisPoint,
-      {
-        top: `${startPos}dvh`,
-      },
-      {
-        top: `${endPos}dvh`,
-      },
-    );
+  const axisTracker = gsap.timeline({
+    scrollTrigger: {
+      trigger: allSections[1],
+      start: "top center",
+      endTrigger: allSections[allSections.length - 1],
+      end: "bottom bottom",
+      scrub: 1,
+      anticipatePin: 1,
+    },
   });
+  console.log(allSections.length - 1);
+  axisTracker.fromTo(
+    axisPoint,
+    {
+      top: `${BASE_HEIGHT}dvh`,
+    },
+    {
+      top: `450dvh`,
+      ease: "none",
+    },
+  );
 }
 
 /*
@@ -185,8 +174,8 @@ introTimeline
   .to(axisPoint, {
     // top: introBottomLine,
     top: `${BASE_HEIGHT}dvh`,
-    width: "14px",
-    height: "14px",
+    width: "12px",
+    height: "12px",
   })
   .to(
     axisPoint,

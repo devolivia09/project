@@ -50,19 +50,21 @@ img {
   position: absolute;
   top: 0;
   left: 16%;
-  width: 1.5px;
+  width: 1px;
   height: 100%;
   background-color: #222;
 }
 .axis-point {
   position: absolute;
-  left: 0%;
+  left: 0;
   z-index: 3;
   width: 30px;
   height: 30px;
   background-color: #000;
   border-radius: 50%;
   opacity: 0;
+  will-change: top;
+  transform: translate3d(0, 0, 0);
 }
 .section-indicator {
   position: fixed;
