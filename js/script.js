@@ -53,10 +53,9 @@ function startAxisTracker() {
  *   Section 진입 시, 그에 맞는 색인 변화
  * ---------------------------------------------------------
  */
-allSections.forEach((eachSec) => {
-  const sectionName = eachSec.dataset.name;
-
+allSections.forEach((eachSec, idx) => {
   const indicatorController = () => {
+    const sectionName = eachSec.dataset.name;
     const timeline = gsap.timeline();
 
     let defaultOpacity = 1;
@@ -65,12 +64,11 @@ allSections.forEach((eachSec) => {
     }
 
     timeline
-      .to(sectionIndicator, { opacity: 0, duration: 0.4 })
-      .to(sectionIndicator, { textContent: sectionName, duration: 0 })
+      .to(sectionIndicator, { opacity: 0, duration: 0.25 })
       .to(sectionIndicator, {
-        opacity: 1,
-        ease: "power2.out",
-        duration: 0.5,
+        opacity: defaultOpacity,
+        textContent: sectionName,
+        duration: 0.35,
       });
 
     return timeline;
@@ -80,7 +78,6 @@ allSections.forEach((eachSec) => {
     scrollTrigger: {
       trigger: eachSec,
       start: "top center",
-
       onEnter: () => indicatorController(),
       onEnterBack: () => indicatorController(),
     },
@@ -134,9 +131,6 @@ const clearPulseTimeline = gsap.timeline({
  *   Intro 타임라인 애니메이션
  * ---------------------------------------------------------
  */
-
-// const introBottomLine = `${BASE_HEIGHT}dvh`;
-// const Axis_Start = `${HALF_HEIGHT}dvh`;
 
 const introTimeline = gsap.timeline({
   defaults: {
