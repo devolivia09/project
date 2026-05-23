@@ -23,6 +23,7 @@ let isIntroComplete = false;
  *  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
  * ---------------------------------------------------------
  */
+
 function startAxisTracker() {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
@@ -53,6 +54,7 @@ function startAxisTracker() {
  *   Section 진입 시, 그에 맞는 색인 변화
  * ---------------------------------------------------------
  */
+
 allSections.forEach((eachSec, idx) => {
   const indicatorController = () => {
     const sectionName = eachSec.dataset.name;
@@ -90,6 +92,7 @@ allSections.forEach((eachSec, idx) => {
  *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
+
 let pulseHandle;
 
 const pulseAnimation = () => {
@@ -144,14 +147,12 @@ const introTimeline = gsap.timeline({
 });
 
 introTimeline.set(axisPoint, {
-  // top: Axis_Start,
   top: `${HALF_HEIGHT}dvh`,
   yPercent: -50,
   xPercent: -50,
 });
 
 introTimeline
-
   //  1. point 안의 선을 90도 전환 및 point의 사이즈 축소
   .to(".intro__dot-innerline", {
     rotate: 90,
@@ -166,7 +167,6 @@ introTimeline
 
   //  2. point의 y 값을 intro section의 바닥까지 이동
   .to(axisPoint, {
-    // top: introBottomLine,
     top: `${BASE_HEIGHT}dvh`,
     width: "12px",
     height: "12px",

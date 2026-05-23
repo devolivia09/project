@@ -32,6 +32,14 @@ img {
   display: block;
   max-width: 100%;
 }
+.blind {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  margin: -1px;
+}
 
 /* ---  Common Section Style --- */
 .container {
@@ -221,7 +229,6 @@ section.profile {
   border-radius: 50%;
 }
 .works__corporate .works__thumbnail {
-  /* transform: rotate(-10deg); */
   background-color: #ddd;
 }
 .works__thumbnail img {
