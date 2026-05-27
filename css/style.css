@@ -7,19 +7,23 @@
   padding: 0;
 }
 html {
-  font-size: 16px;
+  font-size: 62.5%;
   height: 100%;
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
 body {
+  width: 100vw;
+  width: 100dvw;
   min-height: 100vh;
   min-height: 100dvh;
   background-color: #fff;
   font-family: "Noto Serif KR", serif;
   -webkit-font-smoothing: antialiased;
+  font-size: 1.6rem;
   line-height: 1.6;
   color: #000;
+  background-color: #efebb8;
 }
 ul {
   list-style: none;
@@ -44,10 +48,12 @@ img {
 /* ---  Common Section Style --- */
 .container {
   position: relative;
-  width: 100vw;
-  width: 100dvw;
+  width: 100%;
+  max-width: 1024px;
   height: 500vh;
   height: 500dvh;
+  margin: 0 auto;
+  background-color: #fff;
 }
 .section {
   position: relative;
@@ -75,7 +81,7 @@ img {
   transform: translate3d(0, 0, 0);
 }
 .section-indicator {
-  position: fixed;
+  position: absolute;
   top: 1.75%;
   right: 3.5%;
   font-weight: 500;
@@ -90,16 +96,16 @@ section.intro {
 }
 .intro__txt {
   position: absolute;
-  left: 16%;
-  padding-bottom: 0.3rem;
-  padding: 0 0.35rem 0.3rem;
+  left: 11%;
+  padding-bottom: 0.45rem;
+  padding: 0 0.55rem 0.45rem;
   background-color: #000;
-  font-size: 2.5rem;
+  font-size: 4rem;
   font-weight: 500;
   letter-spacing: 3px;
   color: #fff;
   opacity: 1;
-  transform: translateX(-3.25rem);
+  transform: translateX(-14%);
 }
 .intro__txt span {
   opacity: 0;
@@ -135,7 +141,6 @@ section.intro {
 
 /* --- [Section] Profile Style -------------------------------------------- */
 section.profile {
-  font-size: 1.2rem;
   line-height: 1.85;
 }
 .profile-frame {
@@ -144,29 +149,30 @@ section.profile {
 }
 .profile__item {
   position: absolute;
-  left: 20%;
+  left: 25%;
 }
 .profile__name {
   top: 10%;
 }
 .profile__job {
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 .profile__name {
-  font-size: 1.6rem;
+  font-size: 2.5rem;
 }
 .profile__portrait {
   top: 25%;
 }
 .profile__info {
   top: 55%;
+  font-size: 1.75rem;
 }
 .profile__portrait svg {
   overflow: visible;
 }
 .profile__message {
   top: 70%;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 /* --- [Section] Skills Style -------------------------------------------- */
@@ -314,4 +320,16 @@ section.outro::after {
 .outro__menu li a {
   padding-bottom: 2px;
   letter-spacing: 0.85px;
+}
+
+/* --- [MediaQueries] All sections -------------------------------------------- */
+@media (max-width: 375px) {
+  .profile__portrait {
+    top: 22%;
+  }
+}
+@media (min-width: 820px) {
+  .intro__txt {
+    transform: translateX(-10%);
+  }
 }

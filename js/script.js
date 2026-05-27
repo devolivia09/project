@@ -8,8 +8,8 @@ const section = {
   works: document.querySelector(".works"),
   outro: document.querySelector(".outro"),
 };
-const allSections = Object.values(section);
 
+const allSections = Object.values(section);
 const axisPoint = document.querySelector(".axis-point");
 const sectionIndicator = document.querySelector(".section-indicator");
 
@@ -23,7 +23,6 @@ let isIntroComplete = false;
  *  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
  * ---------------------------------------------------------
  */
-
 function startAxisTracker() {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
@@ -35,7 +34,7 @@ function startAxisTracker() {
       anticipatePin: 1,
     },
   });
-  
+  console.log(allSections.length - 1);
   axisTracker.fromTo(
     axisPoint,
     {
@@ -54,7 +53,6 @@ function startAxisTracker() {
  *   Section 진입 시, 그에 맞는 색인 변화
  * ---------------------------------------------------------
  */
-
 allSections.forEach((eachSec, idx) => {
   const indicatorController = () => {
     const sectionName = eachSec.dataset.name;
@@ -92,7 +90,6 @@ allSections.forEach((eachSec, idx) => {
  *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
-
 let pulseHandle;
 
 const pulseAnimation = () => {
@@ -134,7 +131,6 @@ const clearPulseTimeline = gsap.timeline({
  *   Intro 타임라인 애니메이션
  * ---------------------------------------------------------
  */
-
 const introTimeline = gsap.timeline({
   defaults: {
     ease: "power2.inOut",
@@ -199,7 +195,6 @@ introTimeline
  * 2 :: 얼굴의 각 요소 타임라인
  * ---------------------------------------------------------
  */
-
 const profileItems = document.querySelectorAll(".profile__item");
 
 // Profile 1 :: 섹션의 각 요소 타임라인 (아이템 우측 Slide-in)
@@ -265,7 +260,6 @@ faceTimeline
  *   기술 섹션의 요소들(언어) 애니메이션 타임라인
  * ---------------------------------------------------------
  */
-
 const listItems = section.skills.querySelectorAll(
   ".skills__arrow, .skills__title, .skills__desc li",
 );
@@ -337,7 +331,6 @@ worksItems.forEach((item) => {
  * 3 :: 섹션의 메뉴 마우스 이벤트 설정
  * ---------------------------------------------------------
  */
-
 const outroTitle = section.outro.querySelector(".outro__title");
 const outroSubTitle = section.outro.querySelector(".outro__subtitle");
 const outroMessageSub = section.outro.querySelector(".outro__message--sub");
