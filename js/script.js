@@ -35,7 +35,7 @@ function startAxisTracker() {
       anticipatePin: 1,
     },
   });
-  console.log(allSections.length - 1);
+  
   axisTracker.fromTo(
     axisPoint,
     {
