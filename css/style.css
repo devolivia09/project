@@ -23,7 +23,7 @@ body {
   font-size: 1.6rem;
   line-height: 1.6;
   color: #000;
-  background-color: #efebb8;
+  background-color: #e8e8e8;
 }
 ul {
   list-style: none;
@@ -59,6 +59,8 @@ img {
   position: relative;
   height: 100vh;
   height: 100dvh;
+  outline: 1px solid gray;
+  outline-offset: -2px;
 }
 .axis-line {
   position: absolute;
@@ -81,7 +83,7 @@ img {
   transform: translate3d(0, 0, 0);
 }
 .section-indicator {
-  position: absolute;
+  position: fixed;
   top: 1.75%;
   right: 3.5%;
   font-weight: 500;
@@ -178,38 +180,35 @@ section.profile {
 /* --- [Section] Skills Style -------------------------------------------- */
 .skills__list {
   position: absolute;
-  top: 8%;
+  top: 12%;
   left: 20%;
   width: 60%;
   text-align: center;
-  line-height: 2.8;
+  line-height: 2.6;
 }
 .skills__item {
   color: #000000;
   font-weight: 500;
 }
 .skills__item:not(:first-child) {
-  margin-top: 1.85rem;
+  margin-top: 6rem;
 }
 .skills__title {
   position: relative;
-  font-size: 1.5rem;
+  font-size: 1.9rem;
 }
 .skills__arrow {
   position: absolute;
   left: 0;
   bottom: 0;
-  font-size: 1.15rem;
+  font-size: 1.6rem;
   transform: translate(150%, 20%) rotate(-35deg);
-}
-.javascript-lang {
-  font-size: 0.95rem;
 }
 
 /* --- [Section] Works Style -------------------------------------------- */
 .works__list {
   position: absolute;
-  top: 12%;
+  top: 15%;
   left: 25%;
   width: 60%;
   text-align: center;
@@ -221,13 +220,13 @@ section.profile {
   justify-content: space-between;
 }
 .works__item:not(:first-child) {
-  margin-top: 5.5rem;
+  margin-top: 8rem;
 }
 .works__thumbnail {
-  width: clamp(5.5rem, 30%, 8rem);
+  aspect-ratio: 1/1;
+  width: clamp(5.5rem, 35%, 8rem);
   background-color: rgba(0, 0, 0, 0.25);
   border-radius: 15%;
-  aspect-ratio: 1/1;
   overflow: hidden;
 }
 .works__jazz .works__thumbnail,
@@ -251,11 +250,11 @@ section.profile {
   color: #ddd;
 }
 .works-title {
-  font-size: 0.875rem;
+  font-size: 1.4rem;
 }
 .works-txt {
   padding: 5px 0;
-  font-size: 0.75rem;
+  font-size: 1.3rem;
 }
 
 /* --- [Section] Outro Style -------------------------------------------- */
@@ -281,18 +280,18 @@ section.outro::after {
   align-items: center;
   padding: 0;
   line-height: 1;
-  min-height: 1.5rem;
+  min-height: 1.6rem;
 }
 .outro__message--sub {
   margin-top: 2.2rem;
 }
 .outro__title {
   font-weight: 600;
-  font-size: 2.15rem;
+  font-size: 2.8rem;
 }
 .outro__subtitle {
   font-weight: 600;
-  font-size: 1.75rem;
+  font-size: 2.3rem;
   white-space: nowrap;
 }
 .outro__cursor {
@@ -305,11 +304,11 @@ section.outro::after {
 .outro__menu {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 2.5rem;
+  grid-gap: 3rem;
   position: absolute;
   top: 58%;
   left: 30%;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   line-height: 2;
   font-weight: 600;
 }
@@ -322,10 +321,27 @@ section.outro::after {
   letter-spacing: 0.85px;
 }
 
+/* 레이아웃 기준점 : iPhone 13, 최대 1024px 해상도까지 대응하도록 구현 */
 /* --- [MediaQueries] All sections -------------------------------------------- */
-@media (max-width: 375px) {
+/* 375px × 667px (아이폰 SE 2/3세대) */
+@media (max-width: 375.98px) {
+  html {
+    font-size: 58%;
+  }
   .profile__portrait {
     top: 22%;
+  }
+  .skills__list {
+    top: 8%;
+  }
+  .skills__item:not(:first-child) {
+    margin-top: 4rem;
+  }
+  .works__list {
+    top: 10%;
+  }
+  .works__item:not(:first-child) {
+    margin-top: 6rem;
   }
 }
 @media (min-width: 820px) {
