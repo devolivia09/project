@@ -131,6 +131,10 @@ const clearPulseTimeline = gsap.timeline({
  *   Intro 타임라인 애니메이션
  * ---------------------------------------------------------
  */
+const isTablet = window.innerWidth >= 768;
+const fisrtDotSize = isTablet ? "24px" : "16px";
+const lastDotSize = isTablet ? "20px" : "12px";
+
 const introTimeline = gsap.timeline({
   defaults: {
     ease: "power2.inOut",
@@ -154,18 +158,18 @@ introTimeline
     rotate: 90,
   })
   .to(axisPoint, {
-    width: "16px",
-    height: "16px",
+    width: fisrtDotSize,
+    height: fisrtDotSize,
     opacity: 1,
-    duration: 0.5,
+    duration: 0.85,
     ease: "back.out(3)",
   })
 
   //  2. point의 y 값을 intro section의 바닥까지 이동
   .to(axisPoint, {
     top: `${BASE_HEIGHT}dvh`,
-    width: "12px",
-    height: "12px",
+    width: lastDotSize,
+    height: lastDotSize,
   })
   .to(
     axisPoint,
