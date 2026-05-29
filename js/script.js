@@ -15,6 +15,8 @@ const sectionIndicator = document.querySelector(".section-indicator");
 
 const BASE_HEIGHT = 100;
 const HALF_HEIGHT = BASE_HEIGHT / 2;
+
+let introTimeline;
 let isIntroComplete = false;
 
 /*
@@ -111,7 +113,9 @@ const clearPulseTimeline = gsap.timeline({
     scrub: true,
     onLeave: () => {
       gsap.to(".intro__arrow", { opacity: 0 });
-      introTimeline.progress(1);
+      if (introTimeline) {
+        introTimeline.progress(1);
+      }
       gsap.to(axisPoint, { yPercent: -50 });
       if (pulseHandle) {
         pulseHandle.pause();
@@ -128,69 +132,84 @@ const clearPulseTimeline = gsap.timeline({
 /*
  * ---------------------------------------------------------
  * [ Intro ]
- *   Intro 타임라인 애니메이션
+ *   Intro 타임라인 애니메이션 (기기별 반응형 대응)
  * ---------------------------------------------------------
  */
-const isTablet = window.innerWidth >= 768;
-const fisrtDotSize = isTablet ? "24px" : "16px";
-const lastDotSize = isTablet ? "20px" : "12px";
 
-const introTimeline = gsap.timeline({
-  defaults: {
-    ease: "power2.inOut",
-    duration: 0.85,
-  },
-  onComplete: () => {
-    isIntroComplete = true;
-    startAxisTracker();
-  },
+let mm = gsap.matchMedia();
+
+mm.add("(min-width: 768px)", () => {
+  const startDotSize = "24px";
+  const endDotSize = "20px";
+  startIntroAnimation(startDotSize, endDotSize);
 });
 
-introTimeline.set(axisPoint, {
-  top: `${HALF_HEIGHT}dvh`,
-  yPercent: -50,
-  xPercent: -50,
+mm.add("(max-width: 767px)", () => {
+  const startDotSize = "16px";
+  const endDotSize = "12px";
+  startIntroAnimation(startDotSize, endDotSize);
 });
 
-introTimeline
-  //  1. point 안의 선을 90도 전환 및 point의 사이즈 축소
-  .to(".intro__dot-innerline", {
-    rotate: 90,
-  })
-  .to(axisPoint, {
-    width: fisrtDotSize,
-    height: fisrtDotSize,
-    opacity: 1,
-    duration: 0.85,
-    ease: "back.out(3)",
-  })
-
-  //  2. point의 y 값을 intro section의 바닥까지 이동
-  .to(axisPoint, {
-    top: `${BASE_HEIGHT}dvh`,
-    width: lastDotSize,
-    height: lastDotSize,
-  })
-  .to(
-    axisPoint,
-    {
-      yPercent: -100,
+function startIntroAnimation(startDotSize, endDotSize) {
+  const timeline = gsap.timeline({
+    defaults: {
+      ease: "power2.inOut",
+      duration: 0.85,
     },
-    "<",
-  )
-  //  3. point에 Pulse Animation 넣기
-  .to(axisPoint, pulseAnimation(), "+=0.3")
-
-  //  4. 아래로 가기 화살표 등장
-  .to(
-    ".intro__arrow",
-    {
-      bottom: "2%",
-      opacity: 0.6,
-      ease: "power2.out",
+    onComplete: () => {
+      isIntroComplete = true;
+      startAxisTracker();
     },
-    "+=1.5",
-  );
+  });
+
+  timeline.set(axisPoint, {
+    top: `${HALF_HEIGHT}dvh`,
+    yPercent: -50,
+    xPercent: -50,
+  });
+
+  timeline
+    //  1. point 안의 선을 90도 전환 및 point의 사이즈 축소
+    .to(".intro__dot-innerline", {
+      rotate: 90,
+    })
+    .to(axisPoint, {
+      width: startDotSize,
+      // height: startDotSize,
+      opacity: 1,
+      duration: 0.85,
+      ease: "back.out(3)",
+    })
+
+    //  2. point의 y 값을 intro section의 바닥까지 이동
+    .to(axisPoint, {
+      top: `${BASE_HEIGHT}dvh`,
+      width: endDotSize,
+      // height: lastDotSize,
+    })
+    .to(
+      axisPoint,
+      {
+        yPercent: -100,
+      },
+      "<",
+    )
+    //  3. point에 Pulse Animation 넣기
+    .to(axisPoint, pulseAnimation(), "+=0.3")
+
+    //  4. 아래로 가기 화살표 등장
+    .to(
+      ".intro__arrow",
+      {
+        bottom: "2%",
+        opacity: 0.6,
+        ease: "power2.out",
+      },
+      "+=1.5",
+    );
+
+  return timeline;
+}
 
 //
 /* * ---------------------------------------------------------
