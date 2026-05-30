@@ -16,8 +16,8 @@ const sectionIndicator = document.querySelector(".section-indicator");
 const BASE_HEIGHT = 100;
 const HALF_HEIGHT = BASE_HEIGHT / 2;
 
-let introTimeline;
 let isIntroComplete = false;
+let introTimeline;
 
 /*
  * ---------------------------------------------------------
@@ -139,15 +139,23 @@ const clearPulseTimeline = gsap.timeline({
 let mm = gsap.matchMedia();
 
 mm.add("(min-width: 768px)", () => {
-  const startDotSize = "24px";
-  const endDotSize = "20px";
-  startIntroAnimation(startDotSize, endDotSize);
+  introTimeline = startIntroAnimation("24px", "20px");
+  return () => {
+    if (introTimeline) {
+      introTimeline.kill();
+      introTimeline = null;
+    }
+  };
 });
 
 mm.add("(max-width: 767px)", () => {
-  const startDotSize = "16px";
-  const endDotSize = "12px";
-  startIntroAnimation(startDotSize, endDotSize);
+  introTimeline = startIntroAnimation("16px", "12px");
+  return () => {
+    if (introTimeline) {
+      introTimeline.kill();
+      introTimeline = null;
+    }
+  };
 });
 
 function startIntroAnimation(startDotSize, endDotSize) {
@@ -175,7 +183,6 @@ function startIntroAnimation(startDotSize, endDotSize) {
     })
     .to(axisPoint, {
       width: startDotSize,
-      // height: startDotSize,
       opacity: 1,
       duration: 0.85,
       ease: "back.out(3)",
@@ -185,7 +192,6 @@ function startIntroAnimation(startDotSize, endDotSize) {
     .to(axisPoint, {
       top: `${BASE_HEIGHT}dvh`,
       width: endDotSize,
-      // height: lastDotSize,
     })
     .to(
       axisPoint,

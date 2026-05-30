@@ -95,24 +95,14 @@ section.intro {
   display: flex;
   align-items: center;
 }
-/* section.intro::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background-color: black;
-  transform: translateY(-50%);
-} */
 .intro__txt {
   position: absolute;
   left: 11%;
   padding-bottom: 0.45rem;
   padding: 0 0.55rem 0.45rem;
   background-color: #000;
-  font-size: 4rem;
+  /* font-size: 4rem; */
+  font-size: clamp(4rem, 6vw, 6.5rem);
   font-weight: 500;
   letter-spacing: 0.5rem;
   color: #fff;
@@ -167,24 +157,24 @@ section.profile {
   top: 10%;
 }
 .profile__job {
-  font-size: 2rem;
+  font-size: clamp(2rem, 4vw, 5rem);
 }
 .profile__name {
-  font-size: 2.5rem;
+  font-size: clamp(2.5rem, 5vw, 6rem);
 }
 .profile__portrait {
   top: 25%;
 }
 .profile__info {
   top: 55%;
-  font-size: 1.75rem;
+  font-size: clamp(1.85rem, 3.25vw, 4rem);
 }
 .profile__portrait svg {
   overflow: visible;
 }
 .profile__message {
   top: 70%;
-  font-size: 2rem;
+  font-size: clamp(2.5rem, 4vw, 5rem);
 }
 
 /* --- [Section] Skills Style -------------------------------------------- */
@@ -204,18 +194,26 @@ section.profile {
   margin-top: 6rem;
 }
 .skills__title {
+  display: inline-block;
   position: relative;
-  font-size: 1.9rem;
+  font-size: clamp(2rem, 5vw, 5rem);
 }
 .skills__arrow {
+  display: inline-block;
   position: absolute;
   left: 0;
   bottom: 0;
-  font-size: 1.6rem;
-  transform: translate(150%, 20%) rotate(-35deg);
+  font-size: clamp(1.7rem, 4vw, 4rem);
+  transform: translate(-6vw, 7%) rotate(-25deg);
+}
+.skills__desc {
+  font-size: clamp(1.6rem, 3vw, 3.5rem);
 }
 
 /* --- [Section] Works Style -------------------------------------------- */
+section.works {
+  background-color: #eee;
+}
 .works__list {
   position: absolute;
   top: 15%;
@@ -359,7 +357,6 @@ section.outro::after {
   .intro__txt {
     transform: translateX(-10%);
     font-size: 6.5rem;
-    vertical-align: -1px;
   }
   .intro__txt-dot {
     width: 4.5rem;
