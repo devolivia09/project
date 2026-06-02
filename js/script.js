@@ -486,3 +486,5 @@ outroLinks.forEach((link) => {
     });
   });
 });
+
+// console.log(outroLinks);

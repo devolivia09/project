@@ -74,7 +74,6 @@ img {
   z-index: 3;
   width: 30px;
   aspect-ratio: 1/1;
-  /* height: 30px; */
   background-color: #000;
   border-radius: 50%;
   opacity: 0;
@@ -101,7 +100,6 @@ section.intro {
   padding-bottom: 0.45rem;
   padding: 0 0.55rem 0.45rem;
   background-color: #000;
-  /* font-size: 4rem; */
   font-size: clamp(4rem, 6vw, 6.5rem);
   font-weight: 500;
   letter-spacing: 0.5rem;
@@ -164,6 +162,8 @@ section.profile {
 }
 .profile__portrait {
   top: 25%;
+  width: 30%;
+  height: 30%;
 }
 .profile__info {
   top: 55%;
@@ -278,7 +278,7 @@ section.outro::after {
   top: 25%;
   left: 26%;
   width: 60%;
-  line-height: 2;
+  line-height: 1;
 }
 .outro__message {
   display: flex;
@@ -287,23 +287,22 @@ section.outro::after {
   min-height: 1.6rem;
 }
 .outro__message--sub {
-  margin-top: 2.2rem;
+  margin-top: clamp(2.8rem, 6vw, 6rem);
 }
 .outro__title {
   font-weight: 600;
-  font-size: clamp(2.8rem, 5vw, 7rem);
+  font-size: clamp(2.8rem, 6vw, 6rem);
 }
 .outro__subtitle {
   font-weight: 600;
-  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-size: clamp(2.4rem, 5vw, 5rem);
   white-space: nowrap;
 }
 .outro__cursor {
   width: 2px;
-  height: 2.5rem;
+  height: clamp(3rem, 6vw, 6rem);
   background-color: #000;
   margin-left: 4px;
-  vertical-align: sub;
 }
 .outro__menu {
   display: grid;
@@ -314,7 +313,6 @@ section.outro::after {
   left: 30%;
   font-size: clamp(1.8rem, 3.75vw, 6rem);
   font-weight: 600;
-  /* line-height: 2; */
 }
 .outro__menu li {
   transform: translateX(-1.2rem);
@@ -365,9 +363,9 @@ section.outro::after {
     top: 8%;
     width: 54%;
   }
-  .outro__cursor {
+  /* .outro__cursor {
     height: 4rem;
-  }
+  } */
   .outro__menu {
     top: 60%;
     grid-gap: 6rem;
