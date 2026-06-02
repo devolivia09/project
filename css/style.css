@@ -234,8 +234,7 @@ section.profile {
   border-radius: 15%;
   overflow: hidden;
 }
-.works__jazz .works__thumbnail,
-.works__codepen .works__thumbnail {
+.works__list li:nth-child(even) .works__thumbnail {
   border-radius: 50%;
 }
 .works__corporate .works__thumbnail {
@@ -385,5 +384,48 @@ section.outro::after {
   }
   .skills__list {
     top: 5%;
+  }
+}
+@media (min-width: 1025px) {
+  html {
+    font-size: 35%;
+  }
+  section {
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+  }
+  .intro__txt {
+    transform: translateX(0%);
+    letter-spacing: 1rem;
+  }
+  .profile__portrait {
+    width: 20%;
+    height: 20%;
+  }
+  .works__list {
+    width: 50%;
+  }
+  .works__thumbnail {
+    font-size: 2vw;
+    min-width: 22rem;
+  }
+  .works-title {
+    font-size: clamp(1.4rem, 2vw, 5rem);
+  }
+  .works__list a * {
+    /* border: 1px solid gray; */
+  }
+  .works__list li:nth-child(odd) .works__thumbnail {
+    margin-left: 12%;
+  }
+  .works__list li:nth-child(even) .works__thumbnail {
+    margin-right: 12%;
+  }
+  /* 글씨 방향 바꾸기 */
+  .works__list li:nth-child(odd) .works__desc {
+    text-align: left;
+  }
+  .works__list li:nth-child(even) .works__desc {
+    text-align: right;
   }
 }
