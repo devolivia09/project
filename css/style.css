@@ -83,13 +83,16 @@ img {
 .section-indicator {
   position: fixed;
   top: 1.75%;
-  right: 3.5%;
+  right: 4.5%;
+  font-size: clamp(1.3rem, 2.6vw, 3.25rem);
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.75);
-  transform: scale(0.8);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 /* --- [Section] Intro Style -------------------------------------------- */
+section {
+  border: 1px solid gray;
+}
 section.intro {
   display: flex;
   align-items: center;
@@ -322,7 +325,7 @@ section.outro::after {
   letter-spacing: 0.85px;
 }
 
-/* 레이아웃 기준점 : iPhone 13, 최대 1024px 해상도까지 대응하도록 구현 */
+/* 레이아웃 기준점 : iPhone 13, 이후 최대 1024px 해상도까지 대응하도록 구현 */
 /* --- [MediaQueries] All sections -------------------------------------------- */
 /* 375px × 667px (아이폰 SE 2/3세대) */
 @media (max-width: 375.98px) {
@@ -346,6 +349,7 @@ section.outro::after {
   }
 }
 
+/* 820px × 1180px (iPad Air) */
 @media (min-width: 820px) {
   .intro__txt {
     transform: translateX(-10%);
@@ -362,15 +366,14 @@ section.outro::after {
     top: 8%;
     width: 54%;
   }
-  /* .outro__cursor {
-    height: 4rem;
-  } */
+
   .outro__menu {
     top: 60%;
     grid-gap: 6rem;
   }
 }
 
+/* 1024px × 1366px (iPad Pro) */
 @media (min-width: 1024px) {
   .intro__txt {
     vertical-align: text-top;
@@ -386,6 +389,8 @@ section.outro::after {
     top: 5%;
   }
 }
+
+/* 1025px 이상 (Desktop) */
 @media (min-width: 1025px) {
   html {
     font-size: 35%;
@@ -393,6 +398,10 @@ section.outro::after {
   section {
     border-left: 1px solid gray;
     border-right: 1px solid gray;
+  }
+  .section-indicator {
+    right: 50%;
+    transform: translateX(80rem);
   }
   .intro__txt {
     transform: translateX(0%);
@@ -412,16 +421,12 @@ section.outro::after {
   .works-title {
     font-size: clamp(1.4rem, 2vw, 5rem);
   }
-  .works__list a * {
-    /* border: 1px solid gray; */
-  }
   .works__list li:nth-child(odd) .works__thumbnail {
     margin-left: 12%;
   }
   .works__list li:nth-child(even) .works__thumbnail {
     margin-right: 12%;
   }
-  /* 글씨 방향 바꾸기 */
   .works__list li:nth-child(odd) .works__desc {
     text-align: left;
   }

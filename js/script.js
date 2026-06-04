@@ -58,19 +58,25 @@ function startAxisTracker() {
 allSections.forEach((eachSec, idx) => {
   const indicatorController = () => {
     const sectionName = eachSec.dataset.name;
+    const isIntroSection = self.progress < 0.4;
     const timeline = gsap.timeline();
-
     let defaultOpacity = 1;
+
+    // window.addEventListener("scroll", () => {
+    //   console.log(window.scrollY, ",", sectionName);
+    // });
+
     if (sectionName === "intro") {
       defaultOpacity = 0;
     }
+    //  ||
 
     timeline
       .to(sectionIndicator, { opacity: 0, duration: 0.25 })
       .to(sectionIndicator, {
         opacity: defaultOpacity,
         textContent: sectionName,
-        duration: 0.35,
+        duration: 0.5,
       });
 
     return timeline;
@@ -80,8 +86,22 @@ allSections.forEach((eachSec, idx) => {
     scrollTrigger: {
       trigger: eachSec,
       start: "top center",
+      onUpdate: (self) => {
+        console.log(
+          window.scrollY,
+          ",",
+          self.progress < 0.4,
+          ",",
+          eachSec.dataset.name,
+        );
+      },
       onEnter: () => indicatorController(),
       onEnterBack: () => indicatorController(),
+      onLeaveBack: () => {
+        if (eachSec === "profile") {
+          gsap.to(sectionIndicator, { opacity: 0, duration: 0.25 });
+        }
+      },
     },
   });
 });
