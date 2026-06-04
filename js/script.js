@@ -139,7 +139,7 @@ const clearPulseTimeline = gsap.timeline({
 let mm = gsap.matchMedia();
 
 mm.add("(min-width: 768px)", () => {
-  introTimeline = startIntroAnimation("24px", "20px");
+  introTimeline = startIntroAnimation("2.4rem", "1.8rem");
   return () => {
     if (introTimeline) {
       introTimeline.kill();
@@ -149,7 +149,7 @@ mm.add("(min-width: 768px)", () => {
 });
 
 mm.add("(max-width: 767px)", () => {
-  introTimeline = startIntroAnimation("16px", "12px");
+  introTimeline = startIntroAnimation("1.8rem", "1.4rem");
   return () => {
     if (introTimeline) {
       introTimeline.kill();
