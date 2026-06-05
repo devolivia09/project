@@ -1,5 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(TextPlugin);
+gsap.registerPlugin(scrollTo);
 
 const section = {
   intro: document.querySelector(".intro"),
@@ -363,6 +364,7 @@ worksItems.forEach((item) => {
  * 1 :: cursorBlink 함수 정의 (커서 숨김 & 깜빡임)
  * 2 :: 섹션 클로징 타이핑 애니메이션
  * 3 :: 섹션의 메뉴 마우스 이벤트 설정
+ * 4 :: Outro 메뉴의 클릭 이벤트 설정 (해당 섹션으로 스크롤 이동)
  * ---------------------------------------------------------
  */
 const outroTitle = section.outro.querySelector(".outro__title");
@@ -476,8 +478,8 @@ outroTimeline
 
   .to(axisPoint, pulseAnimation());
 
-// 3 :: 섹션 메뉴의 마우스 hover 설정
 outroLinks.forEach((link) => {
+  // 3 :: 섹션 메뉴의 마우스 hover 설정
   link.addEventListener("mouseenter", () => {
     gsap.to(link, {
       borderBottom: "1px solid black",
@@ -490,6 +492,21 @@ outroLinks.forEach((link) => {
       duration: 0.5,
     });
   });
-});
 
-// console.log(outroLinks);
+  // 4 :: Outro 메뉴의 클릭 이벤트 설정 (해당 섹션으로 스크롤 이동)
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const targetSection = link.dataset.target;
+    const targetElement = section[targetSection];
+    if (targetSection) {
+      gsap.to(window, {
+        scrollTo: {
+          y: targetElement,
+          autoKill: false,
+        },
+        duration: 0.8,
+        ease: "power2.inOut",
+      });
+    }
+  });
+});
