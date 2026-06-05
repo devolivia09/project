@@ -58,18 +58,12 @@ function startAxisTracker() {
 allSections.forEach((eachSec, idx) => {
   const indicatorController = () => {
     const sectionName = eachSec.dataset.name;
-    const isIntroSection = self.progress < 0.4;
     const timeline = gsap.timeline();
     let defaultOpacity = 1;
-
-    // window.addEventListener("scroll", () => {
-    //   console.log(window.scrollY, ",", sectionName);
-    // });
 
     if (sectionName === "intro") {
       defaultOpacity = 0;
     }
-    //  ||
 
     timeline
       .to(sectionIndicator, { opacity: 0, duration: 0.25 })
@@ -86,19 +80,10 @@ allSections.forEach((eachSec, idx) => {
     scrollTrigger: {
       trigger: eachSec,
       start: "top center",
-      onUpdate: (self) => {
-        console.log(
-          window.scrollY,
-          ",",
-          self.progress < 0.4,
-          ",",
-          eachSec.dataset.name,
-        );
-      },
       onEnter: () => indicatorController(),
       onEnterBack: () => indicatorController(),
       onLeaveBack: () => {
-        if (eachSec === "profile") {
+        if (eachSec.dataset.name === "profile") {
           gsap.to(sectionIndicator, { opacity: 0, duration: 0.25 });
         }
       },
@@ -159,7 +144,7 @@ const clearPulseTimeline = gsap.timeline({
 let mm = gsap.matchMedia();
 
 mm.add("(min-width: 768px)", () => {
-  introTimeline = startIntroAnimation("2.4rem", "1.8rem");
+  introTimeline = startIntroAnimation("2.6rem", "2.2rem");
   return () => {
     if (introTimeline) {
       introTimeline.kill();
@@ -204,7 +189,7 @@ function startIntroAnimation(startDotSize, endDotSize) {
     .to(axisPoint, {
       width: startDotSize,
       opacity: 1,
-      duration: 0.85,
+      duration: 1,
       ease: "back.out(3)",
     })
 
