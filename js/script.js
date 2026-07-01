@@ -1,6 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(TextPlugin);
-gsap.registerPlugin(scrollTo);
+gsap.registerPlugin(ScrollToPlugin);
 
 const section = {
   intro: document.querySelector(".intro"),
