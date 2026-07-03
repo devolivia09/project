@@ -27,11 +27,14 @@ let introTimeline;
  * ---------------------------------------------------------
  */
 function startAxisTracker() {
+  const baseSectionCount = allSections.length - 1; // 4
+  const Scroll_Range = BASE_HEIGHT * baseSectionCount + HALF_HEIGHT; // 400 + 50
+
   const axisTracker = gsap.timeline({
     scrollTrigger: {
       trigger: allSections[1],
       start: "top center",
-      endTrigger: allSections[allSections.length - 1],
+      endTrigger: allSections[baseSectionCount],
       end: "bottom bottom",
       scrub: 1,
       anticipatePin: 1,
@@ -44,7 +47,7 @@ function startAxisTracker() {
       top: `${BASE_HEIGHT}dvh`,
     },
     {
-      top: `450dvh`,
+      top: `${Scroll_Range}dvh`,
       ease: "none",
     },
   );
