@@ -56,38 +56,36 @@ function startAxisTracker() {
  *   Section 진입 시, 그에 맞는 색인 변화
  * ---------------------------------------------------------
  */
+const indicatorController = (sectionName) => {
+  gsap.killTweensOf(sectionIndicator);
+
+  const timeline = gsap.timeline();
+  let defaultOpacity = 1;
+
+  if (sectionName === "intro") {
+    defaultOpacity = 0;
+  }
+  timeline
+    .to(sectionIndicator, { opacity: 0, duration: 0.25 })
+    .to(sectionIndicator, {
+      opacity: defaultOpacity,
+      textContent: sectionName,
+      duration: 0.5,
+    });
+
+  return timeline;
+};
+
 allSections.forEach((eachSec, idx) => {
-  const indicatorController = () => {
-    const sectionName = eachSec.dataset.name;
-    const timeline = gsap.timeline();
-    let defaultOpacity = 1;
-
-    if (sectionName === "intro") {
-      defaultOpacity = 0;
-    }
-
-    timeline
-      .to(sectionIndicator, { opacity: 0, duration: 0.25 })
-      .to(sectionIndicator, {
-        opacity: defaultOpacity,
-        textContent: sectionName,
-        duration: 0.5,
-      });
-
-    return timeline;
-  };
+  const sectionName = eachSec.dataset.name;
 
   const indicatorTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: eachSec,
       start: "top center",
-      onEnter: () => indicatorController(),
-      onEnterBack: () => indicatorController(),
-      onLeaveBack: () => {
-        if (eachSec.dataset.name === "profile") {
-          gsap.to(sectionIndicator, { opacity: 0, duration: 0.25 });
-        }
-      },
+      end: "bottom center",
+      onEnter: () => indicatorController(sectionName),
+      onEnterBack: () => indicatorController(sectionName),
     },
   });
 });
