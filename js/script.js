@@ -60,23 +60,18 @@ const indicatorController = (sectionName) => {
   gsap.killTweensOf(sectionIndicator);
 
   const timeline = gsap.timeline();
-  let defaultOpacity = 1;
+  let baseOpacity = sectionName === "intro" ? 0 : 1;
 
-  if (sectionName === "intro") {
-    defaultOpacity = 0;
-  }
   timeline
     .to(sectionIndicator, { opacity: 0, duration: 0.25 })
     .to(sectionIndicator, {
-      opacity: defaultOpacity,
+      opacity: baseOpacity,
       textContent: sectionName,
       duration: 0.5,
     });
-
-  return timeline;
 };
 
-allSections.forEach((eachSec, idx) => {
+allSections.forEach((eachSec) => {
   const sectionName = eachSec.dataset.name;
 
   const indicatorTimeline = gsap.timeline({
