@@ -262,6 +262,9 @@ section.profile {
 }
 
 /* --- [Section] Outro Style -------------------------------------------- */
+section.outro {
+  pointer-events: none;
+}
 section.outro::after {
   content: "";
   display: block;
@@ -313,6 +316,7 @@ section.outro::after {
   font-size: clamp(1.8rem, 3.75vw, 6rem);
   font-weight: 600;
   text-transform: capitalize;
+  pointer-events: auto;
 }
 .outro__menu li {
   transform: translateX(-1.2rem);
@@ -321,6 +325,19 @@ section.outro::after {
 .outro__menu li a {
   padding-bottom: 2px;
   letter-spacing: 0.85px;
+}
+/* 1. 모든 섹션에 색깔 테두리를 입혀서 '영역'을 눈으로 확인하자 */
+.section {
+  border: 5px solid red;
+}
+
+/* 2. 문제의 범인으로 의심되는 곳에 배경색을 입혀보자 */
+.section.outro {
+  background-color: rgba(0, 0, 255, 0.2); /* 반투명한 파란색 */
+}
+
+.outro__wrapper {
+  background-color: rgba(255, 255, 0, 0.5) !important; /* 반투명한 노란색 */
 }
 
 /* 레이아웃 기준점 : iPhone 13, 이후 최대 1024px 해상도까지 대응하도록 구현 */
