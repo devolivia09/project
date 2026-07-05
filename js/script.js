@@ -333,11 +333,12 @@ worksItems.forEach((item) => {
   const worksTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: item,
-      start: "top 90%",
-      end: "bottom 45%",
+      // start: "top 90%",
+      start: "top bottom",
+      end: "bottom center",
       scrub: 1,
     },
-    ease: "slow(0.7,0.7,false)",
+    ease: "slow(0.65,0.65,false)",
     duration: 1.25,
   });
 

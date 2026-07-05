@@ -351,6 +351,29 @@ section.outro::after {
   }
 }
 
+@media screen and (max-width: 932px) and (orientation: landscape) {
+  body {
+    overflow: hidden;
+    min-height: 100dvh;
+  }
+
+  .container {
+    display: none;
+  }
+  .landscape-message {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  section {
+    min-height: 100dvh;
+  }
+}
+
 /* 820px × 1180px (iPad Air) */
 @media (min-width: 820px) {
   .intro__txt {
