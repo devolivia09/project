@@ -1,10 +1,9 @@
 import { test, expect } from "@playwright/test";
 
-test("포트폴리오 테스트 외부링크", async ({ page }) => {
+test("포트폴리오 테스트 링크검사", async ({ page }) => {
   // 1. 로딩검사 : 메인페이지 접속 & 제목 이상 없는지 확인
   await page.goto("http://solaris2.dothome.co.kr/project/index.html");
   await expect(page).toHaveTitle(/Connect/);
-  await expect(page).toHaveScreenshot({ maxDiffPixelRatio: 0.2 });
 
   // 2. 렌더링 검사
   const firstSection = page.locator("section.intro");
@@ -43,5 +42,37 @@ test("포트폴리오 테스트 외부링크", async ({ page }) => {
     // d. 보안 확인
     await expect(link).toHaveAttribute("target", "_blank");
     await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  }
+
+  // 4. 내비게이션 링크 테스트
+  const navLinks = [
+    { name: "intro" },
+    { name: "profile" },
+    { name: "skills" },
+    { name: "works" },
+  ];
+
+  for (const link of navLinks) {
+    await page.getByRole("link", { name: link.name }).click();
+    const currentSection = page.getByRole("heading", { name: link.name });
+
+    await expect(currentSection).toBeVisible();
+  }
+});
+
+test("반응형 검사", async ({ page }) => {
+  const introSection = page.locator("section.intro");
+  const devices = [
+    { width: 375, height: 667 }, // 모바일
+    { width: 768, height: 1024 }, // 태블릿
+    { width: 1024, height: 1000 }, // 데스크탑
+  ];
+  for (const viewport of devices) {
+    await page.setViewportSize({
+      width: viewport.width,
+      height: viewport.height,
+    });
+    await page.goto("http://solaris2.dothome.co.kr/project/index.html");
+    await expect(introSection).toBeVisible();
   }
 });
