@@ -9,34 +9,29 @@ const section = {
   works: document.querySelector(".works"),
   outro: document.querySelector(".outro"),
 };
-
 const allSections = Object.values(section);
+
 const axisPoint = document.querySelector(".axis-point");
 const sectionIndicator = document.querySelector(".section-indicator");
-
-const BASE_HEIGHT = 100;
-const HALF_HEIGHT = BASE_HEIGHT / 2;
 
 let isIntroComplete = false;
 let introTimeline;
 
 /*
  * ---------------------------------------------------------
- * [ Axis-Line ]
- *  intro 제외한 각 섹션의 축 포인트 제어하는 타임라인
+ * [ AxisTracker ]
+ *  intro 제외한 전체 화면의 스크롤에 맞춰 axis-point 움직임 조절
  * ---------------------------------------------------------
  */
 function startAxisTracker() {
-  const baseSectionCount = allSections.length - 1; // 4
-  const Scroll_Range = BASE_HEIGHT * baseSectionCount + HALF_HEIGHT; // 400 + 50
-
   const axisTracker = gsap.timeline({
     scrollTrigger: {
-      trigger: allSections[1],
+      trigger: section.profile,
+      endTrigger: section.outro,
       start: "top center",
-      endTrigger: allSections[baseSectionCount],
-      end: "bottom bottom",
-      scrub: 1,
+      end: "top center",
+      scroller: document.querySelector(".container"),
+      scrub: 0.5,
       anticipatePin: 1,
     },
   });
@@ -44,10 +39,10 @@ function startAxisTracker() {
   axisTracker.fromTo(
     axisPoint,
     {
-      top: `${BASE_HEIGHT}dvh`,
+      top: "100dvh", // intro section 하단
     },
     {
-      top: `${Scroll_Range}dvh`,
+      top: "calc(100% - 50dvh)", //outro section 가운데 지점
       ease: "none",
     },
   );
@@ -59,25 +54,10 @@ function startAxisTracker() {
  *   Section 진입 시, 그에 맞는 색인 변화
  * ---------------------------------------------------------
  */
-const indicatorController = (sectionName) => {
-  gsap.killTweensOf(sectionIndicator);
-
-  const timeline = gsap.timeline();
-  let baseOpacity = sectionName === "intro" ? 0 : 1;
-
-  timeline
-    .to(sectionIndicator, { opacity: 0, duration: 0.25 })
-    .to(sectionIndicator, {
-      opacity: baseOpacity,
-      textContent: sectionName,
-      duration: 0.5,
-    });
-};
-
 allSections.forEach((eachSec) => {
   const sectionName = eachSec.dataset.name;
-
-  const indicatorTimeline = gsap.timeline({
+  console.log("Section-indicator", sectionName);
+  const timline = gsap.timeline({
     scrollTrigger: {
       trigger: eachSec,
       start: "top center",
@@ -88,20 +68,33 @@ allSections.forEach((eachSec) => {
   });
 });
 
+const indicatorController = (sectionName) => {
+  gsap.killTweensOf(sectionIndicator);
+
+  let baseOpacity = sectionName === "intro" ? 0 : 1;
+  const tl = gsap.timeline();
+
+  tl.to(sectionIndicator, { opacity: 0, duration: 0.25 }).to(sectionIndicator, {
+    opacity: baseOpacity,
+    textContent: sectionName,
+    duration: 0.5,
+  });
+};
+
 /*
  * ---------------------------------------------------------
- * [ Pulse Effect ]
+ * [ Pulse Effect & Skip ]
  *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
-let pulseHandle;
+let pulseHandle; // global state
 
 const pulseAnimation = () => {
   return {
-    boxShadow: "0 0 0 18px rgba(0, 0, 0, 0.18)",
+    boxShadow: "0 0 0 14px rgba(0, 0, 0, 0.18)",
     scale: 1.1,
     duration: 1.3,
-    ease: "none",
+    ease: "sine.inOut",
     repeat: -1,
     yoyo: true,
   };
@@ -139,7 +132,7 @@ const clearPulseTimeline = gsap.timeline({
  */
 
 let mm = gsap.matchMedia();
-
+// 1. Desktop (min-width: 768px)
 mm.add("(min-width: 768px)", () => {
   introTimeline = startIntroAnimation("2.6rem", "2.2rem");
   return () => {
@@ -150,8 +143,10 @@ mm.add("(min-width: 768px)", () => {
   };
 });
 
+// 2. Mobile (max-width: 767px)
 mm.add("(max-width: 767px)", () => {
   introTimeline = startIntroAnimation("1.8rem", "1.4rem");
+
   return () => {
     if (introTimeline) {
       introTimeline.kill();
@@ -164,16 +159,12 @@ function startIntroAnimation(startDotSize, endDotSize) {
   const timeline = gsap.timeline({
     defaults: {
       ease: "power2.inOut",
-      duration: 0.85,
-    },
-    onComplete: () => {
-      isIntroComplete = true;
-      startAxisTracker();
+      duration: 0.8,
     },
   });
 
   timeline.set(axisPoint, {
-    top: `${HALF_HEIGHT}dvh`,
+    top: "50dvh",
     yPercent: -50,
     xPercent: -50,
   });
@@ -192,7 +183,7 @@ function startIntroAnimation(startDotSize, endDotSize) {
 
     //  2. point의 y 값을 intro section의 바닥까지 이동
     .to(axisPoint, {
-      top: `${BASE_HEIGHT}dvh`,
+      top: "100dvh",
       width: endDotSize,
     })
     .to(
@@ -214,7 +205,11 @@ function startIntroAnimation(startDotSize, endDotSize) {
         ease: "power2.out",
       },
       "+=1.5",
-    );
+    )
+    .call(() => {
+      isIntroComplete = true;
+      startAxisTracker();
+    });
 
   return timeline;
 }
@@ -261,24 +256,27 @@ const faceTimeline = gsap.timeline({
 // Profile 2 :: 얼굴의 각 요소 타임라인
 faceTimeline
   .from("#face", {
-    x: 350,
-    y: 100,
+    x: 200,
+    y: 50,
   })
   .from("#hat", {
-    rotate: -360,
-    transformOrigin: "center center",
+    rotate: -270,
+    transformOrigin: "top center",
   })
   .from("#eye", {
-    x: -150,
+    x: -50,
+    y: 100,
   })
   .from("#mouth", {
     x: 100,
     y: 50,
-    rotate: -25,
+    rotate: -15,
   })
   .from("#mouthLine", {
-    x: -100,
-    y: 20,
+    x: 60,
+    y: 40,
+    rotate: 180,
+    transformOrigin: "top right",
   })
   .from("#nose", {
     y: -10,
@@ -333,7 +331,6 @@ worksItems.forEach((item) => {
   const worksTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: item,
-      // start: "top 90%",
       start: "top bottom",
       end: "bottom center",
       scrub: 1,
