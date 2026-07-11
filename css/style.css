@@ -53,8 +53,7 @@ img {
   width: 100%;
   max-width: 1024px;
   height: 100vh;
-  height: 100svh;
-  /* height: 100dvh; */
+  height: 100dvh;
   /* overflow-x: hidden; */
   /* overflow-y: auto; */
   overflow: auto;
@@ -69,8 +68,7 @@ img {
   position: absolute;
   width: 100%;
   min-height: 100vh;
-  min-height: 100svh;
-  /* min-height: 100dvh; */
+  min-height: 100dvh;
   background-color: #fff;
 }
 .axis-line {
@@ -91,15 +89,13 @@ img {
   background-color: #000;
   border-radius: 50%;
   opacity: 0;
-  /* opacity: 1; */
   will-change: transform, top;
   transform: translate3d(0, 0, 0);
 }
 .section {
   position: relative;
   height: 100vh;
-  height: 100svh;
-  /* height: 100dvh; */
+  height: 100dvh;
 }
 .section-indicator {
   position: fixed;
