@@ -49,13 +49,15 @@ img {
 
 /* --- Common Style : Section --- */
 .container {
-  /* Gsap scroll 기준 */
   position: relative;
   width: 100%;
+  max-width: 1024px;
   height: 100vh;
-  height: 100dvh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  height: 100svh;
+  /* height: 100dvh; */
+  /* overflow-x: hidden; */
+  /* overflow-y: auto; */
+  overflow: auto;
   margin: 0 auto;
   scrollbar-width: none;
   overscroll-behavior: none;
@@ -66,9 +68,9 @@ img {
 .content-wrapper {
   position: absolute;
   width: 100%;
-  max-width: 1024px;
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh;
+  /* min-height: 100dvh; */
   background-color: #fff;
 }
 .axis-line {
@@ -96,7 +98,8 @@ img {
 .section {
   position: relative;
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
+  /* height: 100dvh; */
 }
 .section-indicator {
   position: fixed;
@@ -157,9 +160,9 @@ section.intro {
 }
 .intro__arrow {
   position: absolute;
-  bottom: 5%;
+  bottom: 6%;
   left: 50%;
-  width: clamp(2.5rem, 5vw, 6rem);
+  width: clamp(2.75rem, 5vw, 6rem);
   transform: translateX(-50%);
   opacity: 0;
 }

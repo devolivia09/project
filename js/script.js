@@ -14,8 +14,11 @@ const allSections = Object.values(section);
 const axisPoint = document.querySelector(".axis-point");
 const sectionIndicator = document.querySelector(".section-indicator");
 
-let isIntroComplete = false;
-let introTimeline;
+const introState = {
+  isComplete: false,
+  timeline: null,
+  pulseEffect: null,
+};
 
 /*
  * ---------------------------------------------------------
@@ -87,7 +90,6 @@ const indicatorController = (sectionName) => {
  *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
  * ---------------------------------------------------------
  */
-let pulseHandle; // global state
 
 const pulseAnimation = () => {
   return {
@@ -100,7 +102,7 @@ const pulseAnimation = () => {
   };
 };
 
-const clearPulseTimeline = gsap.timeline({
+const clearPulseEffect = gsap.timeline({
   scrollTrigger: {
     trigger: section.intro,
     start: "top center",
@@ -108,16 +110,12 @@ const clearPulseTimeline = gsap.timeline({
     scrub: true,
     onLeave: () => {
       gsap.to(".intro__arrow", { opacity: 0 });
-      if (introTimeline) {
-        introTimeline.progress(1);
-      }
       gsap.to(axisPoint, { yPercent: -50 });
-      if (pulseHandle) {
-        pulseHandle.pause();
-      }
+      introState.timeline?.progress(1);
+      introState.pulseEffect?.puase();
     },
     onEnterBack: () => {
-      pulseHandle = gsap.to(axisPoint, pulseAnimation());
+      introState.pulseEffect = gsap.to(axisPoint, pulseAnimation());
       gsap.to(".intro__arrow", { opacity: 0.5 });
       gsap.to(axisPoint, { yPercent: -100 });
     },
@@ -127,72 +125,42 @@ const clearPulseTimeline = gsap.timeline({
 /*
  * ---------------------------------------------------------
  * [ Intro ]
- *   Intro 타임라인 애니메이션 (기기별 반응형 대응)
+ *   Intro 타임라인 애니메이션 & 기기별 대응
  * ---------------------------------------------------------
  */
-
-let mm = gsap.matchMedia();
-// 1. Desktop (min-width: 768px)
-mm.add("(min-width: 768px)", () => {
-  introTimeline = startIntroAnimation("2.6rem", "2.2rem");
-  return () => {
-    if (introTimeline) {
-      introTimeline.kill();
-      introTimeline = null;
-    }
-  };
-});
-
-// 2. Mobile (max-width: 767px)
-mm.add("(max-width: 767px)", () => {
-  introTimeline = startIntroAnimation("1.8rem", "1.4rem");
-
-  return () => {
-    if (introTimeline) {
-      introTimeline.kill();
-      introTimeline = null;
-    }
-  };
-});
-
-function startIntroAnimation(startDotSize, endDotSize) {
-  const timeline = gsap.timeline({
+function playIntro(startSize, endSize) {
+  const tl = gsap.timeline({
     defaults: {
       ease: "power2.inOut",
-      duration: 0.8,
+      duration: 0.6,
     },
   });
 
-  timeline.set(axisPoint, {
+  tl.set(axisPoint, {
     top: "50dvh",
     yPercent: -50,
     xPercent: -50,
   });
 
-  timeline
+  tl
     //  1. point 안의 선을 90도 전환 및 point의 사이즈 축소
     .to(".intro__dot-innerline", {
       rotate: 90,
+      duration: 0.6,
     })
     .to(axisPoint, {
-      width: startDotSize,
+      width: startSize,
       opacity: 1,
-      duration: 1,
       ease: "back.out(3)",
     })
 
     //  2. point의 y 값을 intro section의 바닥까지 이동
     .to(axisPoint, {
       top: "100dvh",
-      width: endDotSize,
+      width: endSize,
+      yPercent: -100,
     })
-    .to(
-      axisPoint,
-      {
-        yPercent: -100,
-      },
-      "<",
-    )
+
     //  3. point에 Pulse Animation 넣기
     .to(axisPoint, pulseAnimation(), "+=0.3")
 
@@ -200,19 +168,42 @@ function startIntroAnimation(startDotSize, endDotSize) {
     .to(
       ".intro__arrow",
       {
-        bottom: "2%",
-        opacity: 0.6,
-        ease: "power2.out",
+        opacity: 0.8,
+        bottom: "4%",
       },
-      "+=1.5",
+      "+=0.4",
     )
     .call(() => {
-      isIntroComplete = true;
+      introState.isComplete = true;
       startAxisTracker();
     });
 
-  return timeline;
+  return tl;
 }
+
+//  Intro 타임라인 기기별 대응 Desktop & Mobile
+let mm = gsap.matchMedia();
+
+mm.add("(min-width: 768px)", () => {
+  introState.timeline = playIntro("2.6rem", "2.2rem");
+  return () => {
+    if (introState.timeline) {
+      introState.timeline.kill();
+      introState.timeline = null;
+    }
+  };
+});
+
+mm.add("(max-width: 767px)", () => {
+  introState.timeline = playIntro("1.8rem", "1.4rem");
+
+  return () => {
+    if (introState.timeline) {
+      introState.timeline.kill();
+      introState.timeline = null;
+    }
+  };
+});
 
 //
 /* * ---------------------------------------------------------
