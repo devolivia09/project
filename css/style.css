@@ -1,4 +1,4 @@
-/* -------------------  기준 디바이스: iPhone 13 (390 x 844 px) --------------------- */
+/* ------------------  기준 디바이스: iPhone 13 (390 x 844 px) -------------------- */
 /* --- Common Style : Reset & Base --- */
 *,
 *::before,
@@ -10,8 +10,7 @@
 html,
 body {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100dvh;
   scroll-behavior: smooth;
   overscroll-behavior: none;
 }
@@ -26,6 +25,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: 1.6rem; /* 16px */
   line-height: 1.6;
+  overscroll-behavior: none;
 }
 ul {
   list-style: none;
@@ -49,15 +49,9 @@ img {
 
 /* --- Common Style : Section --- */
 .container {
-  position: relative;
   width: 100%;
-  max-width: 1024px;
-  height: 100vh;
-  height: 100dvh;
-  /* overflow-x: hidden; */
-  /* overflow-y: auto; */
-  overflow: auto;
-  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
   scrollbar-width: none;
   overscroll-behavior: none;
 }
@@ -65,10 +59,12 @@ img {
   display: none;
 }
 .content-wrapper {
-  position: absolute;
+  position: relative;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  max-width: 1024px;
   background-color: #fff;
 }
 .axis-line {
@@ -76,7 +72,7 @@ img {
   top: 0;
   left: 16%;
   width: 1.5px;
-  height: 100%;
+  height: 98.6%;
   background-color: #222;
 }
 .axis-point {
@@ -89,7 +85,7 @@ img {
   background-color: #000;
   border-radius: 50%;
   opacity: 0;
-  will-change: transform, top;
+  will-change: top;
   transform: translate3d(0, 0, 0);
 }
 .section {
@@ -294,21 +290,46 @@ section.outro::after {
   display: block;
   position: absolute;
   top: 50%;
-  left: 0;
+  left: 16%;
   width: 100%;
   height: 0.1rem;
   background-color: #222;
 }
+.outro__line {
+  display: block; /* 이거 한 줄 추가 */
+  position: absolute;
+  left: 0%;
+  bottom: 7%;
+
+  /* 박스가 아니라 '선'으로 만들기 */
+  width: 84%; /* 원하는 선의 길이 */
+  height: 1.5px; /* 선의 두께 (10px보다 얇게) */
+  background-color: #222;
+
+  /* padding은 선의 두께를 왜곡하니 제거하거나 아주 조금만 써 */
+  padding: 0;
+  z-index: 1;
+}
+section.outro::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 16%;
+  width: 0.15rem;
+  height: 50%;
+  background-color: #222;
+}
 .outro__wrapper {
   position: absolute;
-  top: 25%;
+  top: 24%;
   left: 26%;
   width: 60%;
   line-height: 1;
 }
 .outro__message {
   display: flex;
-  align-items: center;
+  align-items: end;
   padding: 0;
   min-height: 1.6rem;
 }
@@ -333,10 +354,10 @@ section.outro::after {
 .outro__menu {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 3rem;
+  grid-gap: 3.5rem;
   position: absolute;
   top: 58%;
-  left: 30%;
+  left: 28%;
   font-size: clamp(1.8rem, 3.75vw, 6rem);
   font-weight: 600;
   text-transform: capitalize;
@@ -349,6 +370,18 @@ section.outro::after {
 .outro__menu li a {
   padding-bottom: 2px;
   letter-spacing: 0.85px;
+}
+.outro__copyright {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1.5rem 0;
+  font-size: clamp(1rem, 2.2vw, 3.25rem);
+  /* border-top: 1.5px solid #222; */
+  /* background-color: #efefef; */
+  text-align: center;
+  z-index: -1;
 }
 
 /* ---------------------- 미디어쿼리 반응형 기기별 대응 ------------------------- */

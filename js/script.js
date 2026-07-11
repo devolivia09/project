@@ -97,7 +97,7 @@ const pulseAnimation = () => {
     scale: 1.1,
     duration: 1.3,
     ease: "sine.inOut",
-    repeat: -1,
+    repeat: 3,
     yoyo: true,
   };
 };
