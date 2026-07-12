@@ -14,9 +14,14 @@ const allSections = Object.values(section);
 const axisPoint = document.querySelector(".axis-point");
 const sectionIndicator = document.querySelector(".section-indicator");
 
-let introComplete = false;
+// let introComplete = false;
+// let pulseEffect = null;
+const introState = {
+  isComplete: false,
+  pulse: null,
+};
+
 let introTimeline = null;
-let pulseEffect = null;
 
 const base_VH = allSections[0].offsetHeight;
 const half_VH = base_VH / 2;
@@ -32,11 +37,11 @@ const scrollEnd_VH = document.documentElement.offsetHeight - half_VH;
 function startAxisTracker() {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
-      trigger: section.profile,
+      trigger: section.intro,
       endTrigger: section.outro,
-      start: "top center",
+      start: "bottom center",
       end: "top center",
-      anticipatePin: 1,
+      anticipatePin: 0.75,
       scrub: 0.75,
     },
   });
@@ -108,7 +113,6 @@ function playIntro(startSize, endSize) {
       introComplete = true;
       startAxisTracker();
     });
-  console.log("introTimeline", introTimeline);
   return tl;
 }
 
@@ -162,17 +166,16 @@ function pulseAnimation() {
 const clearPulseEffect = gsap.timeline({
   scrollTrigger: {
     trigger: section.intro,
-    start: "top center",
+    start: "top bottom",
     end: "bottom center",
     scrub: true,
     onLeave: () => {
       gsap.to(".intro__arrow", { opacity: 0 });
       gsap.to(axisPoint, { yPercent: -50 });
-      console.log(introTimeline);
       introTimeline?.progress(1);
     },
     onEnterBack: () => {
-      pulseEffect = gsap.to(axisPoint, pulseAnimation());
+      introState.pulse = gsap.to(axisPoint, pulseAnimation());
       gsap.to(".intro__arrow", { opacity: 0.5 });
       gsap.to(axisPoint, { yPercent: -100 });
     },
@@ -187,7 +190,7 @@ const clearPulseEffect = gsap.timeline({
  */
 allSections.forEach((eachSec) => {
   const sectionName = eachSec.dataset.name;
-  // console.log("Section-indicator", sectionName);
+
   const timline = gsap.timeline({
     scrollTrigger: {
       trigger: eachSec,
@@ -244,8 +247,8 @@ profileItems.forEach((item) => {
 const faceTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: "section.profile",
-    start: "25% 80%",
-    end: "center 50%",
+    start: "top bottom",
+    end: "center center",
     scrub: 0.75,
     toggleActions: "play none none reverse",
   },
