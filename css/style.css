@@ -72,7 +72,7 @@ img {
   top: 0;
   left: 16%;
   width: 1.5px;
-  height: 98.6%;
+  height: 98.5%;
   background-color: #222;
 }
 .axis-point {
@@ -291,24 +291,9 @@ section.outro::after {
   position: absolute;
   top: 50%;
   left: 16%;
-  width: 100%;
+  width: 84%;
   height: 0.1rem;
   background-color: #222;
-}
-.outro__line {
-  display: block; /* 이거 한 줄 추가 */
-  position: absolute;
-  left: 0%;
-  bottom: 7%;
-
-  /* 박스가 아니라 '선'으로 만들기 */
-  width: 84%; /* 원하는 선의 길이 */
-  height: 1.5px; /* 선의 두께 (10px보다 얇게) */
-  background-color: #222;
-
-  /* padding은 선의 두께를 왜곡하니 제거하거나 아주 조금만 써 */
-  padding: 0;
-  z-index: 1;
 }
 section.outro::before {
   content: "";
@@ -354,33 +339,38 @@ section.outro::before {
 .outro__menu {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 3.5rem;
+  grid-gap: 3.75rem;
   position: absolute;
   top: 58%;
-  left: 28%;
-  font-size: clamp(1.8rem, 3.75vw, 6rem);
+  left: 26%;
+  font-size: clamp(2rem, 3.25vw, 5rem);
   font-weight: 600;
   text-transform: capitalize;
   pointer-events: auto;
+  text-align: center;
 }
 .outro__menu li {
   transform: translateX(-1.2rem);
   opacity: 0;
+  /* border: 1px solid blue; */
 }
 .outro__menu li a {
+  display: inline-block;
   padding-bottom: 2px;
   letter-spacing: 0.85px;
 }
 .outro__copyright {
+  display: grid;
+  place-items: center;
   position: absolute;
-  right: 0;
+  right: 16%;
   bottom: 0;
-  width: 100%;
-  padding: 1.5rem 0;
-  font-size: clamp(1rem, 2.2vw, 3.25rem);
-  /* border-top: 1.5px solid #222; */
-  /* background-color: #efefef; */
-  text-align: center;
+  width: 84%;
+  height: 7.5%;
+  padding: auto 0;
+  font-size: clamp(1rem, 2.2vw, 2.75rem);
+  border-top: 1.5px solid #222;
+  border-right: 1.5px solid #222;
   z-index: -1;
 }
 
@@ -425,8 +415,7 @@ section.outro::before {
     width: 54%;
   }
   .outro__menu {
-    top: 60%;
-    grid-gap: 6rem;
+    grid-gap: 7rem;
   }
 }
 
@@ -444,6 +433,11 @@ section.outro::before {
   }
   .skills__list {
     top: 5%;
+  }
+  .outro__menu {
+    left: 22%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 3rem;
   }
 }
 
@@ -489,6 +483,9 @@ section.outro::before {
   }
   .works__list li:nth-child(even) .works__desc {
     text-align: right;
+  }
+  .outro__menu {
+    grid-gap: 7rem;
   }
 }
 

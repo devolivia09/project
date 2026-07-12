@@ -112,7 +112,7 @@ const clearPulseEffect = gsap.timeline({
       gsap.to(".intro__arrow", { opacity: 0 });
       gsap.to(axisPoint, { yPercent: -50 });
       introState.timeline?.progress(1);
-      introState.pulseEffect?.puase();
+      introState.pulseEffect?.puase;
     },
     onEnterBack: () => {
       introState.pulseEffect = gsap.to(axisPoint, pulseAnimation());
