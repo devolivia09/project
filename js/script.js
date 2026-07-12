@@ -14,11 +14,13 @@ const allSections = Object.values(section);
 const axisPoint = document.querySelector(".axis-point");
 const sectionIndicator = document.querySelector(".section-indicator");
 
-const introState = {
-  isComplete: false,
-  timeline: null,
-  pulseEffect: null,
-};
+let introComplete = false;
+let introTimeline = null;
+let pulseEffect = null;
+
+const base_VH = allSections[0].offsetHeight;
+const half_VH = base_VH / 2;
+const scrollEnd_VH = document.documentElement.offsetHeight - half_VH;
 
 /*
  * ---------------------------------------------------------
@@ -26,6 +28,7 @@ const introState = {
  *  intro 제외한 전체 화면의 스크롤에 맞춰 axis-point 움직임 조절
  * ---------------------------------------------------------
  */
+
 function startAxisTracker() {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
@@ -33,94 +36,22 @@ function startAxisTracker() {
       endTrigger: section.outro,
       start: "top center",
       end: "top center",
-      scroller: document.querySelector(".container"),
-      scrub: 0.5,
       anticipatePin: 1,
+      scrub: 0.75,
     },
   });
 
   axisTracker.fromTo(
     axisPoint,
     {
-      top: "100dvh", // intro section 하단
+      top: base_VH, // intro section 하단
     },
     {
-      top: "calc(100% - 50dvh)", //outro section 가운데 지점
+      top: scrollEnd_VH, //outro section 중간 (450vh)
       ease: "none",
     },
   );
 }
-
-/*
- * ---------------------------------------------------------
- * [ Section-indicator ]
- *   Section 진입 시, 그에 맞는 색인 변화
- * ---------------------------------------------------------
- */
-allSections.forEach((eachSec) => {
-  const sectionName = eachSec.dataset.name;
-  console.log("Section-indicator", sectionName);
-  const timline = gsap.timeline({
-    scrollTrigger: {
-      trigger: eachSec,
-      start: "top center",
-      end: "bottom center",
-      onEnter: () => indicatorController(sectionName),
-      onEnterBack: () => indicatorController(sectionName),
-    },
-  });
-});
-
-const indicatorController = (sectionName) => {
-  gsap.killTweensOf(sectionIndicator);
-
-  let baseOpacity = sectionName === "intro" ? 0 : 1;
-  const tl = gsap.timeline();
-
-  tl.to(sectionIndicator, { opacity: 0, duration: 0.25 }).to(sectionIndicator, {
-    opacity: baseOpacity,
-    textContent: sectionName,
-    duration: 0.5,
-  });
-};
-
-/*
- * ---------------------------------------------------------
- * [ Pulse Effect & Skip ]
- *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
- * ---------------------------------------------------------
- */
-
-const pulseAnimation = () => {
-  return {
-    boxShadow: "0 0 0 14px rgba(0, 0, 0, 0.18)",
-    scale: 1.1,
-    duration: 1.3,
-    ease: "sine.inOut",
-    repeat: 3,
-    yoyo: true,
-  };
-};
-
-const clearPulseEffect = gsap.timeline({
-  scrollTrigger: {
-    trigger: section.intro,
-    start: "top center",
-    end: "bottom center",
-    scrub: true,
-    onLeave: () => {
-      gsap.to(".intro__arrow", { opacity: 0 });
-      gsap.to(axisPoint, { yPercent: -50 });
-      introState.timeline?.progress(1);
-      introState.pulseEffect?.puase;
-    },
-    onEnterBack: () => {
-      introState.pulseEffect = gsap.to(axisPoint, pulseAnimation());
-      gsap.to(".intro__arrow", { opacity: 0.5 });
-      gsap.to(axisPoint, { yPercent: -100 });
-    },
-  },
-});
 
 /*
  * ---------------------------------------------------------
@@ -174,10 +105,10 @@ function playIntro(startSize, endSize) {
       "+=0.4",
     )
     .call(() => {
-      introState.isComplete = true;
+      introComplete = true;
       startAxisTracker();
     });
-
+  console.log("introTimeline", introTimeline);
   return tl;
 }
 
@@ -185,25 +116,101 @@ function playIntro(startSize, endSize) {
 let mm = gsap.matchMedia();
 
 mm.add("(min-width: 768px)", () => {
-  introState.timeline = playIntro("2.6rem", "2.2rem");
+  introTimeline = playIntro("2.5rem", "2.1rem");
   return () => {
-    if (introState.timeline) {
-      introState.timeline.kill();
-      introState.timeline = null;
+    if (introTimeline) {
+      introTimeline.kill();
+      introTimeline = null;
     }
   };
 });
 
 mm.add("(max-width: 767px)", () => {
-  introState.timeline = playIntro("1.8rem", "1.4rem");
+  introTimeline = playIntro("1.85rem", "1.5rem");
 
   return () => {
-    if (introState.timeline) {
-      introState.timeline.kill();
-      introState.timeline = null;
+    if (introTimeline) {
+      introTimeline.kill();
+      introTimeline = null;
     }
   };
 });
+
+/*
+ * ---------------------------------------------------------
+ * [ Pulse Effect  ]
+ *   Axis Point pulse 애니메이션
+ * ---------------------------------------------------------
+ */
+function pulseAnimation() {
+  return {
+    boxShadow: "0 0 0 14px rgba(0, 0, 0, 0.18)",
+    scale: 1.1,
+    duration: 1.3,
+    ease: "sine.inOut",
+    repeat: 3,
+    yoyo: true,
+  };
+}
+
+/*
+ * ---------------------------------------------------------
+ * [ Intro Skip ]
+ *   Intro 섹션 이탈 시, 클래스명 제거 & pulse 애니메이션 제거
+ * ---------------------------------------------------------
+ */
+const clearPulseEffect = gsap.timeline({
+  scrollTrigger: {
+    trigger: section.intro,
+    start: "top center",
+    end: "bottom center",
+    scrub: true,
+    onLeave: () => {
+      gsap.to(".intro__arrow", { opacity: 0 });
+      gsap.to(axisPoint, { yPercent: -50 });
+      console.log(introTimeline);
+      introTimeline?.progress(1);
+    },
+    onEnterBack: () => {
+      pulseEffect = gsap.to(axisPoint, pulseAnimation());
+      gsap.to(".intro__arrow", { opacity: 0.5 });
+      gsap.to(axisPoint, { yPercent: -100 });
+    },
+  },
+});
+
+/*
+ * ---------------------------------------------------------
+ * [ Section-indicator ]
+ *   Section 진입 시, 그에 맞는 색인 변화
+ * ---------------------------------------------------------
+ */
+allSections.forEach((eachSec) => {
+  const sectionName = eachSec.dataset.name;
+  // console.log("Section-indicator", sectionName);
+  const timline = gsap.timeline({
+    scrollTrigger: {
+      trigger: eachSec,
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => indicatorController(sectionName),
+      onEnterBack: () => indicatorController(sectionName),
+    },
+  });
+});
+
+const indicatorController = (sectionName) => {
+  gsap.killTweensOf(sectionIndicator);
+
+  let baseOpacity = sectionName === "intro" ? 0 : 1;
+  const tl = gsap.timeline();
+
+  tl.to(sectionIndicator, { opacity: 0, duration: 0.25 }).to(sectionIndicator, {
+    opacity: baseOpacity,
+    textContent: sectionName,
+    duration: 0.5,
+  });
+};
 
 //
 /* * ---------------------------------------------------------

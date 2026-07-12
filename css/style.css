@@ -12,7 +12,7 @@ body {
   width: 100%;
   min-height: 100dvh;
   scroll-behavior: smooth;
-  overscroll-behavior: none;
+  /* overscroll-behavior: none; */
 }
 html {
   font-size: 62.5%; /* 1rem = 10px */
@@ -25,7 +25,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: 1.6rem; /* 16px */
   line-height: 1.6;
-  overscroll-behavior: none;
+  /* overscroll-behavior: none; */
 }
 ul {
   list-style: none;
