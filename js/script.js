@@ -14,8 +14,6 @@ const allSections = Object.values(section);
 const axisPoint = document.querySelector(".axis-point");
 const sectionIndicator = document.querySelector(".section-indicator");
 
-// let introComplete = false;
-// let pulseEffect = null;
 const introState = {
   isComplete: false,
   pulse: null,
@@ -120,7 +118,7 @@ function playIntro(startSize, endSize) {
 let mm = gsap.matchMedia();
 
 mm.add("(min-width: 768px)", () => {
-  introTimeline = playIntro("2.5rem", "2.1rem");
+  introTimeline = playIntro("3rem", "2.5rem");
   return () => {
     if (introTimeline) {
       introTimeline.kill();
@@ -364,7 +362,7 @@ worksItems.forEach((item) => {
  */
 const outroTitle = section.outro.querySelector(".outro__title");
 const outroSubTitle = section.outro.querySelector(".outro__subtitle");
-const outroMessageSub = section.outro.querySelector(".outro__message--sub");
+const outroMessageSub = section.outro.querySelector(".outro__messages--sub");
 const outroCursor = section.outro.querySelector(".outro__cursor");
 const outroLists = section.outro.querySelectorAll(".outro__menu li");
 const outroLinks = section.outro.querySelectorAll(".outro__menu li a");
