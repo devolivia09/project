@@ -40,7 +40,7 @@ function startAxisTracker() {
       start: "bottom center",
       end: "top center",
       anticipatePin: 1.25,
-      scrub: 0.75,
+      scrub: 1,
     },
   });
 
@@ -298,7 +298,7 @@ listItems.forEach((item) => {
       trigger: item,
       start: "top 80%",
       end: "bottom 60%",
-      scrub: 1,
+      scrub: 0.75,
     },
     duration: 1.5,
     ease: "power2.out",
@@ -307,11 +307,12 @@ listItems.forEach((item) => {
   skillsTimeline.from(
     item,
     {
-      y: 10,
+      x: 150,
+      // y: 15,
       color: "#ccc",
       stagger: 0.3,
     },
-    "+=1",
+    "+=0.5",
   );
 });
 

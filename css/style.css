@@ -209,19 +209,16 @@ section.profile {
 
 /* --- [Section] : Skills Style -------------------------------------------- */
 .skills__list {
-  position: absolute;
-  top: 10%;
-  left: 20%;
-  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: max-content;
   text-align: left;
-  line-height: 2.6;
+  line-height: 2.4;
 }
 .skills__item {
   color: #000000;
   font-weight: 500;
-}
-.skills__item:not(:first-child) {
-  margin-top: 6rem;
 }
 .skills__title {
   display: inline-block;
@@ -229,11 +226,7 @@ section.profile {
   font-size: clamp(2rem, 4.5vw, 6rem);
 }
 .skills__arrow {
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  transform: translate(-400%, 7%) rotate(-25deg);
+  transform: rotate(-25deg);
   font-size: clamp(1.7rem, 3.75vw, 4rem);
 }
 .skills__desc {
@@ -246,7 +239,6 @@ section.profile {
   flex-direction: column;
   justify-content: space-evenly;
   justify-content: space-between;
-  border: 1px solid black;
   width: 100%;
   height: 100%;
   line-height: 1.75;
@@ -386,7 +378,7 @@ section.outro::after {
 }
 
 /* ---------------------- 미디어쿼리 반응형 기기별 대응 ------------------------- */
-/* 모바일 (세로 짧은 기기 대응) iphone se 375 * 667 */
+/*  모바일 (세로 짧은 기기 대응) 375 * 667  */
 @media (max-width: 375.98px) {
   html {
     font-size: 58%;
@@ -405,7 +397,7 @@ section.outro::after {
   }
 }
 
-/* 태블릿 사이즈 */
+/*  태블릿 사이즈  */
 @media (min-width: 768px) {
   .intro__txt {
     gap: 1rem;
@@ -419,9 +411,6 @@ section.outro::after {
   .intro__txt-dot {
     width: 4.5rem;
     height: 4.5rem;
-  }
-  .skills__item:not(:first-child) {
-    margin-top: 4rem;
   }
   .works__list {
     width: 100%;
@@ -443,7 +432,7 @@ section.outro::after {
   }
 }
 
-/* 1024px × 1366px (iPad Pro) */
+/*  데스크톱 사이즈  */
 @media (min-width: 1024px) {
   html {
     font-size: 50%;
@@ -472,83 +461,6 @@ section.outro::after {
     width: clamp(8rem, 30%, 17rem);
   }
 }
-
-/* 1025px 이상 (Desktop) */
-/* @media (min-width: 1025px) { */
-/*
-/* 
-  .section-indicator {
-    right: 50%;
-    transform: translateX(80rem);
-  }
-  .intro__txt {
-    transform: translateX(0%);
-    letter-spacing: 1rem;
-  }
-  .profile__portrait {
-    width: 20%;
-    height: 20%;
-  }
-  section.works {
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-  }
-  .works__list {
-    max-width: 1024x;
-    min-height: 90dvh;
-    height: min-content;
-  } */
-/*
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  justify-content: space-between;
-  border: 1px solid black;
-  height: 100%;
-  line-height: 1.75;
-  white-space: nowrap;
-}
-.works__list a {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 10%;
-}
-.works__thumbnail {
-  aspect-ratio: 1/1;
-  width: clamp(6rem, 35%, 9rem);
-  border: 1px solid #999;
-  border-radius: 20%;
-  overflow: hidden;
-  background-color: #ddd;
-}
-.works__list li:nth-child(even) .works__thumbnail {
-  border-radius: 50%;
-  background-color: #555;
-}
-.works__list li:nth-child(even) .works-desc {
-  text-align: right;
-}
-.works__corporate .works__thumbnail {
-  background-color: #aaa;
-}
-.works__thumbnail img {
-  display: block;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-.works-desc {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  color: #ddd;
-  width: clamp(8rem, 65%, 13rem);
-}*/
-/* .outro__menu {
-    grid-gap: 7rem;
-  }
-} */
 
 /* --- 모바일, 태블릿에서 가로모드 시에 안내문구(세로 모드로 이용해주세요) --- */
 @media screen and (max-width: 932px) and (orientation: landscape) {
