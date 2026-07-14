@@ -39,7 +39,7 @@ function startAxisTracker() {
       endTrigger: section.outro,
       start: "bottom center",
       end: "top center",
-      anticipatePin: 0.75,
+      anticipatePin: 1.25,
       scrub: 0.75,
     },
   });
@@ -335,12 +335,13 @@ worksItems.forEach((item) => {
       scrub: 1,
     },
     ease: "slow(0.65,0.65,false)",
-    duration: 1.25,
+    duration: 1.5,
   });
 
   worksTimeline
     .to(targetImg, {
       opacity: 1,
+      duration: 3,
     })
     .to(
       targetTxt,
