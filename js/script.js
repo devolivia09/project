@@ -33,7 +33,6 @@ let indicatorTimeline;
  *  intro 제외한 전체 화면의 스크롤에 맞춰 axis-point 움직임 조절
  * ---------------------------------------------------------
  */
-
 function startAxisTracker() {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
@@ -82,7 +81,6 @@ function playIntro(startSize, endSize) {
     //  1. point 안의 선을 90도 전환 및 point의 사이즈 축소
     .to(".intro__dot-innerline", {
       rotate: 90,
-      duration: 0.6,
     })
     .to(axisPoint, {
       width: startSize,
@@ -131,7 +129,6 @@ mm.add("(min-width: 768px)", () => {
 
 mm.add("(max-width: 767px)", () => {
   introTimeline = playIntro("1.85rem", "1.5rem");
-
   return () => {
     if (introTimeline) {
       introTimeline.kill();
