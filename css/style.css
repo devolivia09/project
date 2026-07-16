@@ -98,13 +98,13 @@ img {
 }
 .section-indicator {
   position: fixed;
-  top: 10%;
-  left: 50%;
-  min-width: 4rem;
-  font-size: clamp(1.3rem, 2.6vw, 3.25rem);
+  top: 2.5%;
+  right: 5%;
+  height: 10rem;
+  font-size: clamp(1.5rem, 2.75vw, 3.25rem);
   font-weight: 500;
   color: rgba(0, 0, 0, 0.7);
-  border: 1px solid black;
+  z-index: 1;
 }
 .landscape-message {
   display: none;

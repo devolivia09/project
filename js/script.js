@@ -25,6 +25,8 @@ const base_VH = allSections[0].offsetHeight;
 const half_VH = base_VH / 2;
 const scrollEnd_VH = document.documentElement.offsetHeight - half_VH;
 
+let indicatorTimeline;
+
 /*
  * ---------------------------------------------------------
  * [ AxisTracker ]
@@ -189,27 +191,26 @@ const clearPulseEffect = gsap.timeline({
 allSections.forEach((eachSec) => {
   const sectionName = eachSec.dataset.name;
 
-  const timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: eachSec,
-      start: "top top",
-      end: "bottom bottom",
-      onEnter: () => indicatorController(sectionName),
-      onEnterBack: () => indicatorController(sectionName),
-    },
+  ScrollTrigger.create({
+    trigger: eachSec,
+    start: "top center",
+    end: "bottom center",
+    onEnter: () => indicatorController(sectionName),
+    onEnterBack: () => indicatorController(sectionName),
   });
 });
 
 const indicatorController = (sectionName) => {
-  // gsap.killTweensOf(sectionIndicator);
+  indicatorTimeline?.kill();
   let baseOpacity = sectionName === "intro" ? 0 : 1;
-  const tl = gsap.timeline();
-  tl.to(sectionIndicator, { opacity: 0, duration: 0.25 }).to(sectionIndicator, {
-    opacity: baseOpacity,
-    textContent: sectionName,
-    duration: 0.5,
-  });
-  return tl;
+  indicatorTimeline = gsap.timeline();
+  indicatorTimeline
+    .to(sectionIndicator, { opacity: 0, duration: 0.25 })
+    .to(sectionIndicator, {
+      opacity: baseOpacity,
+      textContent: sectionName,
+      duration: 0.5,
+    });
 };
 
 //
