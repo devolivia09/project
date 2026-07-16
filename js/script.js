@@ -226,7 +226,7 @@ const profileItems = document.querySelectorAll(".profile__item");
 profileItems.forEach((item) => {
   gsap.fromTo(
     item,
-    { opacity: 0, x: 60 },
+    { opacity: 0, x: 50 },
     {
       opacity: 1,
       x: 0,
@@ -307,12 +307,13 @@ listItems.forEach((item) => {
   skillsTimeline.from(
     item,
     {
-      x: 150,
-      // y: 15,
-      color: "#ccc",
-      stagger: 0.3,
+      x: 70,
+      color: "#ededed",
+      stagger: 0.5,
+      // rotate: "-3deg",
+      // scale: 0,
     },
-    "+=0.5",
+    "+=0.75",
   );
 });
 
@@ -336,6 +337,8 @@ worksItems.forEach((item) => {
       scrub: 1,
     },
     ease: "slow(0.65,0.65,false)",
+    stagger: 0.5,
+
     duration: 1.5,
   });
 

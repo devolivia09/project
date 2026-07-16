@@ -26,6 +26,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: 1.6rem; /* 16px */
   line-height: 1.6;
+  overflow-x: hidden;
 }
 ul {
   list-style: none;
@@ -61,10 +62,9 @@ img {
 }
 .content-wrapper {
   position: relative;
-  /*
   top: 0;
-  left: 50%; */
-  /* transform: translateX(-50%); */
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   max-width: 1024px;
   background-color: #fff;
@@ -217,13 +217,19 @@ section.profile {
   display: inline-block;
   position: relative;
   font-size: clamp(2rem, 4.5vw, 3.75rem);
+  opacity: 1;
 }
 .skills__arrow {
+  color: #aaa;
   transform: rotate(-25deg);
   font-size: clamp(1.7rem, 3.75vw, 2.75rem);
+  opacity: 1;
 }
 .skills__desc {
   font-size: clamp(1.6rem, 2.75vw, 2.75rem);
+}
+.skills__desc li {
+  opacity: 1;
 }
 
 /* --- [Section] : Works Style -------------------------------------------- */
@@ -249,7 +255,9 @@ section {
 }
 .works__thumbnail {
   max-width: 6rem;
-  max-height: 6rem;
+  max-width: 12rem;
+  aspect-ratio: 1/1;
+  /* max-height: 6rem; */
   border-radius: 15%;
   border: 1px solid #ccc;
   background-color: #ddd;
@@ -384,13 +392,12 @@ section.outro::after {
   .profile__portrait {
     width: 42%;
   }
-  /*
   .skills__list {
-    top: 8%;
+    /*    top: 8%;*/
   }
   .skills__item:not(:first-child) {
-    margin-top: 4rem;
-  } */
+    /* margin-top: 4rem; */
+  }
 }
 
 /*  태블릿 사이즈  */
@@ -410,7 +417,6 @@ section.outro::after {
   }
   .works__list {
     justify-content: space-between;
-    line-height: 2;
   }
   .works__list a {
     gap: 0%;
@@ -448,7 +454,6 @@ section.outro::after {
     height: 6.5rem;
   }
   .profile__portrait {
-    top: 25%;
     width: 25%;
   }
   .skills__list {
