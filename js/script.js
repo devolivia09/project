@@ -183,17 +183,17 @@ const clearPulseEffect = gsap.timeline({
 /*
  * ---------------------------------------------------------
  * [ Section-indicator ]
- *   Section 진입 시, 그에 맞는 색인 변화
+ *   Section 진입 시, 그에 맞게 색인 변화
  * ---------------------------------------------------------
  */
 allSections.forEach((eachSec) => {
   const sectionName = eachSec.dataset.name;
 
-  const timline = gsap.timeline({
+  const timeline = gsap.timeline({
     scrollTrigger: {
       trigger: eachSec,
-      start: "top center",
-      end: "bottom center",
+      start: "top top",
+      end: "bottom bottom",
       onEnter: () => indicatorController(sectionName),
       onEnterBack: () => indicatorController(sectionName),
     },
@@ -201,16 +201,15 @@ allSections.forEach((eachSec) => {
 });
 
 const indicatorController = (sectionName) => {
-  gsap.killTweensOf(sectionIndicator);
-
+  // gsap.killTweensOf(sectionIndicator);
   let baseOpacity = sectionName === "intro" ? 0 : 1;
   const tl = gsap.timeline();
-
   tl.to(sectionIndicator, { opacity: 0, duration: 0.25 }).to(sectionIndicator, {
     opacity: baseOpacity,
     textContent: sectionName,
     duration: 0.5,
   });
+  return tl;
 };
 
 //

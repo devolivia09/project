@@ -98,11 +98,13 @@ img {
 }
 .section-indicator {
   position: fixed;
-  top: 1.75%;
-  right: 4.5%;
+  top: 10%;
+  left: 50%;
+  min-width: 4rem;
   font-size: clamp(1.3rem, 2.6vw, 3.25rem);
   font-weight: 500;
   color: rgba(0, 0, 0, 0.7);
+  border: 1px solid black;
 }
 .landscape-message {
   display: none;
@@ -187,8 +189,7 @@ section.profile {
 .profile__portrait {
   display: flex;
   align-items: center;
-  width: 32%;
-  height: 32%;
+  max-width: 50%;
 }
 .profile__info {
   font-size: clamp(1.85rem, 3.25vw, 3rem);
@@ -233,9 +234,6 @@ section.profile {
 }
 
 /* --- [Section] : Works Style -------------------------------------------- */
-section {
-  /* border: 1px solid black; */
-}
 .works__list {
   display: flex;
   flex-direction: column;
@@ -244,28 +242,30 @@ section {
   height: 100%;
   line-height: 1.75;
   white-space: nowrap;
-  /* border: 1px solid black; */
 }
 .works__list a {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* gap: 10%; */
-  /* border: 1px solid black; */
 }
 .works__thumbnail {
-  max-width: 6rem;
-  max-width: 12rem;
+  max-width: 7rem;
   aspect-ratio: 1/1;
-  /* max-height: 6rem; */
-  border-radius: 15%;
   border: 1px solid #ccc;
-  background-color: #ddd;
+  background-color: #eee;
   overflow: hidden;
 }
 .works__list li:nth-child(even) .works__thumbnail {
   border-radius: 50%;
   background-color: #555;
+}
+.works__list li:nth-child(1) .works__thumbnail {
+  border-top-left-radius: 35%;
+  border-bottom-right-radius: 35%;
+}
+.works__list li:nth-child(3) .works__thumbnail {
+  border-top-right-radius: 35%;
+  border-bottom-left-radius: 35%;
 }
 .works__list li:nth-child(even) .works-desc {
   text-align: right;
@@ -286,7 +286,6 @@ section {
   justify-content: space-evenly;
   color: #ddd;
   width: clamp(8rem, 65%, 13rem);
-  /* border: 1px solid #999; */
 }
 .works-title {
   font-size: clamp(1.5rem, 2.75vw, 3rem);
@@ -377,7 +376,6 @@ section.outro::after {
   bottom: 0;
   width: 100%;
   height: 7.5%;
-  padding: auto 0;
   font-size: clamp(1.25rem, 2.2vw, 2.75rem);
   border-top: 1.5px solid #222;
   z-index: -1;
@@ -391,12 +389,6 @@ section.outro::after {
   }
   .profile__portrait {
     width: 42%;
-  }
-  .skills__list {
-    /*    top: 8%;*/
-  }
-  .skills__item:not(:first-child) {
-    /* margin-top: 4rem; */
   }
 }
 
@@ -423,7 +415,7 @@ section.outro::after {
     justify-content: space-around;
   }
   .works__thumbnail {
-    /* width: clamp(8rem, 30%, 15rem); */
+    max-width: 12rem;
   }
   .works-desc {
     width: max-content;
@@ -454,7 +446,7 @@ section.outro::after {
     height: 6.5rem;
   }
   .profile__portrait {
-    width: 25%;
+    width: 30%;
   }
   .skills__list {
     justify-content: space-evenly;
