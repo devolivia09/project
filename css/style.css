@@ -14,6 +14,7 @@ body {
   min-height: 100dvh;
   scroll-behavior: smooth;
   overscroll-behavior: none;
+  overflow-x: hidden;
 }
 html {
   font-size: 62.5%; /* 1rem = 10px */
@@ -26,7 +27,6 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: 1.6rem; /* 16px */
   line-height: 1.6;
-  overflow-x: hidden;
 }
 ul {
   list-style: none;
@@ -189,13 +189,14 @@ section.profile {
 .profile__portrait {
   display: flex;
   align-items: center;
-  max-width: 50%;
+  max-width: 35%;
+}
+.profile__portrait svg {
+  width: 100%;
+  overflow: visible;
 }
 .profile__info {
   font-size: clamp(1.85rem, 3.25vw, 3rem);
-}
-.profile__portrait svg {
-  overflow: visible;
 }
 .profile__message {
   font-size: clamp(2.35rem, 4vw, 3.25rem);
@@ -388,7 +389,7 @@ section.outro::after {
     font-size: 55%;
   }
   .profile__portrait {
-    width: 42%;
+    max-width: 42%;
   }
 }
 

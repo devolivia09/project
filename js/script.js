@@ -335,7 +335,6 @@ worksItems.forEach((item) => {
     },
     ease: "slow(0.65,0.65,false)",
     stagger: 0.5,
-
     duration: 1.5,
   });
 
