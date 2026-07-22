@@ -149,7 +149,7 @@ function pulseAnimation() {
     scale: 1.1,
     duration: 1.3,
     ease: "sine.inOut",
-    repeat: 3,
+    repeat: -1,
     yoyo: true,
   };
 }
@@ -163,12 +163,13 @@ function pulseAnimation() {
 const clearPulseEffect = gsap.timeline({
   scrollTrigger: {
     trigger: section.intro,
-    start: "top bottom",
+    start: "top center",
     end: "bottom center",
     scrub: true,
     onLeave: () => {
       gsap.to(".intro__arrow", { opacity: 0 });
       gsap.to(axisPoint, { yPercent: -50 });
+      console.log("onLeave");
       introTimeline?.progress(1);
     },
     onEnterBack: () => {
