@@ -21,10 +21,11 @@ const introState = {
 
 let introTimeline = null;
 
-const base_VH = allSections[0].offsetHeight; // 1 section height
+const base_VH2 = allSections[0].offsetHeight; // 1 section height
+const base_VH = window.innerHeight; // 1 section height
 const half_VH = base_VH / 2; // 0.5 section height
 const scroll_Range = base_VH * 3 + half_VH; // 3.5
-
+console.log(base_VH, ", ", base_VH2);
 let indicatorTimeline;
 
 /*
@@ -61,7 +62,7 @@ function startAxisTracker() {
       trigger: section.intro,
       endTrigger: section.outro,
       start: "bottom top",
-      end: "top top",
+      end: "top bottom",
       anticipatePin: 1.25,
       scrub: 1,
       invalidateOnRefresh: true,
