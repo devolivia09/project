@@ -21,9 +21,10 @@ const introState = {
 
 let introTimeline = null;
 
-const base_VH = allSections[0].offsetHeight;
-const half_VH = base_VH / 2;
-const scrollEnd_VH = document.documentElement.offsetHeight - half_VH;
+const base_VH = allSections[0].offsetHeight; // 1 section height
+const half_VH = base_VH / 2; // 0.5 section height
+const scrollEnd_VH = document.documentElement.offsetHeight - half_VH; // 4.5
+// const scroll_Range = base_VH * 3 + half_VH; // 3.5
 
 let indicatorTimeline;
 
@@ -39,9 +40,12 @@ function startAxisTracker() {
       trigger: section.intro,
       endTrigger: section.outro,
       start: "bottom center",
-      end: "top center",
+      // start: "top center",
+      // end: "top top",
+      end: "top bottom",
       anticipatePin: 1.25,
       scrub: 1,
+      invalidateOnRefresh: true,
     },
   });
 
@@ -55,6 +59,7 @@ function startAxisTracker() {
       ease: "none",
     },
   );
+  // axisTracker.fromTo(axisPoint, { y: 0 }, { y: scroll_Range, ease: "none" });
 }
 
 /*
@@ -149,7 +154,7 @@ function pulseAnimation() {
     scale: 1.1,
     duration: 1.3,
     ease: "sine.inOut",
-    repeat: -1,
+    repeat: 3,
     yoyo: true,
   };
 }
@@ -169,7 +174,6 @@ const clearPulseEffect = gsap.timeline({
     onLeave: () => {
       gsap.to(".intro__arrow", { opacity: 0 });
       gsap.to(axisPoint, { yPercent: -50 });
-      console.log("onLeave");
       introTimeline?.progress(1);
     },
     onEnterBack: () => {
@@ -336,6 +340,7 @@ worksItems.forEach((item) => {
     },
     ease: "slow(0.65,0.65,false)",
     stagger: 0.5,
+
     duration: 1.5,
   });
 
