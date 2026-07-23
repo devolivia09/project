@@ -23,10 +23,22 @@ let introTimeline = null;
 
 const base_VH = allSections[0].offsetHeight; // 1 section height
 const half_VH = base_VH / 2; // 0.5 section height
-const scrollEnd_VH = document.documentElement.offsetHeight - half_VH; // 4.5
-// const scroll_Range = base_VH * 3 + half_VH; // 3.5
+const scroll_Range = base_VH * 3 + half_VH; // 3.5
 
 let indicatorTimeline;
+
+/*
+ * ---------------------------------------------------------
+ * [ Document Height Reset ]
+ *  디바이스 해상도 및 화면 가로 전환 시에 대응 높이값 초기화
+ * ---------------------------------------------------------
+ */
+function setRealVh() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+}
+setRealVh();
+window.addEventListener("orientationchange", setRealVh);
 
 /*
  * ---------------------------------------------------------
@@ -34,6 +46,8 @@ let indicatorTimeline;
  *  intro 제외한 전체 화면의 스크롤에 맞춰 axis-point 움직임 조절
  * ---------------------------------------------------------
  */
+// 모바일 브라우저 스크롤 바운스 및 덜컥거림(버벅임) 방지
+ScrollTrigger.normalizeScroll(true);
 function startAxisTracker() {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
@@ -42,24 +56,14 @@ function startAxisTracker() {
       start: "bottom center",
       // start: "top center",
       // end: "top top",
-      end: "top bottom",
+      end: "top top",
       anticipatePin: 1.25,
       scrub: 1,
       invalidateOnRefresh: true,
     },
   });
 
-  axisTracker.fromTo(
-    axisPoint,
-    {
-      top: base_VH, // intro section 하단
-    },
-    {
-      top: scrollEnd_VH, //outro section 중간 (450vh)
-      ease: "none",
-    },
-  );
-  // axisTracker.fromTo(axisPoint, { y: 0 }, { y: scroll_Range, ease: "none" });
+  axisTracker.fromTo(axisPoint, { y: 0 }, { y: scroll_Range, ease: "none" });
 }
 
 /*

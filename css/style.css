@@ -92,8 +92,7 @@ img {
 .section {
   display: flex;
   position: relative;
-  height: 100vh;
-  height: 100dvh;
+  height: calc(var(--vh, 1vh) * 100);
   padding: 10% 15% 10% 25%;
 }
 .section-indicator {
@@ -108,10 +107,16 @@ img {
 }
 .landscape-message {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   font-size: clamp(1.5rem, 3vw, 4rem);
   font-weight: 500;
   color: #000;
   text-align: center;
+  background: #fff;
 }
 
 /* --- [Section] : Intro Style -------------------------------------------- */
@@ -436,6 +441,9 @@ section.outro::after {
     border-right: 1px solid gray;
     padding: 15% 10% 15% 25%;
   }
+  .section-indicator {
+    left: 70%;
+  }
   .intro__txt {
     transform: translateX(-22rem);
   }
@@ -460,19 +468,17 @@ section.outro::after {
 /* --- 모바일, 태블릿에서 가로모드 시에 안내문구(세로 모드로 이용해주세요) --- */
 @media screen and (max-width: 932px) and (orientation: landscape) {
   body {
-    overflow: hidden;
+    /* overflow: hidden; */
     min-height: 100dvh;
   }
-  .container {
-    display: none;
+  .content-wrapper {
+    /* display: none; */
+    background: red;
   }
   .landscape-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    inset: 0;
-    background: #fff;
+    display: grid;
+    place-items: center;
+
     z-index: 100;
   }
 }
