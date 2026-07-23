@@ -29,7 +29,7 @@ let indicatorTimeline;
 
 /*
  * ---------------------------------------------------------
- * [ Document Height Reset ]
+ * [ Update Document Height on Resize]
  *  디바이스 해상도 및 화면 가로 전환 시에 대응 높이값 초기화
  * ---------------------------------------------------------
  */
@@ -42,20 +42,25 @@ window.addEventListener("orientationchange", setRealVh);
 
 /*
  * ---------------------------------------------------------
+ * [ Initialize Mobile Scroll Optimization ]
+ *   모바일 브라우저 스크롤 바운스 및 덜컥거림(버벅임) 방지
+ * ---------------------------------------------------------
+ */
+ScrollTrigger.normalizeScroll(true);
+ScrollTrigger.config({ ignoreMobileResize: true });
+
+/*
+ * ---------------------------------------------------------
  * [ AxisTracker ]
  *  intro 제외한 전체 화면의 스크롤에 맞춰 axis-point 움직임 조절
  * ---------------------------------------------------------
  */
-// 모바일 브라우저 스크롤 바운스 및 덜컥거림(버벅임) 방지
-ScrollTrigger.normalizeScroll(true);
 function startAxisTracker() {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
       trigger: section.intro,
       endTrigger: section.outro,
-      start: "bottom center",
-      // start: "top center",
-      // end: "top top",
+      start: "bottom top",
       end: "top top",
       anticipatePin: 1.25,
       scrub: 1,

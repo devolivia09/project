@@ -1,6 +1,5 @@
-/* ---------------------------  기본 : 모바일 퍼스트  ---------------------------- */
-/* ------------------  기준 디바이스: iPhone 13 (390 x 844 px) -------------------- */
-/* --- Common Style : Reset  --- */
+/* ---------------  모바일 퍼스트 : css 기준 iPhone 13 (390 x 844 px) --------------- */
+/* --- Reset : Common Style  --- */
 *,
 *::before,
 *::after {
@@ -86,7 +85,7 @@ img {
   background-color: #000;
   border-radius: 50%;
   opacity: 0;
-  will-change: top;
+  will-change: transform;
   transform: translate3d(0, 0, 0);
 }
 .section {
@@ -174,7 +173,7 @@ section.intro {
   opacity: 0;
 }
 
-/* --- [Section] : Profile Style -------------------------------------------- */
+/* -------- [Section] : Profile Style --------------------------------------- */
 section.profile {
   line-height: 1.75;
 }
@@ -207,7 +206,7 @@ section.profile {
   font-size: clamp(2.35rem, 4vw, 3.25rem);
 }
 
-/* --- [Section] : Skills Style -------------------------------------------- */
+/* -------- [Section] : Skills Style --------------------------------------- */
 .skills__list {
   display: flex;
   flex-direction: column;
@@ -239,7 +238,7 @@ section.profile {
   opacity: 1;
 }
 
-/* --- [Section] : Works Style -------------------------------------------- */
+/* -------- [Section] : Works Style --------------------------------------- */
 .works__list {
   display: flex;
   flex-direction: column;
@@ -300,7 +299,7 @@ section.profile {
   font-size: clamp(1.25rem, 2.5vw, 2.5rem);
 }
 
-/* --- [Section] : Outro Style -------------------------------------------- */
+/* -------- [Section] : Outro Style --------------------------------------- */
 section.outro {
   pointer-events: none;
 }
@@ -388,7 +387,7 @@ section.outro::after {
 }
 
 /* ---------------------- 미디어쿼리 반응형 기기별 대응 ------------------------- */
-/*  모바일 (세로 짧은 기기 대응) 375 * 667  */
+/*  모바일 375 * 667(세로 짧은 기기)  */
 @media (max-width: 375.98px) {
   html {
     font-size: 55%;
@@ -465,20 +464,18 @@ section.outro::after {
   }
 }
 
-/* --- 모바일, 태블릿에서 가로모드 시에 안내문구(세로 모드로 이용해주세요) --- */
+/* -- 모바일, 태블릿에서 가로모드 안내문구(세로 모드로 이용해주세요) -- */
 @media screen and (max-width: 932px) and (orientation: landscape) {
   body {
-    /* overflow: hidden; */
+    overflow: hidden;
     min-height: 100dvh;
   }
   .content-wrapper {
-    /* display: none; */
-    background: red;
+    display: none;
   }
   .landscape-message {
     display: grid;
     place-items: center;
-
     z-index: 100;
   }
 }
