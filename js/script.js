@@ -21,25 +21,11 @@ const introState = {
 
 let introTimeline = null;
 
-const base_VH2 = allSections[0].offsetHeight; // 1 section height
-const base_VH = window.innerHeight; // 1 section height
+const base_VH = section.intro.offsetHeight; // 1 section height
 const half_VH = base_VH / 2; // 0.5 section height
-const scroll_Range = base_VH * 3 + half_VH; // 3.5
-console.log(base_VH, ", ", base_VH2);
-let indicatorTimeline;
+const scroll_Range = base_VH * 3 + half_VH; // 4.5
 
-/*
- * ---------------------------------------------------------
- * [ Update Document Height on Resize]
- *  디바이스 해상도 및 화면 가로 전환 시에 대응 높이값 초기화
- * ---------------------------------------------------------
- */
-function setRealVh() {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
-}
-setRealVh();
-window.addEventListener("orientationchange", setRealVh);
+let indicatorTimeline;
 
 /*
  * ---------------------------------------------------------
@@ -59,11 +45,11 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 function startAxisTracker() {
   const axisTracker = gsap.timeline({
     scrollTrigger: {
-      trigger: section.intro,
+      trigger: section.profile,
       endTrigger: section.outro,
-      start: "bottom top",
-      end: "top bottom",
-      anticipatePin: 1.25,
+      start: "top center",
+      end: "top top",
+      anticipatePin: 1,
       scrub: 1,
       invalidateOnRefresh: true,
     },
@@ -84,10 +70,14 @@ function playIntro(startSize, endSize) {
       ease: "power2.inOut",
       duration: 0.6,
     },
+    onComplete: () => {
+      introState.isComplete = true;
+      startAxisTracker();
+    },
   });
 
   tl.set(axisPoint, {
-    top: "50dvh",
+    top: half_VH,
     yPercent: -50,
     xPercent: -50,
   });
@@ -105,7 +95,7 @@ function playIntro(startSize, endSize) {
 
     //  2. point의 y 값을 intro section의 바닥까지 이동
     .to(axisPoint, {
-      top: "100dvh",
+      top: base_VH,
       width: endSize,
       yPercent: -100,
     })
@@ -121,11 +111,8 @@ function playIntro(startSize, endSize) {
         bottom: "4%",
       },
       "+=0.4",
-    )
-    .call(() => {
-      introComplete = true;
-      startAxisTracker();
-    });
+    );
+
   return tl;
 }
 
@@ -143,7 +130,7 @@ mm.add("(min-width: 768px)", () => {
 });
 
 mm.add("(max-width: 767px)", () => {
-  introTimeline = playIntro("1.85rem", "1.5rem");
+  introTimeline = playIntro("1.85rem", "1.25rem");
   return () => {
     if (introTimeline) {
       introTimeline.kill();
