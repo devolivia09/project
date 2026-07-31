@@ -125,22 +125,19 @@ section.intro {
 }
 .intro__txt {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transform: translateX(-8.25rem);
+  transform: translateX(calc(-50% + 16% - 2vw));
   color: #fff;
   background-color: #000;
   font-weight: 500;
-  padding: 1.25rem 0rem;
+  line-height: 1;
 }
 .intro__txt span {
   display: grid;
   place-items: center;
-  font-size: 2.75rem;
-  min-width: 2.75rem;
+  width: 8vw;
+  padding: 2vh 0;
   margin-top: -4px;
-  padding: 0.25rem;
-  line-height: 1;
+  font-size: 2.75rem;
 }
 .intro__txt span.circle-o {
   opacity: 0;
@@ -400,9 +397,9 @@ section.outro::after {
 /*  태블릿 사이즈  */
 @media (min-width: 768px) {
   .intro__txt {
-    gap: 1rem;
-    transform: translateX(-14rem);
-    padding: 1.75rem 0rem;
+    /* gap: 1rem; */
+    /* transform: translateX(-14rem); */
+    /* padding: 1.75rem 0rem; */
   }
   .intro__txt span {
     font-size: 5rem;
@@ -444,7 +441,7 @@ section.outro::after {
     left: 70%;
   }
   .intro__txt {
-    transform: translateX(-22rem);
+    /* transform: translateX(-22rem); */
   }
   .intro__txt span {
     font-size: 8.25rem;
